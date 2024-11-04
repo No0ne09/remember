@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/auth_textfield.dart';
@@ -16,6 +17,7 @@ class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isLogin = true;
+  final _firebase = FirebaseAuth.instance;
   @override
   void dispose() {
     _usernameController.dispose();
@@ -23,6 +25,47 @@ class _AuthFormState extends State<AuthForm> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _validate() async {
+    if (_formKey.currentState!.validate()) {
+      final username = _usernameController.text;
+      final email = _emailController.text.toLowerCase();
+      final password = _passwordController.text;
+      _isLogin ? _loginUser(email, password) : _registerUser(email, password);
+    }
+  }
+
+  Future<void> _loginUser(String email, String password) async {
+    try {
+      await _firebase.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        print("Upewnij się, że dane są poprawne.");
+        return;
+      }
+      if (e.code == "network-request-failed") {
+        print("Upewnij się, posiadasz połączenie z internetem.");
+        return;
+      }
+    }
+  }
+
+  Future<void> _registerUser(String email, String password) async {
+    try {
+      await _firebase.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "network-request-failed") {
+        print("Upewnij się, posiadasz połączenie z internetem.");
+        return;
+      }
+      if (e.code == 'email-already-in-use') {
+        print("Istnieje już konto powiązane z tym adresem email");
+        return;
+      }
+    }
   }
 
   @override
@@ -37,11 +80,9 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 children: [
                   Container(
-                      width: 300,
-                      child: Image.asset(
-                        "logo.png",
-                        fit: BoxFit.contain,
-                      )),
+                    width: 200,
+                    child: Image.asset("assets/logo.png"),
+                  ),
                   AuthTextfield(
                     hint: "Nazwa użytkownika",
                     validator: usernameValidator,
@@ -88,7 +129,7 @@ class _AuthFormState extends State<AuthForm> {
                         Text(_isLogin ? "Utwórz nowe konto" : "Mam już konto"),
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _validate,
                       child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"))
                 ],
               ),
