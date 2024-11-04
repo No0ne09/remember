@@ -21,7 +21,24 @@ class _AuthFormState extends State<AuthForm> {
             child: Form(
               key: _formKey,
               child: Column(
-                children: [AuthTextfield()],
+                children: [
+                  const AuthTextfield(
+                    hint: "Nazwa użytkownika",
+                  ),
+                  const AuthTextfield(
+                    hint: "Adres email",
+                    isEmail: true,
+                  ),
+                  const AuthTextfield(
+                    hint: "Hasło",
+                    isPassword: true,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        _formKey.currentState!.validate();
+                      },
+                      child: const Text("siup"))
+                ],
               ),
             ),
           ),
