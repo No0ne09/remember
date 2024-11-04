@@ -19,6 +19,7 @@ class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isLogin = true;
+  bool _isProccesing = false;
   final _firebase = FirebaseAuth.instance;
   @override
   void dispose() {
@@ -31,6 +32,9 @@ class _AuthFormState extends State<AuthForm> {
 
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isProccesing = true;
+      });
       final username = _usernameController.text;
       final email = _emailController.text.toLowerCase();
       final password = _passwordController.text;
@@ -43,6 +47,9 @@ class _AuthFormState extends State<AuthForm> {
       await _firebase.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
+      setState(() {
+        _isProccesing = false;
+      });
       if (e.code == 'invalid-credential') {
         if (!mounted) {
           return;
@@ -76,6 +83,9 @@ class _AuthFormState extends State<AuthForm> {
       await _firebase.createUserWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
+      setState(() {
+        _isProccesing = false;
+      });
       if (e.code == "network-request-failed") {
         if (!mounted) {
           return;
@@ -160,44 +170,55 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(
                     height: 8,
                   ),
-                  ElevatedButton(
-                    onPressed: _validate,
-                    child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  if (_isLogin)
-                    Column(
-                      children: [
-                        TextButton(
-                          onPressed: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) => const EmailResetPopup(),
-                            );
-                          },
-                          child: const Text(
-                            "Nie pamiętam hasła",
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
+                  _isProccesing
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _validate,
+                              child: Text(
+                                  _isLogin ? "Zaloguj się" : "Zarejestruj się"),
                             ),
-                          ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            if (_isLogin)
+                              Column(
+                                children: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const EmailResetPopup(),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Nie pamiętam hasła",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                ],
+                              ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isLogin = !_isLogin;
+                                });
+                              },
+                              child: Text(_isLogin
+                                  ? "Utwórz nowe konto"
+                                  : "Mam już konto"),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                    child:
-                        Text(_isLogin ? "Utwórz nowe konto" : "Mam już konto"),
-                  ),
                 ],
               ),
             ),
