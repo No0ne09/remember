@@ -69,6 +69,17 @@ class _AuthTextfieldState extends State<AuthTextfield> {
                   ),
                 )
               : null,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(55),
+            borderSide: const BorderSide(color: Colors.transparent),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(55),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(55),
+            borderSide: const BorderSide(color: Colors.transparent),
+          ),
         ),
       ),
     );

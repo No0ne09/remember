@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/auth_textfield.dart';
+import 'package:remember/widgets/info_popup.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
@@ -42,11 +43,28 @@ class _AuthFormState extends State<AuthForm> {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
-        print("Upewnij się, że dane są poprawne.");
+        if (!mounted) {
+          return;
+        }
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Uwaga", desc: "Upewnij się, że dane są poprawne."),
+        );
+
         return;
       }
       if (e.code == "network-request-failed") {
-        print("Upewnij się, posiadasz połączenie z internetem.");
+        if (!mounted) {
+          return;
+        }
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Uwaga",
+              desc: "Upewnij się, posiadasz połączenie z internetem."),
+        );
+
         return;
       }
     }
@@ -58,11 +76,29 @@ class _AuthFormState extends State<AuthForm> {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == "network-request-failed") {
-        print("Upewnij się, posiadasz połączenie z internetem.");
+        if (!mounted) {
+          return;
+        }
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Uwaga",
+              desc: "Upewnij się, posiadasz połączenie z internetem."),
+        );
+
         return;
       }
       if (e.code == 'email-already-in-use') {
-        print("Istnieje już konto powiązane z tym adresem email");
+        if (!mounted) {
+          return;
+        }
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Uwaga",
+              desc: "Istnieje już konto powiązane z tym adresem email"),
+        );
+
         return;
       }
     }
@@ -71,7 +107,7 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Colors.amber,
+        color: Theme.of(context).colorScheme.onTertiary,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -79,8 +115,8 @@ class _AuthFormState extends State<AuthForm> {
               key: _formKey,
               child: Column(
                 children: [
-                  Container(
-                    width: 200,
+                  SizedBox(
+                    width: 300,
                     child: Image.asset("assets/logo.png"),
                   ),
                   if (!_isLogin)
@@ -120,6 +156,16 @@ class _AuthFormState extends State<AuthForm> {
                             ),
                           ],
                         ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  ElevatedButton(
+                    onPressed: _validate,
+                    child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   TextButton(
                     onPressed: () {
                       setState(() {
@@ -129,9 +175,6 @@ class _AuthFormState extends State<AuthForm> {
                     child:
                         Text(_isLogin ? "Utwórz nowe konto" : "Mam już konto"),
                   ),
-                  ElevatedButton(
-                      onPressed: _validate,
-                      child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"))
                 ],
               ),
             ),
