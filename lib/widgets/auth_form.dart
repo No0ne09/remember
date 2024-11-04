@@ -125,6 +125,19 @@ class _AuthFormState extends State<AuthForm> {
 
         return;
       }
+      if (e.code == "invalid-email") {
+        if (!mounted) {
+          return;
+        }
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Uwaga",
+              desc: "Upewnij się, podany adres email jest poprawny."),
+        );
+
+        return;
+      }
     }
   }
 
@@ -224,6 +237,10 @@ class _AuthFormState extends State<AuthForm> {
                               onPressed: () {
                                 setState(() {
                                   _isLogin = !_isLogin;
+                                  _emailController.clear();
+                                  _usernameController.clear();
+                                  _passwordController.clear();
+                                  _confirmPasswordController.clear();
                                 });
                               },
                               child: Text(_isLogin
