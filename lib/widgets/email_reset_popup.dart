@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/auth_textfield.dart';
 import 'package:remember/widgets/info_popup.dart';
@@ -55,6 +56,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
       if (!mounted) {
         return;
       }
+      showToast("Sprawdź swoją skrzynkę");
       Navigator.pop(context);
     }
   }
@@ -113,7 +115,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
                   height: 10,
                 ),
                 _isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : ElevatedButton(
                         onPressed: _resetPassword,
                         child: const Text("Wyślij wiadomość"),
