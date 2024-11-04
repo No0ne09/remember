@@ -6,14 +6,22 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-            child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AuthForm(),
+            Text("Re(me)mber"),
+            SizedBox(
+              height: kToolbarHeight,
+              child: Image.asset("assets/logo.png"),
+            )
           ],
-        )),
+        ),
+      ),
+      body: const Center(
+        child: SingleChildScrollView(child: const AuthForm()),
       ),
     );
   }

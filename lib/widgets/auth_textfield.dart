@@ -41,6 +41,7 @@ class _AuthTextfieldState extends State<AuthTextfield> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
         controller: widget.controller,
         textInputAction: TextInputAction.next,
         obscureText: widget.isPassword ? hidden : false,

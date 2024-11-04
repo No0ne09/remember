@@ -152,10 +152,6 @@ class _AuthFormState extends State<AuthForm> {
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox(
-                    width: 300,
-                    child: Image.asset("assets/logo.png"),
-                  ),
                   if (!_isLogin)
                     AuthTextfield(
                       hint: "Nazwa użytkownika",
