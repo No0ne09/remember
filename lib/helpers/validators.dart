@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
+
+final emailValidator = ValidationBuilder(localeName: 'pl').email().build();
+final usernameValidator = ValidationBuilder(localeName: 'pl').build();
+String? Function(String?) registerPasswordValidator(
+    TextEditingController passwordController) {
+  return ValidationBuilder(localeName: 'pl')
+      .minLength(8)
+      .add((value) {
+        return value == passwordController.text
+            ? null
+            : 'Hasła muszą być takie same';
+      })
+      .add(
+        (value) => value.toString().contains((' '))
+            ? "Hasło nie może zawierać spacji."
+            : null,
+      )
+      .build();
+}
