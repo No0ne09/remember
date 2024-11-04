@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/auth_textfield.dart';
+import 'package:remember/widgets/email_reset_popup.dart';
 import 'package:remember/widgets/info_popup.dart';
 
 class AuthForm extends StatefulWidget {
@@ -170,7 +171,14 @@ class _AuthFormState extends State<AuthForm> {
                     Column(
                       children: [
                         TextButton(
-                          onPressed: _validate,
+                          onPressed: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return EmailResetPopup();
+                              },
+                            );
+                          },
                           child: const Text(
                             "Nie pamiętam hasła",
                             style: TextStyle(
