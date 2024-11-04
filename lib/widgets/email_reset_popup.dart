@@ -28,7 +28,6 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
   }
 
   Future<void> _resetPassword() async {
-    print("test");
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;

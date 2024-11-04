@@ -174,9 +174,7 @@ class _AuthFormState extends State<AuthForm> {
                           onPressed: () async {
                             await showDialog(
                               context: context,
-                              builder: (context) {
-                                return EmailResetPopup();
-                              },
+                              builder: (context) => const EmailResetPopup(),
                             );
                           },
                           child: const Text(
