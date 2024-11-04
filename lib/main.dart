@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:remember/screens/auth_screen.dart';
+import 'package:remember/screens/content_screen.dart';
 import 'helpers/firebase_options.dart';
 
 void main() async {
@@ -34,9 +35,7 @@ class App extends StatelessWidget {
           if (!snapshot.hasData) {
             return const AuthScreen();
           }
-          return const Center(
-            child: Text("test"),
-          );
+          return const ContentScreen();
         },
       ),
     );
