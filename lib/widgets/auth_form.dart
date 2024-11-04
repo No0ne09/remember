@@ -166,6 +166,23 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(
                     height: 8,
                   ),
+                  if (_isLogin)
+                    Column(
+                      children: [
+                        TextButton(
+                          onPressed: _validate,
+                          child: const Text(
+                            "Nie pamiętam hasła",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                      ],
+                    ),
                   TextButton(
                     onPressed: () {
                       setState(() {

@@ -30,6 +30,12 @@ class _AuthTextfieldState extends State<AuthTextfield> {
     focusNode = FocusNode();
   }
 
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+
   bool hidden = true;
   @override
   Widget build(BuildContext context) {
