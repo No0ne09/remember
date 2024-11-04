@@ -83,11 +83,12 @@ class _AuthFormState extends State<AuthForm> {
                     width: 200,
                     child: Image.asset("assets/logo.png"),
                   ),
-                  AuthTextfield(
-                    hint: "Nazwa użytkownika",
-                    validator: usernameValidator,
-                    controller: _usernameController,
-                  ),
+                  if (!_isLogin)
+                    AuthTextfield(
+                      hint: "Nazwa użytkownika",
+                      validator: usernameValidator,
+                      controller: _usernameController,
+                    ),
                   AuthTextfield(
                     hint: "Adres email",
                     isEmail: true,
