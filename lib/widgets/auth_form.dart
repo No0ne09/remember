@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
@@ -38,7 +39,10 @@ class _AuthFormState extends State<AuthForm> {
       final username = _usernameController.text;
       final email = _emailController.text.toLowerCase();
       final password = _passwordController.text;
-      _isLogin ? _loginUser(email, password) : _registerUser(email, password);
+
+      _isLogin
+          ? _loginUser(email, password)
+          : _registerUser(email, password, username);
     }
   }
 
@@ -78,10 +82,19 @@ class _AuthFormState extends State<AuthForm> {
     }
   }
 
-  Future<void> _registerUser(String email, String password) async {
+  Future<void> _registerUser(
+      String email, String password, String username) async {
     try {
-      await _firebase.createUserWithEmailAndPassword(
+      final userData = await _firebase.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userData.user!.uid)
+          .set({
+        'username': username,
+        'email': email,
+      });
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProccesing = false;

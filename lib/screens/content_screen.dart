@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/functions.dart';
 
 class ContentScreen extends StatefulWidget {
   const ContentScreen({super.key});
@@ -9,6 +12,7 @@ class ContentScreen extends StatefulWidget {
 }
 
 class _ContentScreenState extends State<ContentScreen> {
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +25,18 @@ class _ContentScreenState extends State<ContentScreen> {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: const Center(
-        child: Text("Hello"),
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () async {
+              final status = await checkConnection();
+              if (!status) {
+                return;
+              }
+              await FirebaseFirestore.instance
+                  .collection("test")
+                  .add({"test1": "test2"});
+            },
+            child: Text("siup")),
       ),
     );
   }
