@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "920328765849",
+    "project_id": "remember-df301",
+    "storage_bucket": "remember-df301.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920328765849:android:330f301fb3f3218e21d308",
+        "android_client_info": {
+          "package_name": "com.example.remember"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3FQhGrxvo5sLtxC5Pn6k4oevz4Imhnxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
