@@ -15,7 +15,7 @@ class _AuthFormState extends State<AuthForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  bool _isLogin = false;
+  bool _isLogin = true;
   @override
   void dispose() {
     _usernameController.dispose();
@@ -47,24 +47,43 @@ class _AuthFormState extends State<AuthForm> {
                     validator: emailValidator,
                     controller: _emailController,
                   ),
-                  AuthTextfield(
-                    hint: "Hasło",
-                    isPassword: true,
-                    validator:
-                        registerPasswordValidator(_confirmPasswordController),
-                    controller: _passwordController,
-                  ),
-                  AuthTextfield(
-                    hint: "Powtórz Hasło",
-                    isPassword: true,
-                    validator: registerPasswordValidator(_passwordController),
-                    controller: _confirmPasswordController,
+                  _isLogin
+                      ? AuthTextfield(
+                          hint: "Hasło",
+                          isPassword: true,
+                          validator: usernameValidator,
+                          controller: _passwordController,
+                        )
+                      : Column(
+                          children: [
+                            AuthTextfield(
+                              hint: "Hasło",
+                              isPassword: true,
+                              validator: registerPasswordValidator(
+                                  _confirmPasswordController),
+                              controller: _passwordController,
+                            ),
+                            AuthTextfield(
+                              hint: "Powtórz Hasło",
+                              isPassword: true,
+                              validator: registerPasswordValidator(
+                                  _passwordController),
+                              controller: _confirmPasswordController,
+                            ),
+                          ],
+                        ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                    child:
+                        Text(_isLogin ? "Utwórz nowe konto" : "Mam już konto"),
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        _formKey.currentState!.validate();
-                      },
-                      child: const Text("siup"))
+                      onPressed: () {},
+                      child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"))
                 ],
               ),
             ),
