@@ -5,13 +5,17 @@ class AuthTextfield extends StatefulWidget {
   const AuthTextfield({
     this.isEmail = false,
     this.isPassword = false,
+    required this.validator,
     required this.hint,
+    required this.controller,
     super.key,
   });
 
   final bool isEmail;
   final bool isPassword;
   final String hint;
+  final String? Function(String?) validator;
+  final TextEditingController controller;
 
   @override
   State<AuthTextfield> createState() => _AuthTextfieldState();
@@ -29,12 +33,16 @@ class _AuthTextfieldState extends State<AuthTextfield> {
   bool hidden = true;
   @override
   Widget build(BuildContext context) {
-    final validator = widget.isEmail
-        ? emailValidator
-        : widget.isPassword
-            ? registerPasswordValidator
-            : usernameValidator;
     return TextFormField(
+      controller: widget.controller,
+      textInputAction: TextInputAction.next,
+      obscureText: widget.isPassword ? hidden : false,
+      obscuringCharacter: "●",
+      focusNode: focusNode,
+      validator: widget.validator,
+      onTapOutside: (event) {
+        focusNode.unfocus();
+      },
       decoration: InputDecoration(
         label: Padding(
           padding: const EdgeInsets.only(left: 14),
@@ -60,13 +68,6 @@ class _AuthTextfieldState extends State<AuthTextfield> {
               )
             : null,
       ),
-      textInputAction: TextInputAction.next,
-      obscureText: widget.isPassword ? hidden : false,
-      focusNode: focusNode,
-      validator: validator,
-      onTapOutside: (event) {
-        focusNode.unfocus();
-      },
     );
   }
 }
