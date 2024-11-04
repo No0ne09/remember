@@ -33,40 +33,43 @@ class _AuthTextfieldState extends State<AuthTextfield> {
   bool hidden = true;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      textInputAction: TextInputAction.next,
-      obscureText: widget.isPassword ? hidden : false,
-      obscuringCharacter: "●",
-      focusNode: focusNode,
-      validator: widget.validator,
-      onTapOutside: (event) {
-        focusNode.unfocus();
-      },
-      decoration: InputDecoration(
-        label: Padding(
-          padding: const EdgeInsets.only(left: 14),
-          child: Text(
-            widget.hint,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: widget.controller,
+        textInputAction: TextInputAction.next,
+        obscureText: widget.isPassword ? hidden : false,
+        obscuringCharacter: "●",
+        focusNode: focusNode,
+        validator: widget.validator,
+        onTapOutside: (event) {
+          focusNode.unfocus();
+        },
+        decoration: InputDecoration(
+          label: Padding(
+            padding: const EdgeInsets.only(left: 14),
+            child: Text(
+              widget.hint,
+            ),
           ),
+          filled: true,
+          floatingLabelAlignment: FloatingLabelAlignment.start,
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
+          suffixIcon: widget.isPassword
+              ? ExcludeFocus(
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        hidden = !hidden;
+                      });
+                    },
+                    icon: hidden
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+                  ),
+                )
+              : null,
         ),
-        filled: true,
-        floatingLabelAlignment: FloatingLabelAlignment.start,
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: widget.isPassword
-            ? ExcludeFocus(
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      hidden = !hidden;
-                    });
-                  },
-                  icon: hidden
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                ),
-              )
-            : null,
       ),
     );
   }

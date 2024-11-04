@@ -28,14 +28,20 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: Colors.red,
+        color: Colors.amber,
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(24.0),
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
+                  Container(
+                      width: 300,
+                      child: Image.asset(
+                        "logo.png",
+                        fit: BoxFit.contain,
+                      )),
                   AuthTextfield(
                     hint: "Nazwa użytkownika",
                     validator: usernameValidator,
