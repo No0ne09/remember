@@ -14,6 +14,7 @@ class EmailResetPopup extends StatefulWidget {
 class _EmailResetPopupState extends State<EmailResetPopup> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -28,6 +29,9 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
   Future<void> _resetPassword() async {
     print("test");
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       final email = _emailController.text.toLowerCase();
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
@@ -42,15 +46,17 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
                 title: "Uwaga",
                 desc: "Upewnij się, posiadasz połączenie z internetem."),
           );
-
+          setState(() {
+            _isLoading = false;
+          });
           return;
         }
       }
+      if (!mounted) {
+        return;
+      }
+      Navigator.pop(context);
     }
-    if (!mounted) {
-      return;
-    }
-    Navigator.pop(context);
   }
 
   @override
@@ -106,10 +112,12 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
                 const SizedBox(
                   height: 10,
                 ),
-                ElevatedButton(
-                  onPressed: _resetPassword,
-                  child: const Text("Wyślij wiadomość"),
-                ),
+                _isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
+                        onPressed: _resetPassword,
+                        child: const Text("Wyślij wiadomość"),
+                      ),
               ],
             ),
           ],
