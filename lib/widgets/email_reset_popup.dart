@@ -38,9 +38,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       } on FirebaseAuthException catch (e) {
         if (e.code == "network-request-failed") {
-          if (!mounted) {
-            return;
-          }
+          if (!mounted) return;
           await showDialog(
             context: context,
             builder: (context) => const InfoPopup(
@@ -53,9 +51,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
           return;
         }
       }
-      if (!mounted) {
-        return;
-      }
+      if (!mounted) return;
       showToast("Sprawdź swoją skrzynkę");
       Navigator.pop(context);
     }

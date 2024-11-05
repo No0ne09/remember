@@ -21,9 +21,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
 
     final XFile? image = await picker.pickImage(source: source);
 
-    if (image == null) {
-      return;
-    }
+    if (image == null) return;
 
     setState(() {
       _chosenPhoto = File(image.path);

@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/main_button.dart';
@@ -21,25 +22,34 @@ class _NewMemoryState extends State<NewMemory> {
   final _descriptionController = TextEditingController();
   File? _chosenImage;
   String? _memoryDate;
+
   Future<void> _checkDateTime() async {
-    if (_chosenImage == null) {
-      return;
-    }
+    if (_chosenImage == null) return;
     final exif = await readExifFromFile(_chosenImage!);
     final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
-    if (exifDateTime == null) {
-      return;
-    }
-    final exifDate = exifDateTime.substring(0, 10).replaceAll(":", '-');
+    if (exifDateTime == null) return;
 
-    final tempDateTime = DateTime.tryParse(exifDate);
+    final tempDateTime =
+        DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
 
-    if (tempDateTime == null) {
-      return;
-    }
+    if (tempDateTime == null) return;
 
-    final dateTime = DateFormat("dd.MM.yyyy").format(tempDateTime);
+    final dateTime = getFormattedDate(tempDateTime);
+    setState(() {
+      _memoryDate = dateTime;
+    });
+  }
+
+  Future<void> _pickDateTime() async {
+    final tempDateTime = await showDatePicker(
+      locale: const Locale("pl"),
+      context: context,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime.now(),
+    );
+    if (tempDateTime == null) return;
+    final dateTime = getFormattedDate(tempDateTime);
     setState(() {
       _memoryDate = dateTime;
     });
@@ -80,19 +90,7 @@ class _NewMemoryState extends State<NewMemory> {
             ),
             MainButton(
               onPressed: () async {
-                final tempDateTime = await showDatePicker(
-                  locale: const Locale("pl"),
-                  context: context,
-                  firstDate: DateTime(DateTime.now().year - 5),
-                  lastDate: DateTime.now(),
-                );
-                if (tempDateTime == null) {
-                  return;
-                }
-                final dateTime = DateFormat("dd.MM.yyyy").format(tempDateTime);
-                setState(() {
-                  _memoryDate = dateTime;
-                });
+                await _pickDateTime();
               },
               text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
             ),

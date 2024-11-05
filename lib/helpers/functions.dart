@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 void showToast(String text) {
   Fluttertoast.showToast(
@@ -19,4 +20,8 @@ Future<bool> checkConnection() async {
     return true;
   }
   return false;
+}
+
+String getFormattedDate(DateTime date) {
+  return DateFormat("dd.MM.yyyy").format(date);
 }
