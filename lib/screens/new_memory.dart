@@ -75,6 +75,7 @@ class _NewMemoryState extends State<NewMemory> {
               validator: basicValidator,
               hint: "Nazwij swoje wspomnienie",
               controller: _titleController,
+              inputAction: TextInputAction.done,
             ),
             const SizedBox(
               height: 8,

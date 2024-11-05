@@ -8,6 +8,7 @@ class BaseTextfield extends StatefulWidget {
     required this.validator,
     required this.hint,
     required this.controller,
+    this.inputAction = TextInputAction.next,
     super.key,
   });
 
@@ -16,6 +17,7 @@ class BaseTextfield extends StatefulWidget {
   final String hint;
   final String? Function(String?) validator;
   final TextEditingController controller;
+  final TextInputAction inputAction;
 
   @override
   State<BaseTextfield> createState() => _BaseTextfieldState();
@@ -44,7 +46,7 @@ class _BaseTextfieldState extends State<BaseTextfield> {
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         controller: widget.controller,
-        textInputAction: TextInputAction.next,
+        textInputAction: widget.inputAction,
         obscureText: widget.isPassword ? hidden : false,
         obscuringCharacter: "●",
         focusNode: focusNode,
