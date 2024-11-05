@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
+import 'package:remember/widgets/new_photo_widget.dart';
 
 class NewMemory extends StatefulWidget {
   const NewMemory({super.key});
@@ -36,15 +37,7 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                ),
-              ),
-            ),
+            NewPhotoWidget(),
             const SizedBox(
               height: 8,
             ),
