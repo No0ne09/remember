@@ -30,7 +30,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: _chosenPhoto == null ? null : Colors.black,
+            color: Colors.black,
             border: Border.all(),
             borderRadius: BorderRadius.circular(40),
           ),
@@ -48,7 +48,22 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
                   ),
                 )
               : const Center(
-                  child: Text("Nie wybrano zdjęcia"),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        size: 50,
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Nie wybrano zdjęcia",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
         ),
         SizedBox(
