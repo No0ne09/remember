@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/main_button.dart';
@@ -15,6 +19,28 @@ class NewMemory extends StatefulWidget {
 class _NewMemoryState extends State<NewMemory> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  File? _chosenImage;
+  Future<void> _checkDateTime() async {
+    if (_chosenImage == null) {
+      return;
+    }
+    final exif = await readExifFromFile(_chosenImage!);
+    final data = exif["EXIF DateTimeOriginal"]
+        ?.toString()
+        .substring(0, 10)
+        .replaceAll(':', "-");
+
+    if (data == null) {
+      print("siup");
+      return;
+    }
+    final tempDateTime = DateTime.tryParse(data);
+    if (tempDateTime == null) {
+      return;
+    }
+    final dateTime = DateFormat("dd-MM-yyyy").format(tempDateTime);
+    print(dateTime);
+  }
 
   @override
   void dispose() {
@@ -38,7 +64,14 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            const NewPhotoWidget(),
+            NewPhotoWidget(
+              onChooseImage: (image) async {
+                setState(() {
+                  _chosenImage = image;
+                });
+                await _checkDateTime();
+              },
+            ),
             const SizedBox(
               height: 8,
             ),

@@ -5,8 +5,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:remember/widgets/main_button.dart';
 
 class NewPhotoWidget extends StatefulWidget {
-  const NewPhotoWidget({super.key});
-
+  const NewPhotoWidget({
+    required this.onChooseImage,
+    super.key,
+  });
+  final void Function(File image) onChooseImage;
   @override
   State<NewPhotoWidget> createState() => _NewPhotoWidgetState();
 }
@@ -17,12 +20,16 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
     final ImagePicker picker = ImagePicker();
 
     final XFile? image = await picker.pickImage(source: source);
+
     if (image == null) {
       return;
     }
+
     setState(() {
       _chosenPhoto = File(image.path);
     });
+    print("hehe");
+    widget.onChooseImage(_chosenPhoto!);
   }
 
   @override
