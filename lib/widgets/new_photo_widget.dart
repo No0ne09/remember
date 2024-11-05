@@ -67,7 +67,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
                   ),
                 ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(

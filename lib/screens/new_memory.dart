@@ -38,7 +38,7 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            NewPhotoWidget(),
+            const NewPhotoWidget(),
             const SizedBox(
               height: 8,
             ),
