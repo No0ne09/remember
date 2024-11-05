@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
+import 'package:remember/screens/add_memory.dart';
+import 'package:remember/screens/map.dart';
+import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {
@@ -19,13 +20,21 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
   int currentIndex = 0;
 
   Widget get currentContent {
-    return Placeholder();
+    switch (currentIndex) {
+      case 0:
+        return const MemoriesGallery();
+      case 1:
+        return const AddMemory();
+      case 2:
+        return const MapWidget();
+      default:
+        return const MemoriesGallery();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     currentIndex = ref.watch(indexProvider);
-    print(currentIndex);
 
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
@@ -56,19 +65,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
           )
         ],
       ),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () async {
-              final status = await checkConnection();
-              if (!status) {
-                return;
-              }
-              await FirebaseFirestore.instance
-                  .collection("test")
-                  .add({"test1": "test2"});
-            },
-            child: const Text("siup")),
-      ),
+      body: currentContent,
     );
   }
 }
