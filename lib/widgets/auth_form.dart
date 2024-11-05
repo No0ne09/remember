@@ -131,6 +131,9 @@ class _AuthFormState extends State<AuthForm> {
                   overflow: TextOverflow.visible,
                 ),
               ),
+              const SizedBox(
+                height: 8,
+              ),
               Card(
                   color: Theme.of(context).colorScheme.onTertiary,
                   child: Padding(
