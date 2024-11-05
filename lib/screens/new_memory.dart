@@ -73,7 +73,7 @@ class _NewMemoryState extends State<NewMemory> {
           children: [
             BaseTextfield(
               validator: basicValidator,
-              label: "Tytuł",
+              hint: "Nazwij swoje wspomnienie",
               controller: _titleController,
             ),
             const SizedBox(
@@ -91,6 +91,7 @@ class _NewMemoryState extends State<NewMemory> {
               height: 8,
             ),
             MainButton(
+              backgroundColor: Colors.amber,
               onPressed: () async {
                 await _pickDateTime();
               },

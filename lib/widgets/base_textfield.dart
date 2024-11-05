@@ -6,14 +6,14 @@ class BaseTextfield extends StatefulWidget {
     this.isEmail = false,
     this.isPassword = false,
     required this.validator,
-    required this.label,
+    required this.hint,
     required this.controller,
     super.key,
   });
 
   final bool isEmail;
   final bool isPassword;
-  final String label;
+  final String hint;
   final String? Function(String?) validator;
   final TextEditingController controller;
 
@@ -42,7 +42,6 @@ class _BaseTextfieldState extends State<BaseTextfield> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        textAlign: TextAlign.center,
         keyboardType: TextInputType.emailAddress,
         controller: widget.controller,
         textInputAction: TextInputAction.next,
@@ -55,10 +54,7 @@ class _BaseTextfieldState extends State<BaseTextfield> {
         },
         decoration: InputDecoration(
           filled: true,
-          label: Center(
-            child: Text(widget.label),
-          ),
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
+          hintText: widget.hint,
           suffixIcon: widget.isPassword
               ? ExcludeFocus(
                   child: IconButton(

@@ -142,19 +142,19 @@ class _AuthFormState extends State<AuthForm> {
                         children: [
                           if (!_isLogin)
                             BaseTextfield(
-                              label: "Nazwa użytkownika",
+                              hint: "Nazwa użytkownika",
                               validator: basicValidator,
                               controller: _usernameController,
                             ),
                           BaseTextfield(
-                            label: "Adres email",
+                            hint: "Adres email",
                             isEmail: true,
                             validator: emailValidator,
                             controller: _emailController,
                           ),
                           _isLogin
                               ? BaseTextfield(
-                                  label: "Hasło",
+                                  hint: "Hasło",
                                   isPassword: true,
                                   validator: basicValidator,
                                   controller: _passwordController,
@@ -162,14 +162,14 @@ class _AuthFormState extends State<AuthForm> {
                               : Column(
                                   children: [
                                     BaseTextfield(
-                                      label: "Hasło",
+                                      hint: "Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _confirmPasswordController),
                                       controller: _passwordController,
                                     ),
                                     BaseTextfield(
-                                      label: "Powtórz Hasło",
+                                      hint: "Powtórz Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _passwordController),
