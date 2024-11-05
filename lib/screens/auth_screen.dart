@@ -8,6 +8,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,

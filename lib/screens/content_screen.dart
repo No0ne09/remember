@@ -52,6 +52,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
       appBar: AppBar(
+        forceMaterialTransparency: true,
         centerTitle: true,
         title: Text(pageTitle),
         bottom: kIsWeb

@@ -25,7 +25,7 @@ class _NewMemoryState extends State<NewMemory> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             BaseTextfield(
@@ -33,15 +33,35 @@ class _NewMemoryState extends State<NewMemory> {
               label: "Tytuł",
               controller: _titleController,
             ),
-            Container(),
+            const SizedBox(
+              height: 8,
+            ),
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
             ElevatedButton(
               onPressed: () {},
               child: Text("Location"),
+            ),
+            const SizedBox(
+              height: 8,
             ),
             MultilineTextfield(
               validator: basicValidator,
               label: "Opisz swoje wspomnienie",
               controller: _descriptionController,
+            ),
+            const SizedBox(
+              height: 8,
             ),
             ElevatedButton(
               onPressed: () {},
