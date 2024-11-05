@@ -31,11 +31,10 @@ class _NewMemoryState extends State<NewMemory> {
     if (exifDateTime == null) {
       return;
     }
-    final date = exifDateTime.substring(0, 10).replaceAll(":", '-');
-    final time = exifDateTime.substring(11);
+    final exifDate = exifDateTime.substring(0, 10).replaceAll(":", '-');
 
-    final tempDateTime = DateTime.tryParse('$date $time');
-    print(tempDateTime);
+    final tempDateTime = DateTime.tryParse(exifDate);
+
     if (tempDateTime == null) {
       return;
     }
