@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
-import 'package:remember/widgets/auth_textfield.dart';
+import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/email_reset_popup.dart';
 import 'package:remember/widgets/info_popup.dart';
 
@@ -140,19 +140,19 @@ class _AuthFormState extends State<AuthForm> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (!_isLogin)
-                            AuthTextfield(
+                            BaseTextfield(
                               hint: "Nazwa użytkownika",
                               validator: basicValidator,
                               controller: _usernameController,
                             ),
-                          AuthTextfield(
+                          BaseTextfield(
                             hint: "Adres email",
                             isEmail: true,
                             validator: emailValidator,
                             controller: _emailController,
                           ),
                           _isLogin
-                              ? AuthTextfield(
+                              ? BaseTextfield(
                                   hint: "Hasło",
                                   isPassword: true,
                                   validator: basicValidator,
@@ -160,14 +160,14 @@ class _AuthFormState extends State<AuthForm> {
                                 )
                               : Column(
                                   children: [
-                                    AuthTextfield(
+                                    BaseTextfield(
                                       hint: "Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _confirmPasswordController),
                                       controller: _passwordController,
                                     ),
-                                    AuthTextfield(
+                                    BaseTextfield(
                                       hint: "Powtórz Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(

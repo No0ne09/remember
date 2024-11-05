@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
+import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
 
 class NewMemory extends StatefulWidget {
@@ -10,9 +11,12 @@ class NewMemory extends StatefulWidget {
 }
 
 class _NewMemoryState extends State<NewMemory> {
+  final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+
   @override
   void dispose() {
+    _titleController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -24,7 +28,11 @@ class _NewMemoryState extends State<NewMemory> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            TextField(),
+            BaseTextfield(
+              validator: basicValidator,
+              hint: "Tytuł",
+              controller: _titleController,
+            ),
             Container(),
             ElevatedButton(
               onPressed: () {},
