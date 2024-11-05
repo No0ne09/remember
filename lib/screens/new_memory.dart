@@ -81,6 +81,7 @@ class _NewMemoryState extends State<NewMemory> {
             MainButton(
               onPressed: () async {
                 final tempDateTime = await showDatePicker(
+                  locale: const Locale("pl"),
                   context: context,
                   firstDate: DateTime(DateTime.now().year - 5),
                   lastDate: DateTime.now(),
