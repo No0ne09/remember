@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/auth_textfield.dart';
@@ -143,111 +144,120 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _isLogin = !_isLogin;
-                  _emailController.clear();
-                  _usernameController.clear();
-                  _passwordController.clear();
-                  _confirmPasswordController.clear();
-                });
-              },
-              child: Text(
-                _isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?",
-                overflow: TextOverflow.visible,
+        child: SizedBox(
+          width: height > width ? width : width / 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isLogin = !_isLogin;
+                    _emailController.clear();
+                    _usernameController.clear();
+                    _passwordController.clear();
+                    _confirmPasswordController.clear();
+                  });
+                },
+                child: Text(
+                  _isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?",
+                  overflow: TextOverflow.visible,
+                ),
               ),
-            ),
-            Card(
-                color: Theme.of(context).colorScheme.onTertiary,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (!_isLogin)
+              Card(
+                  color: Theme.of(context).colorScheme.onTertiary,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!_isLogin)
+                            AuthTextfield(
+                              hint: "Nazwa użytkownika",
+                              validator: usernameValidator,
+                              controller: _usernameController,
+                            ),
                           AuthTextfield(
-                            hint: "Nazwa użytkownika",
-                            validator: usernameValidator,
-                            controller: _usernameController,
+                            hint: "Adres email",
+                            isEmail: true,
+                            validator: emailValidator,
+                            controller: _emailController,
                           ),
-                        AuthTextfield(
-                          hint: "Adres email",
-                          isEmail: true,
-                          validator: emailValidator,
-                          controller: _emailController,
-                        ),
-                        _isLogin
-                            ? AuthTextfield(
-                                hint: "Hasło",
-                                isPassword: true,
-                                validator: usernameValidator,
-                                controller: _passwordController,
-                              )
-                            : Column(
-                                children: [
-                                  AuthTextfield(
-                                    hint: "Hasło",
-                                    isPassword: true,
-                                    validator: registerPasswordValidator(
-                                        _confirmPasswordController),
-                                    controller: _passwordController,
+                          _isLogin
+                              ? AuthTextfield(
+                                  hint: "Hasło",
+                                  isPassword: true,
+                                  validator: usernameValidator,
+                                  controller: _passwordController,
+                                )
+                              : Column(
+                                  children: [
+                                    AuthTextfield(
+                                      hint: "Hasło",
+                                      isPassword: true,
+                                      validator: registerPasswordValidator(
+                                          _confirmPasswordController),
+                                      controller: _passwordController,
+                                    ),
+                                    AuthTextfield(
+                                      hint: "Powtórz Hasło",
+                                      isPassword: true,
+                                      validator: registerPasswordValidator(
+                                          _passwordController),
+                                      controller: _confirmPasswordController,
+                                    ),
+                                  ],
+                                ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          if (_isLogin)
+                            ExcludeFocus(
+                              child: TextButton(
+                                onPressed: () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const EmailResetPopup(),
+                                  );
+                                },
+                                child: const Text(
+                                  "Nie pamiętam hasła",
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
                                   ),
-                                  AuthTextfield(
-                                    hint: "Powtórz Hasło",
-                                    isPassword: true,
-                                    validator: registerPasswordValidator(
-                                        _passwordController),
-                                    controller: _confirmPasswordController,
-                                  ),
-                                ],
-                              ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        if (_isLogin)
-                          TextButton(
-                            onPressed: () async {
-                              await showDialog(
-                                context: context,
-                                builder: (context) => const EmailResetPopup(),
-                              );
-                            },
-                            child: const Text(
-                              "Nie pamiętam hasła",
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                )),
-            const SizedBox(
-              height: 8,
-            ),
-            _isProccesing
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: _validate,
-                      child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                  )),
+              const SizedBox(
+                height: 8,
+              ),
+              _isProccesing
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _validate,
+                        child:
+                            Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                      ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );
