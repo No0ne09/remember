@@ -35,7 +35,7 @@ class _ContentScreenState extends State<ContentScreen> {
                   .collection("test")
                   .add({"test1": "test2"});
             },
-            child: Text("siup")),
+            child: const Text("siup")),
       ),
     );
   }
