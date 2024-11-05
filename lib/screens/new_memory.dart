@@ -29,7 +29,6 @@ class _NewMemoryState extends State<NewMemory> {
     final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
     if (exifDateTime == null) return;
-    print(exifDateTime.substring(0, 10).replaceAll(":", '-'));
     final tempDateTime =
         DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
 
