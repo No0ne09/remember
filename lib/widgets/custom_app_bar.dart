@@ -11,12 +11,32 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return ConvexAppBar(items: const [
-      TabItem(icon: Icons.home, title: 'Home'),
-      TabItem(icon: Icons.map, title: 'Discovery'),
-      TabItem(icon: Icons.add, title: 'Add'),
-      TabItem(icon: Icons.message, title: 'Message'),
-      TabItem(icon: Icons.people, title: 'Profile'),
-    ]);
+    return ConvexAppBar(
+        activeColor: Colors.white,
+        initialActiveIndex: 0,
+        top: 0,
+        height: 60,
+        style: TabStyle.custom,
+        items: const [
+          TabItem(
+            icon: Icons.library_books_outlined,
+            title: 'Wspomnienia',
+            activeIcon: Icon(
+              Icons.library_books_sharp,
+            ),
+          ),
+          TabItem(
+            icon: Icons.browse_gallery_outlined,
+            title: 'Zapamiętaj',
+            activeIcon: Icon(
+              Icons.browse_gallery,
+            ),
+          ),
+          TabItem(
+            icon: Icons.map_outlined,
+            title: 'Mapa wspomnień',
+            activeIcon: Icon(Icons.map),
+          ),
+        ]);
   }
 }
