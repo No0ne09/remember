@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 
 final emailValidator = ValidationBuilder(localeName: 'pl').email().build();
-final usernameValidator = ValidationBuilder(localeName: 'pl').build();
+final basicValidator = ValidationBuilder(localeName: 'pl').build();
 String? Function(String?) registerPasswordValidator(
     TextEditingController passwordController) {
   return ValidationBuilder(localeName: 'pl')

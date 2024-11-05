@@ -48,7 +48,7 @@ class _AuthFormState extends State<AuthForm> {
     }
     await showDialog(
       context: context,
-      builder: (context) => InfoPopup(title: "Uwaga", desc: message),
+      builder: (context) => InfoPopup(title: "Błąd", desc: message),
     );
   }
 
