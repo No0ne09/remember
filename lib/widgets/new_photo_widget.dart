@@ -94,7 +94,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
                       ImageSource.camera,
                     );
                   },
-                  text: "Zrób nowe zdjęcie"),
+                  text: "Zrób zdjęcie"),
             ),
           ],
         )

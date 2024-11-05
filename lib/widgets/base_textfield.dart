@@ -71,6 +71,7 @@ class _BaseTextfieldState extends State<BaseTextfield> {
               : null,
           enabledBorder: textFieldBorder,
           focusedBorder: textFieldBorder,
+          border: textFieldBorder,
         ),
       ),
     );

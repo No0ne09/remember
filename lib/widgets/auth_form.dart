@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/email_reset_popup.dart';
-import 'package:remember/widgets/info_popup.dart';
 import 'package:remember/widgets/main_button.dart';
 
 class AuthForm extends StatefulWidget {
@@ -33,26 +33,6 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
   }
 
-  Future<void> _handleAuthError(FirebaseAuthException e) async {
-    String message;
-    switch (e.code) {
-      case 'invalid-credential':
-        message = "Upewnij się, że dane są poprawne.";
-      case 'network-request-failed':
-        message = "Upewnij się, posiadasz połączenie z internetem.";
-      case 'email-already-in-use':
-        message = "Istnieje już konto powiązane z tym adresem email.";
-      case 'invalid-email':
-        message = "Upewnij się, podany adres email jest poprawny.";
-      default:
-        message = "Wystąpił nieznany błąd.";
-    }
-    await showDialog(
-      context: context,
-      builder: (context) => InfoPopup(title: "Błąd", desc: message),
-    );
-  }
-
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -76,7 +56,8 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         _isProccesing = false;
       });
-      _handleAuthError(e);
+      if (!mounted) return;
+      handleAuthError(e, context);
       return;
     }
   }
@@ -98,7 +79,8 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         _isProccesing = false;
       });
-      _handleAuthError(e);
+      if (!mounted) return;
+      handleAuthError(e, context);
       return;
     }
   }
@@ -215,8 +197,9 @@ class _AuthFormState extends State<AuthForm> {
                   : SizedBox(
                       width: double.infinity,
                       child: MainButton(
-                          onPressed: _validate,
-                          text: _isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                        onPressed: _validate,
+                        text: _isLogin ? "Zaloguj się" : "Zarejestruj się",
+                      ),
                     ),
             ],
           ),

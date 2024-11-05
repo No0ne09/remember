@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
-import 'package:remember/widgets/info_popup.dart';
+
 import 'package:remember/widgets/main_button.dart';
 
 class EmailResetPopup extends StatefulWidget {
@@ -37,19 +37,12 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       } on FirebaseAuthException catch (e) {
-        if (e.code == "network-request-failed") {
-          if (!mounted) return;
-          await showDialog(
-            context: context,
-            builder: (context) => const InfoPopup(
-                title: "Uwaga",
-                desc: "Upewnij się, posiadasz połączenie z internetem."),
-          );
-          setState(() {
-            _isLoading = false;
-          });
-          return;
-        }
+        setState(() {
+          _isLoading = false;
+        });
+        if (!mounted) return;
+        handleAuthError(e, context);
+        return;
       }
       if (!mounted) return;
       showToast("Sprawdź swoją skrzynkę");
