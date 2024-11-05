@@ -20,6 +20,7 @@ class _NewMemoryState extends State<NewMemory> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   File? _chosenImage;
+  String? _memoryDate;
   Future<void> _checkDateTime() async {
     if (_chosenImage == null) {
       return;
@@ -38,7 +39,10 @@ class _NewMemoryState extends State<NewMemory> {
     if (tempDateTime == null) {
       return;
     }
-    final dateTime = DateFormat("dd-MM-yyyy").format(tempDateTime);
+    final dateTime = DateFormat("dd.MM.yyyy").format(tempDateTime);
+    setState(() {
+      _memoryDate = dateTime;
+    });
     print(dateTime);
   }
 
@@ -71,6 +75,27 @@ class _NewMemoryState extends State<NewMemory> {
                 });
                 await _checkDateTime();
               },
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            MainButton(
+              onPressed: () async {
+                final tempDateTime = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(DateTime.now().year - 5),
+                  lastDate: DateTime.now(),
+                );
+                if (tempDateTime == null) {
+                  return;
+                }
+                final dateTime = DateFormat("dd.MM.yyyy").format(tempDateTime);
+                setState(() {
+                  _memoryDate = dateTime;
+                });
+                print(dateTime);
+              },
+              text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
             ),
             const SizedBox(
               height: 8,
