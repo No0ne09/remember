@@ -12,7 +12,7 @@ class AuthScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Re(me)mber"),
+            const Text("Re(me)mber"),
             SizedBox(
               height: kToolbarHeight,
               child: Image.asset("assets/logo.png"),
@@ -21,7 +21,7 @@ class AuthScreen extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: SingleChildScrollView(child: const AuthForm()),
+        child: AuthForm(),
       ),
     );
   }
