@@ -32,6 +32,26 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
   }
 
+  Future<void> _handleAuthError(FirebaseAuthException e) async {
+    String message;
+    switch (e.code) {
+      case 'invalid-credential':
+        message = "Upewnij się, że dane są poprawne.";
+      case 'network-request-failed':
+        message = "Upewnij się, posiadasz połączenie z internetem.";
+      case 'email-already-in-use':
+        message = "Istnieje już konto powiązane z tym adresem email.";
+      case 'invalid-email':
+        message = "Upewnij się, podany adres email jest poprawny.";
+      default:
+        message = "Wystąpił nieznany błąd.";
+    }
+    await showDialog(
+      context: context,
+      builder: (context) => InfoPopup(title: "Uwaga", desc: message),
+    );
+  }
+
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -55,31 +75,8 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         _isProccesing = false;
       });
-      if (e.code == 'invalid-credential') {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga", desc: "Upewnij się, że dane są poprawne."),
-        );
-
-        return;
-      }
-      if (e.code == "network-request-failed") {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Upewnij się, posiadasz połączenie z internetem."),
-        );
-
-        return;
-      }
+      _handleAuthError(e);
+      return;
     }
   }
 
@@ -100,45 +97,8 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         _isProccesing = false;
       });
-      if (e.code == "network-request-failed") {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Upewnij się, posiadasz połączenie z internetem."),
-        );
-
-        return;
-      }
-      if (e.code == 'email-already-in-use') {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Istnieje już konto powiązane z tym adresem email"),
-        );
-
-        return;
-      }
-      if (e.code == "invalid-email") {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Upewnij się, podany adres email jest poprawny."),
-        );
-
-        return;
-      }
+      _handleAuthError(e);
+      return;
     }
   }
 
@@ -182,7 +142,7 @@ class _AuthFormState extends State<AuthForm> {
                           if (!_isLogin)
                             AuthTextfield(
                               hint: "Nazwa użytkownika",
-                              validator: usernameValidator,
+                              validator: basicValidator,
                               controller: _usernameController,
                             ),
                           AuthTextfield(
@@ -195,7 +155,7 @@ class _AuthFormState extends State<AuthForm> {
                               ? AuthTextfield(
                                   hint: "Hasło",
                                   isPassword: true,
-                                  validator: usernameValidator,
+                                  validator: basicValidator,
                                   controller: _passwordController,
                                 )
                               : Column(
