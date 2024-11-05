@@ -29,7 +29,7 @@ class _NewMemoryState extends State<NewMemory> {
     final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
     if (exifDateTime == null) return;
-
+    print(exifDateTime.substring(0, 10).replaceAll(":", '-'));
     final tempDateTime =
         DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
 
@@ -44,6 +44,9 @@ class _NewMemoryState extends State<NewMemory> {
   Future<void> _pickDateTime() async {
     final tempDateTime = await showDatePicker(
       locale: const Locale("pl"),
+      initialDate: _memoryDate == null
+          ? DateTime.now()
+          : DateTime.tryParse(_memoryDate!),
       context: context,
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime.now(),
