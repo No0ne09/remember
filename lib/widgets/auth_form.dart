@@ -143,112 +143,117 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Theme.of(context).colorScheme.onTertiary,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  if (!_isLogin)
-                    AuthTextfield(
-                      hint: "Nazwa użytkownika",
-                      validator: usernameValidator,
-                      controller: _usernameController,
-                    ),
-                  AuthTextfield(
-                    hint: "Adres email",
-                    isEmail: true,
-                    validator: emailValidator,
-                    controller: _emailController,
-                  ),
-                  _isLogin
-                      ? AuthTextfield(
-                          hint: "Hasło",
-                          isPassword: true,
-                          validator: usernameValidator,
-                          controller: _passwordController,
-                        )
-                      : Column(
-                          children: [
-                            AuthTextfield(
-                              hint: "Hasło",
-                              isPassword: true,
-                              validator: registerPasswordValidator(
-                                  _confirmPasswordController),
-                              controller: _passwordController,
-                            ),
-                            AuthTextfield(
-                              hint: "Powtórz Hasło",
-                              isPassword: true,
-                              validator: registerPasswordValidator(
-                                  _passwordController),
-                              controller: _confirmPasswordController,
-                            ),
-                          ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Spacer(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Card(
+              color: Theme.of(context).colorScheme.onTertiary,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (!_isLogin)
+                          AuthTextfield(
+                            hint: "Nazwa użytkownika",
+                            validator: usernameValidator,
+                            controller: _usernameController,
+                          ),
+                        AuthTextfield(
+                          hint: "Adres email",
+                          isEmail: true,
+                          validator: emailValidator,
+                          controller: _emailController,
                         ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  _isProccesing
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: _validate,
-                              child: Text(
-                                  _isLogin ? "Zaloguj się" : "Zarejestruj się"),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            if (_isLogin)
-                              Column(
+                        _isLogin
+                            ? AuthTextfield(
+                                hint: "Hasło",
+                                isPassword: true,
+                                validator: usernameValidator,
+                                controller: _passwordController,
+                              )
+                            : Column(
                                 children: [
-                                  TextButton(
-                                    onPressed: () async {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            const EmailResetPopup(),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "Nie pamiętam hasła",
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
+                                  AuthTextfield(
+                                    hint: "Hasło",
+                                    isPassword: true,
+                                    validator: registerPasswordValidator(
+                                        _confirmPasswordController),
+                                    controller: _passwordController,
                                   ),
-                                  const SizedBox(
-                                    height: 8,
+                                  AuthTextfield(
+                                    hint: "Powtórz Hasło",
+                                    isPassword: true,
+                                    validator: registerPasswordValidator(
+                                        _passwordController),
+                                    controller: _confirmPasswordController,
                                   ),
                                 ],
                               ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isLogin = !_isLogin;
-                                  _emailController.clear();
-                                  _usernameController.clear();
-                                  _passwordController.clear();
-                                  _confirmPasswordController.clear();
-                                });
-                              },
-                              child: Text(_isLogin
-                                  ? "Utwórz nowe konto"
-                                  : "Mam już konto"),
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 8,
                         ),
-                ],
+                        if (_isLogin)
+                          TextButton(
+                            onPressed: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) => const EmailResetPopup(),
+                              );
+                            },
+                            child: const Text(
+                              "Nie pamiętam hasła",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              )),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() {
+              _isLogin = !_isLogin;
+              _emailController.clear();
+              _usernameController.clear();
+              _passwordController.clear();
+              _confirmPasswordController.clear();
+            });
+          },
+          child: Text(_isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?"),
+        ),
+        Spacer(),
+        _isProccesing
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 8,
+                  left: 8,
+                  right: 8,
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _validate,
+                    child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ));
+      ],
+    );
   }
 }

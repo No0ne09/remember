@@ -21,7 +21,7 @@ class AuthScreen extends StatelessWidget {
         ),
       ),
       body: const Center(
-        child: SingleChildScrollView(child: const AuthForm()),
+        child: AuthForm(),
       ),
     );
   }
