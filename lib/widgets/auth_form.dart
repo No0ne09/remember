@@ -6,6 +6,7 @@ import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/email_reset_popup.dart';
 import 'package:remember/widgets/info_popup.dart';
+import 'package:remember/widgets/main_button.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
@@ -210,11 +211,9 @@ class _AuthFormState extends State<AuthForm> {
                     )
                   : SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _validate,
-                        child:
-                            Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
-                      ),
+                      child: MainButton(
+                          onPressed: _validate,
+                          text: _isLogin ? "Zaloguj się" : "Zarejestruj się"),
                     ),
             ],
           ),

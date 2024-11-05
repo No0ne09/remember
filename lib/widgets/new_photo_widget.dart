@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:remember/widgets/main_button.dart';
 
 class NewPhotoWidget extends StatefulWidget {
   const NewPhotoWidget({super.key});
@@ -73,25 +74,23 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: ElevatedButton(
-                onPressed: () async {
-                  await _choosePhoto(ImageSource.gallery);
-                },
-                child: Text("Wybierz z galerii"),
-              ),
+              child: MainButton(
+                  onPressed: () async {
+                    await _choosePhoto(ImageSource.gallery);
+                  },
+                  text: "Wybierz z galerii"),
             ),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Expanded(
-              child: ElevatedButton(
-                onPressed: () async {
-                  await _choosePhoto(
-                    ImageSource.camera,
-                  );
-                },
-                child: Text("Zrób nowe zdjęcie"),
-              ),
+              child: MainButton(
+                  onPressed: () async {
+                    await _choosePhoto(
+                      ImageSource.camera,
+                    );
+                  },
+                  text: "Zrób nowe zdjęcie"),
             ),
           ],
         )

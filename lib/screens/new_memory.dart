@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
+import 'package:remember/widgets/main_button.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
 import 'package:remember/widgets/new_photo_widget.dart';
 
@@ -41,9 +42,9 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            ElevatedButton(
+            MainButton(
               onPressed: () {},
-              child: Text("Location"),
+              text: "Location",
             ),
             const SizedBox(
               height: 8,
@@ -56,9 +57,9 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            ElevatedButton(
+            MainButton(
               onPressed: () {},
-              child: Text("Save memory"),
+              text: "Save memory",
             ),
           ],
         ),
