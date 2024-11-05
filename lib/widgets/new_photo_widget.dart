@@ -28,7 +28,6 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
     setState(() {
       _chosenPhoto = File(image.path);
     });
-    print("hehe");
     widget.onChooseImage(_chosenPhoto!);
   }
 

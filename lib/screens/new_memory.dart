@@ -26,24 +26,24 @@ class _NewMemoryState extends State<NewMemory> {
       return;
     }
     final exif = await readExifFromFile(_chosenImage!);
-    final data = exif["EXIF DateTimeOriginal"]
-        ?.toString()
-        .substring(0, 10)
-        .replaceAll(':', "-");
+    final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
-    if (data == null) {
-      print("siup");
+    if (exifDateTime == null) {
       return;
     }
-    final tempDateTime = DateTime.tryParse(data);
+    final date = exifDateTime.substring(0, 10).replaceAll(":", '-');
+    final time = exifDateTime.substring(11);
+
+    final tempDateTime = DateTime.tryParse('$date $time');
+    print(tempDateTime);
     if (tempDateTime == null) {
       return;
     }
+
     final dateTime = DateFormat("dd.MM.yyyy").format(tempDateTime);
     setState(() {
       _memoryDate = dateTime;
     });
-    print(dateTime);
   }
 
   @override
@@ -93,7 +93,6 @@ class _NewMemoryState extends State<NewMemory> {
                 setState(() {
                   _memoryDate = dateTime;
                 });
-                print(dateTime);
               },
               text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
             ),
