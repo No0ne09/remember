@@ -143,19 +143,32 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Card(
-              color: Theme.of(context).colorScheme.onTertiary,
-              child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _isLogin = !_isLogin;
+                  _emailController.clear();
+                  _usernameController.clear();
+                  _passwordController.clear();
+                  _confirmPasswordController.clear();
+                });
+              },
+              child: Text(
+                _isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?",
+                overflow: TextOverflow.visible,
+              ),
+            ),
+            Card(
+                color: Theme.of(context).colorScheme.onTertiary,
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -219,41 +232,24 @@ class _AuthFormState extends State<AuthForm> {
                       ],
                     ),
                   ),
-                ),
-              )),
-        ),
-        TextButton(
-          onPressed: () {
-            setState(() {
-              _isLogin = !_isLogin;
-              _emailController.clear();
-              _usernameController.clear();
-              _passwordController.clear();
-              _confirmPasswordController.clear();
-            });
-          },
-          child: Text(_isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?"),
-        ),
-        Spacer(),
-        _isProccesing
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom + 8,
-                  left: 8,
-                  right: 8,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _validate,
-                    child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                )),
+            const SizedBox(
+              height: 8,
+            ),
+            _isProccesing
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _validate,
+                      child: Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                    ),
                   ),
-                ),
-              ),
-      ],
+          ],
+        ),
+      ),
     );
   }
 }
