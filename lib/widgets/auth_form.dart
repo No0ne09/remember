@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/validators.dart';
-import 'package:remember/widgets/auth_textfield.dart';
+import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/email_reset_popup.dart';
 import 'package:remember/widgets/info_popup.dart';
 
@@ -32,6 +32,26 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
   }
 
+  Future<void> _handleAuthError(FirebaseAuthException e) async {
+    String message;
+    switch (e.code) {
+      case 'invalid-credential':
+        message = "Upewnij się, że dane są poprawne.";
+      case 'network-request-failed':
+        message = "Upewnij się, posiadasz połączenie z internetem.";
+      case 'email-already-in-use':
+        message = "Istnieje już konto powiązane z tym adresem email.";
+      case 'invalid-email':
+        message = "Upewnij się, podany adres email jest poprawny.";
+      default:
+        message = "Wystąpił nieznany błąd.";
+    }
+    await showDialog(
+      context: context,
+      builder: (context) => InfoPopup(title: "Błąd", desc: message),
+    );
+  }
+
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -55,31 +75,8 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         _isProccesing = false;
       });
-      if (e.code == 'invalid-credential') {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga", desc: "Upewnij się, że dane są poprawne."),
-        );
-
-        return;
-      }
-      if (e.code == "network-request-failed") {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Upewnij się, posiadasz połączenie z internetem."),
-        );
-
-        return;
-      }
+      _handleAuthError(e);
+      return;
     }
   }
 
@@ -100,45 +97,8 @@ class _AuthFormState extends State<AuthForm> {
       setState(() {
         _isProccesing = false;
       });
-      if (e.code == "network-request-failed") {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Upewnij się, posiadasz połączenie z internetem."),
-        );
-
-        return;
-      }
-      if (e.code == 'email-already-in-use') {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Istnieje już konto powiązane z tym adresem email"),
-        );
-
-        return;
-      }
-      if (e.code == "invalid-email") {
-        if (!mounted) {
-          return;
-        }
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Uwaga",
-              desc: "Upewnij się, podany adres email jest poprawny."),
-        );
-
-        return;
-      }
+      _handleAuthError(e);
+      return;
     }
   }
 
@@ -180,35 +140,35 @@ class _AuthFormState extends State<AuthForm> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (!_isLogin)
-                            AuthTextfield(
-                              hint: "Nazwa użytkownika",
-                              validator: usernameValidator,
+                            BaseTextfield(
+                              label: "Nazwa użytkownika",
+                              validator: basicValidator,
                               controller: _usernameController,
                             ),
-                          AuthTextfield(
-                            hint: "Adres email",
+                          BaseTextfield(
+                            label: "Adres email",
                             isEmail: true,
                             validator: emailValidator,
                             controller: _emailController,
                           ),
                           _isLogin
-                              ? AuthTextfield(
-                                  hint: "Hasło",
+                              ? BaseTextfield(
+                                  label: "Hasło",
                                   isPassword: true,
-                                  validator: usernameValidator,
+                                  validator: basicValidator,
                                   controller: _passwordController,
                                 )
                               : Column(
                                   children: [
-                                    AuthTextfield(
-                                      hint: "Hasło",
+                                    BaseTextfield(
+                                      label: "Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _confirmPasswordController),
                                       controller: _passwordController,
                                     ),
-                                    AuthTextfield(
-                                      hint: "Powtórz Hasło",
+                                    BaseTextfield(
+                                      label: "Powtórz Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _passwordController),

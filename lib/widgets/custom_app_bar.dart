@@ -1,0 +1,45 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/providers.dart';
+
+class CustomAppBar extends ConsumerWidget {
+  const CustomAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ConvexAppBar(
+      activeColor: Colors.white,
+      initialActiveIndex: 0,
+      top: 0,
+      height: 60,
+      style: TabStyle.custom,
+      items: const [
+        TabItem(
+          icon: Icons.browse_gallery_outlined,
+          title: 'Wspomnienia',
+          activeIcon: Icon(
+            Icons.browse_gallery,
+          ),
+        ),
+        if (!kIsWeb)
+          TabItem(
+            icon: Icons.add_a_photo_outlined,
+            title: 'Zapamiętaj',
+            activeIcon: Icon(
+              Icons.add_a_photo,
+            ),
+          ),
+        TabItem(
+          icon: Icons.map_outlined,
+          title: 'Mapa wspomnień',
+          activeIcon: Icon(Icons.map),
+        ),
+      ],
+      onTap: (index) {
+        ref.read(indexProvider.notifier).state = index;
+      },
+    );
+  }
+}

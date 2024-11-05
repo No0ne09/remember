@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/constants.dart';
 
-class AuthTextfield extends StatefulWidget {
-  const AuthTextfield({
+class BaseTextfield extends StatefulWidget {
+  const BaseTextfield({
     this.isEmail = false,
     this.isPassword = false,
     required this.validator,
-    required this.hint,
+    required this.label,
     required this.controller,
     super.key,
   });
 
   final bool isEmail;
   final bool isPassword;
-  final String hint;
+  final String label;
   final String? Function(String?) validator;
   final TextEditingController controller;
 
   @override
-  State<AuthTextfield> createState() => _AuthTextfieldState();
+  State<BaseTextfield> createState() => _BaseTextfieldState();
 }
 
-class _AuthTextfieldState extends State<AuthTextfield> {
+class _BaseTextfieldState extends State<BaseTextfield> {
   late FocusNode focusNode;
 
   @override
@@ -41,6 +42,7 @@ class _AuthTextfieldState extends State<AuthTextfield> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        textAlign: TextAlign.center,
         keyboardType: TextInputType.emailAddress,
         controller: widget.controller,
         textInputAction: TextInputAction.next,
@@ -52,14 +54,10 @@ class _AuthTextfieldState extends State<AuthTextfield> {
           focusNode.unfocus();
         },
         decoration: InputDecoration(
-          label: Padding(
-            padding: const EdgeInsets.only(left: 14),
-            child: Text(
-              widget.hint,
-            ),
-          ),
           filled: true,
-          floatingLabelAlignment: FloatingLabelAlignment.start,
+          label: Center(
+            child: Text(widget.label),
+          ),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           suffixIcon: widget.isPassword
               ? ExcludeFocus(
@@ -75,17 +73,8 @@ class _AuthTextfieldState extends State<AuthTextfield> {
                   ),
                 )
               : null,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(55),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(55),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(55),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
+          enabledBorder: textFieldBorder,
+          focusedBorder: textFieldBorder,
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
-import 'package:remember/widgets/auth_textfield.dart';
+import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/info_popup.dart';
 
 class EmailResetPopup extends StatefulWidget {
@@ -105,9 +105,9 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AuthTextfield(
+                BaseTextfield(
                   validator: emailValidator,
-                  hint: "E-mail",
+                  label: "E-mail",
                   controller: _emailController,
                 ),
                 const SizedBox(
