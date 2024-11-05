@@ -4,6 +4,7 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/info_popup.dart';
+import 'package:remember/widgets/main_button.dart';
 
 class EmailResetPopup extends StatefulWidget {
   const EmailResetPopup({super.key});
@@ -115,9 +116,9 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
                 ),
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
+                    : MainButton(
                         onPressed: _resetPassword,
-                        child: const Text("Wyślij wiadomość"),
+                        text: "Wyślij wiadomość",
                       ),
               ],
             ),
