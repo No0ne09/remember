@@ -1,4 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/providers.dart';
@@ -22,13 +23,14 @@ class CustomAppBar extends ConsumerWidget {
             Icons.browse_gallery,
           ),
         ),
-        TabItem(
-          icon: Icons.add_a_photo_outlined,
-          title: 'Zapamiętaj',
-          activeIcon: Icon(
-            Icons.add_a_photo,
+        if (!kIsWeb)
+          TabItem(
+            icon: Icons.add_a_photo_outlined,
+            title: 'Zapamiętaj',
+            activeIcon: Icon(
+              Icons.add_a_photo,
+            ),
           ),
-        ),
         TabItem(
           icon: Icons.map_outlined,
           title: 'Mapa wspomnień',

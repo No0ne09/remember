@@ -24,7 +24,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
       case 0:
         return const MemoriesGallery();
       case 1:
-        return const AddMemory();
+        return kIsWeb ? const MapWidget() : const AddMemory();
       case 2:
         return const MapWidget();
       default:
