@@ -107,7 +107,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
               children: [
                 BaseTextfield(
                   validator: emailValidator,
-                  hint: "E-mail",
+                  label: "E-mail",
                   controller: _emailController,
                 ),
                 const SizedBox(

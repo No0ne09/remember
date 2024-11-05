@@ -30,7 +30,7 @@ class _NewMemoryState extends State<NewMemory> {
           children: [
             BaseTextfield(
               validator: basicValidator,
-              hint: "Tytuł",
+              label: "Tytuł",
               controller: _titleController,
             ),
             Container(),
