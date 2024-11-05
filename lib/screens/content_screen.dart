@@ -58,8 +58,8 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              ref.read(indexProvider.notifier).state = 0;
               FirebaseAuth.instance.signOut();
+              ref.read(indexProvider.notifier).state = 0;
             },
             icon: const Icon(Icons.logout),
           )
