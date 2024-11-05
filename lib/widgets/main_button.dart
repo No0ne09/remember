@@ -19,6 +19,7 @@ class MainButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(backgroundColor: backgroundColor),
       onPressed: onPressed,
       child: Text(
+        textAlign: TextAlign.center,
         text,
         style: Theme.of(context).textTheme.titleMedium!.copyWith(
               color: foregroundColor,
