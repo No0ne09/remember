@@ -22,7 +22,7 @@ class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isLogin = true;
-  bool _isProccesing = false;
+  bool _isProcessing = false;
   final _firebase = FirebaseAuth.instance;
   @override
   void dispose() {
@@ -36,7 +36,7 @@ class _AuthFormState extends State<AuthForm> {
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isProccesing = true;
+        _isProcessing = true;
       });
       final username = _usernameController.text;
       final email = _emailController.text.toLowerCase();
@@ -54,7 +54,7 @@ class _AuthFormState extends State<AuthForm> {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _isProccesing = false;
+        _isProcessing = false;
       });
       if (!mounted) return;
       handleAuthError(e, context);
@@ -77,7 +77,7 @@ class _AuthFormState extends State<AuthForm> {
       });
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _isProccesing = false;
+        _isProcessing = false;
       });
       if (!mounted) return;
       handleAuthError(e, context);
@@ -190,7 +190,7 @@ class _AuthFormState extends State<AuthForm> {
               const SizedBox(
                 height: 8,
               ),
-              _isProccesing
+              _isProcessing
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
