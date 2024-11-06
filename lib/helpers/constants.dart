@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final textFieldBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(55),
+  borderRadius: defaultBorderRadius,
   borderSide: const BorderSide(color: Colors.transparent),
 );
+final defaultBorderRadius = BorderRadius.circular(25);

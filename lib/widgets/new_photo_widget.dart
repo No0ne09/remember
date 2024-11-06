@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/widgets/photo_modal.dart';
 
 class NewPhotoWidget extends StatefulWidget {
@@ -15,7 +16,7 @@ class NewPhotoWidget extends StatefulWidget {
 
 class _NewPhotoWidgetState extends State<NewPhotoWidget> {
   File? _chosenPhoto;
-  Future<void> _retrievePhoto() async {
+  Future<void> _showPhotoModal() async {
     await showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -37,20 +38,20 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
       children: [
         InkWell(
           onTap: () async {
-            await _retrievePhoto();
+            await _showPhotoModal();
           },
           child: Container(
             decoration: BoxDecoration(
               color: Colors.black,
               border: Border.all(),
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: defaultBorderRadius,
             ),
             height: MediaQuery.of(context).size.width,
             width: double.infinity,
             alignment: Alignment.center,
             child: _chosenPhoto != null
                 ? ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: defaultBorderRadius,
                     child: Image.file(
                       _chosenPhoto!,
                       fit: BoxFit.contain,
