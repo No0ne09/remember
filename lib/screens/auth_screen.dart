@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:remember/widgets/auth_form.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -21,8 +22,20 @@ class AuthScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: AuthForm(),
+      body: Container(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              opacity: 0.1,
+              fit: BoxFit.contain,
+              image: const Svg(
+                'assets/background.svg',
+                color: Colors.transparent,
+              )),
+        ),
+        child: const Center(
+          child: AuthForm(),
+        ),
       ),
     );
   }
