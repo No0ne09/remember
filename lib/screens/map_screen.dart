@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:remember/helpers/constants.dart';
-import 'package:remember/models/map_data.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
@@ -77,11 +76,10 @@ class _MapScreenState extends State<MapScreen> {
         ),
       ),
     );
-    _savePlace(lat, lng);
   }
 
   Future<void> _savePlace(double lat, double lng) async {
-    final test = MapData(coordinates: GeoPoint(lat, lng), address: "test");
+    Navigator.pop(context, GeoPoint(lat, lng));
   }
 
   Set<Marker> get markersList {
@@ -122,7 +120,12 @@ class _MapScreenState extends State<MapScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      if (_pickedPosition == null) {
+                        Navigator.pop(context);
+                        return;
+                      }
+                      _savePlace(_pickedPosition!.latitude,
+                          _pickedPosition!.longitude);
                     },
                     child: const Icon(Icons.save_rounded),
                   ),

@@ -16,10 +16,12 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       height: 150,
       text: "Nie podano lokalizacji",
       icon: Icons.location_off,
-      onTap: () {
-        final test = Navigator.of(context).push(MaterialPageRoute(
+      onTap: () async {
+        final location = await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => MapScreen(isSelecting: true),
         ));
+        print(location);
+        if (location == null) return;
       },
     );
   }
