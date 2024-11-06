@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/widgets/info_popup.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
@@ -32,7 +33,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
-    Location location = Location();
+    final location = Location();
 
     bool serviceEnabled;
     PermissionStatus permissionGranted;
@@ -41,6 +42,13 @@ class _MapScreenState extends State<MapScreen> {
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
+        if (!mounted) return;
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Błąd",
+              desc: "Lokalizacja w twoim telefonie musi pozostać włączona."),
+        );
         return;
       }
     }
@@ -49,6 +57,14 @@ class _MapScreenState extends State<MapScreen> {
     if (permissionGranted != PermissionStatus.granted) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
+        if (!mounted) return;
+        await showDialog(
+          context: context,
+          builder: (context) => const InfoPopup(
+              title: "Błąd",
+              desc:
+                  "Musisz zezwolić aplikacji na dostęp do twojej lokalizacji."),
+        );
         return;
       }
     }
@@ -78,8 +94,18 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Future<void> _savePlace(double lat, double lng) async {
-    Navigator.pop(context, GeoPoint(lat, lng));
+  Future<void> _savePlace() async {
+    if (_pickedPosition == null) {
+      Navigator.pop(context);
+      return;
+    }
+    Navigator.pop(
+      context,
+      GeoPoint(
+        _pickedPosition!.latitude,
+        _pickedPosition!.longitude,
+      ),
+    );
   }
 
   Set<Marker> get markersList {
@@ -119,14 +145,7 @@ class _MapScreenState extends State<MapScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_pickedPosition == null) {
-                        Navigator.pop(context);
-                        return;
-                      }
-                      _savePlace(_pickedPosition!.latitude,
-                          _pickedPosition!.longitude);
-                    },
+                    onPressed: _savePlace,
                     child: const Icon(Icons.save_rounded),
                   ),
                 ),

@@ -21,17 +21,17 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       text: "Nie podano lokalizacji",
       icon: Icons.location_off,
       onTap: () async {
-        /* final location = await Navigator.of(context).push(MaterialPageRoute(
+        final location = await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MapScreen(isSelecting: true),
         ));
-
-        if (location == null) return;*/
+        print(location);
+        /*if (location == null) return;
         final status = await checkConnection();
         if (!status) return;
         final url = Uri.parse('https://httpbin.org/ip');
         final response = await http.get(url);
         final resData = json.decode(response.body);
-        final address = resData['results'][0]['formatted_address'];
+        final address = resData['results'][0]['formatted_address'];*/
       },
     );
   }
