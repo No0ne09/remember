@@ -8,8 +8,8 @@ import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/main_button.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
-import 'package:remember/widgets/new_location_widget.dart';
-import 'package:remember/widgets/new_photo_widget.dart';
+import 'package:remember/widgets/new_memory/new_location_widget.dart';
+import 'package:remember/widgets/new_memory/new_photo_widget.dart';
 
 class NewMemory extends StatefulWidget {
   const NewMemory({super.key});

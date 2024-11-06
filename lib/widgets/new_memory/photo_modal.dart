@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:remember/widgets/exit_button.dart';
 
-import 'package:remember/widgets/photo_modal_button.dart';
+import 'package:remember/widgets/new_memory/photo_modal_button.dart';
 
 class PhotoModal extends StatelessWidget {
   const PhotoModal({

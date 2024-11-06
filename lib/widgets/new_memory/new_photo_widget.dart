@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
-import 'package:remember/widgets/new_memory_container.dart';
-import 'package:remember/widgets/photo_modal.dart';
+import 'package:remember/widgets/new_memory/new_memory_container.dart';
+import 'package:remember/widgets/new_memory/photo_modal.dart';
 
 class NewPhotoWidget extends StatefulWidget {
   const NewPhotoWidget({

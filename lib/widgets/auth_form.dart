@@ -102,10 +102,6 @@ class _AuthFormState extends State<AuthForm> {
                 onPressed: () {
                   setState(() {
                     _isLogin = !_isLogin;
-                    _emailController.clear();
-                    _usernameController.clear();
-                    _passwordController.clear();
-                    _confirmPasswordController.clear();
                   });
                 },
                 child: Text(

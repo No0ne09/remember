@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remember/widgets/new_memory_container.dart';
+import 'package:remember/widgets/new_memory/new_memory_container.dart';
 
 class NewLocationWidget extends StatefulWidget {
   const NewLocationWidget({super.key});
