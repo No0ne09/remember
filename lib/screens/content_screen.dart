@@ -6,6 +6,7 @@ import 'package:remember/helpers/providers.dart';
 import 'package:remember/screens/new_memory.dart';
 import 'package:remember/screens/map.dart';
 import 'package:remember/screens/memories_gallery.dart';
+import 'package:remember/widgets/background.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {
@@ -71,7 +72,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
           )
         ],
       ),
-      body: currentContent,
+      body: Background(child: currentContent),
     );
   }
 }

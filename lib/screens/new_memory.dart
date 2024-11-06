@@ -67,73 +67,61 @@ class _NewMemoryState extends State<NewMemory> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            image: const Svg(
-              color: Colors.black,
-              'assets/background.svg',
-            )),
-      ),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              BaseTextfield(
-                validator: basicValidator,
-                hint: "Nazwij swoje wspomnienie",
-                controller: _titleController,
-                inputAction: TextInputAction.done,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              NewPhotoWidget(
-                onChooseImage: (image) async {
-                  setState(() {
-                    _chosenImage = image;
-                  });
-                  await _checkDateTime();
-                },
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              MainButton(
-                backgroundColor: Colors.amber,
-                onPressed: () async {
-                  await _pickDateTime();
-                },
-                text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              MainButton(
-                onPressed: () {},
-                text: "Location",
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              MultilineTextfield(
-                validator: basicValidator,
-                label: "Opisz swoje wspomnienie",
-                controller: _descriptionController,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              MainButton(
-                onPressed: () {},
-                text: "Save memory",
-              ),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            BaseTextfield(
+              validator: basicValidator,
+              hint: "Nazwij swoje wspomnienie",
+              controller: _titleController,
+              inputAction: TextInputAction.done,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            NewPhotoWidget(
+              onChooseImage: (image) async {
+                setState(() {
+                  _chosenImage = image;
+                });
+                await _checkDateTime();
+              },
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            MainButton(
+              backgroundColor: Colors.amber,
+              onPressed: () async {
+                await _pickDateTime();
+              },
+              text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            MainButton(
+              onPressed: () {},
+              text: "Location",
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            MultilineTextfield(
+              validator: basicValidator,
+              label: "Opisz swoje wspomnienie",
+              controller: _descriptionController,
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            MainButton(
+              onPressed: () {},
+              text: "Save memory",
+            ),
+          ],
         ),
       ),
     );
