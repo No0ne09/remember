@@ -15,7 +15,7 @@ class Background extends StatelessWidget {
         image: DecorationImage(
             opacity: 0.1,
             fit: BoxFit.contain,
-            image: const Svg(
+            image: Svg(
               'assets/background.svg',
               color: Colors.transparent,
             )),
