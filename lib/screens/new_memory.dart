@@ -33,12 +33,7 @@ class _NewMemoryState extends State<NewMemory> {
     final tempDateTime =
         DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
 
-    if (tempDateTime == null) return;
-
-    final dateTime = getFormattedDate(tempDateTime);
-    setState(() {
-      _memoryDate = dateTime;
-    });
+    _formatDate(tempDateTime);
   }
 
   Future<void> _pickDateTime() async {
@@ -51,6 +46,10 @@ class _NewMemoryState extends State<NewMemory> {
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime.now(),
     );
+    _formatDate(tempDateTime);
+  }
+
+  void _formatDate(DateTime? tempDateTime) {
     if (tempDateTime == null) return;
     final dateTime = getFormattedDate(tempDateTime);
     setState(() {
@@ -81,23 +80,31 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            NewPhotoWidget(
-              onChooseImage: (image) async {
-                setState(() {
-                  _chosenImage = image;
-                });
-                await _checkDateTime();
-              },
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                NewPhotoWidget(
+                  onChooseImage: (image) async {
+                    setState(() {
+                      _chosenImage = image;
+                    });
+                    await _checkDateTime();
+                  },
+                ),
+                Positioned(
+                  bottom: 8,
+                  child: MainButton(
+                    backgroundColor: Colors.blue,
+                    onPressed: () async {
+                      await _pickDateTime();
+                    },
+                    text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 8,
-            ),
-            MainButton(
-              backgroundColor: Colors.amber,
-              onPressed: () async {
-                await _pickDateTime();
-              },
-              text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
             ),
             const SizedBox(
               height: 8,
