@@ -51,6 +51,8 @@ dependencies:
   flutter_svg_provider: ^1.0.7
   flutter_dotenv: ^5.2.1
   web: ^1.1.0
+  google_maps_flutter: ^2.9.0
+  google_places_flutter: ^2.0.9
 
 dev_dependencies:
   flutter_test:
