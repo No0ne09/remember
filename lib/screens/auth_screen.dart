@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:remember/widgets/auth_form.dart';
 import 'package:remember/widgets/background.dart';
 
