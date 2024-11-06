@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
+import 'package:remember/widgets/exit_button.dart';
 
 import 'package:remember/widgets/main_button.dart';
 
@@ -61,18 +62,10 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
+            const Row(
               children: [
-                const Spacer(),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const CircleAvatar(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      child: Icon(Icons.close),
-                    ))
+                Spacer(),
+                ExitButton(),
               ],
             ),
             Text(
