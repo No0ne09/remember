@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:remember/models/map_data.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
@@ -18,6 +20,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late final GoogleMapController _controller;
   bool _isGettingCurrentLocation = false;
+
   @override
   void dispose() {
     _controller.dispose();
@@ -52,7 +55,17 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       _isGettingCurrentLocation = false;
     });
-    print(locationData);
+    final lat = locationData.latitude;
+    final lng = locationData.longitude;
+    if (lat == null || lng == null) {
+      return;
+    }
+    _savePlace(lat, lng);
+  }
+
+  Future<void> _savePlace(double lat, double lng) async {
+    final test = MapData(coordinates: GeoPoint(lat, lng), address: "test");
+    print(test.coordinates.latitude);
   }
 
   @override
@@ -76,15 +89,9 @@ class _MapScreenState extends State<MapScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Icon(Icons.search_rounded),
-                  ),
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: const Icon(Icons.save_rounded),
                   ),
                 ),
@@ -105,7 +112,11 @@ class _MapScreenState extends State<MapScreen> {
               ),
               zoom: 16,
             ),
-            onTap: widget.isSelecting == false ? null : (markerPosition) {},
+            onTap: widget.isSelecting == false
+                ? null
+                : (markerPosition) {
+                    print(markerPosition);
+                  },
           ),
         ],
       ),

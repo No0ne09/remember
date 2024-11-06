@@ -52,7 +52,6 @@ dependencies:
   flutter_dotenv: ^5.2.1
   web: ^1.1.0
   google_maps_flutter: ^2.9.0
-  google_places_flutter: ^2.0.9
   location: ^7.0.1
 
 dev_dependencies:
