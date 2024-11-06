@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember/screens/map_screen.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
 
 class NewLocationWidget extends StatefulWidget {
@@ -16,7 +17,9 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       text: "Nie podano lokalizacji",
       icon: Icons.location_off,
       onTap: () {
-        return;
+        final test = Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MapScreen(isSelecting: true),
+        ));
       },
     );
   }
