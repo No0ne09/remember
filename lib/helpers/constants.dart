@@ -5,3 +5,4 @@ final textFieldBorder = OutlineInputBorder(
   borderSide: const BorderSide(color: Colors.transparent),
 );
 final defaultBorderRadius = BorderRadius.circular(25);
+const zoom = 17.0;

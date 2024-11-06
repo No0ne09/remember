@@ -2,16 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/models/map_data.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
     required this.isSelecting,
+    this.initialPosition = const LatLng(51.77689791254236, 19.489274125911784),
+    this.markers = const {},
     super.key,
   });
 
   final bool isSelecting;
-  //final LatLng initialPosition;
+  final LatLng initialPosition;
+  final Set<Marker> markers;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -20,6 +24,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late final GoogleMapController _controller;
   bool _isGettingCurrentLocation = false;
+  LatLng? _pickedPosition;
 
   @override
   void dispose() {
@@ -60,12 +65,39 @@ class _MapScreenState extends State<MapScreen> {
     if (lat == null || lng == null) {
       return;
     }
+
+    setState(() {
+      _pickedPosition = LatLng(lat, lng);
+    });
+    _controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: _pickedPosition!,
+          zoom: zoom,
+        ),
+      ),
+    );
     _savePlace(lat, lng);
   }
 
   Future<void> _savePlace(double lat, double lng) async {
     final test = MapData(coordinates: GeoPoint(lat, lng), address: "test");
-    print(test.coordinates.latitude);
+  }
+
+  Set<Marker> get markersList {
+    if (widget.isSelecting && _pickedPosition != null) {
+      return {
+        Marker(
+          markerId: const MarkerId('m1'),
+          position: _pickedPosition!,
+        ),
+      };
+    }
+
+    if (!widget.isSelecting) {
+      return widget.markers;
+    }
+    return {};
   }
 
   @override
@@ -76,7 +108,7 @@ class _MapScreenState extends State<MapScreen> {
               onPressed: _getCurrentLocation,
               backgroundColor: Colors.white,
               child: _isGettingCurrentLocation
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : const Icon(Icons.my_location_outlined),
             )
           : null,
@@ -105,17 +137,17 @@ class _MapScreenState extends State<MapScreen> {
             onMapCreated: (controller) {
               _controller = controller;
             },
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(
-                21,
-                37,
-              ),
-              zoom: 16,
+            initialCameraPosition: CameraPosition(
+              target: widget.initialPosition,
+              zoom: zoom,
             ),
+            markers: markersList,
             onTap: widget.isSelecting == false
                 ? null
                 : (markerPosition) {
-                    print(markerPosition);
+                    setState(() {
+                      _pickedPosition = markerPosition;
+                    });
                   },
           ),
         ],
