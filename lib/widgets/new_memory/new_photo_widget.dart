@@ -19,6 +19,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
   File? _chosenPhoto;
   Future<void> _showPhotoModal() async {
     await showModalBottomSheet(
+      constraints: const BoxConstraints.expand(),
       context: context,
       builder: (context) {
         return PhotoModal(
