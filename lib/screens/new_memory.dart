@@ -8,6 +8,7 @@ import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/main_button.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
+import 'package:remember/widgets/new_location_widget.dart';
 import 'package:remember/widgets/new_photo_widget.dart';
 
 class NewMemory extends StatefulWidget {
@@ -101,10 +102,7 @@ class _NewMemoryState extends State<NewMemory> {
             const SizedBox(
               height: 8,
             ),
-            MainButton(
-              onPressed: () {},
-              text: "Location",
-            ),
+            const NewLocationWidget(),
             const SizedBox(
               height: 8,
             ),

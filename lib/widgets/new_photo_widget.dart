@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/widgets/new_memory_container.dart';
 import 'package:remember/widgets/photo_modal.dart';
 
 class NewPhotoWidget extends StatefulWidget {
@@ -34,52 +35,24 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () async {
-            await _showPhotoModal();
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black,
-              border: Border.all(),
+    return NewMemoryContainer(
+      height: MediaQuery.of(context).size.width,
+      text: "Nie wybrano zdjęcia",
+      icon: Icons.camera_alt,
+      onTap: () async {
+        await _showPhotoModal();
+      },
+      child: _chosenPhoto != null
+          ? ClipRRect(
               borderRadius: defaultBorderRadius,
-            ),
-            height: MediaQuery.of(context).size.width,
-            width: double.infinity,
-            alignment: Alignment.center,
-            child: _chosenPhoto != null
-                ? ClipRRect(
-                    borderRadius: defaultBorderRadius,
-                    child: Image.file(
-                      _chosenPhoto!,
-                      fit: BoxFit.contain,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  )
-                : const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          size: 50,
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          "Nie wybrano zdjęcia",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-          ),
-        ),
-      ],
+              child: Image.file(
+                _chosenPhoto!,
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            )
+          : null,
     );
   }
 }
