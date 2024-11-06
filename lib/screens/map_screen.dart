@@ -88,9 +88,9 @@ class _MapScreenState extends State<MapScreen> {
     if (widget.isSelecting && _pickedPosition != null) {
       return {
         Marker(
-          markerId: const MarkerId('m1'),
-          position: _pickedPosition!,
-        ),
+            markerId: const MarkerId('picked_location'),
+            position: _pickedPosition!,
+            infoWindow: const InfoWindow(title: "Twoja lokalizacja")),
       };
     }
 
