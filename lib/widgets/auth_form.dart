@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
@@ -52,6 +50,7 @@ class _AuthFormState extends State<AuthForm> {
     try {
       await _firebase.signInWithEmailAndPassword(
           email: email, password: password);
+      print(_firebase.currentUser);
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
@@ -67,16 +66,9 @@ class _AuthFormState extends State<AuthForm> {
     try {
       final userData = await _firebase.createUserWithEmailAndPassword(
           email: email, password: password);
-
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(userData.user!.uid)
-          .set({
-        'username': username,
-        'email': email,
-      });
-      await savePrefs('username', username);
-      await savePrefs("email", email);
+      await userData.user!.updateDisplayName(username);
+      await _firebase.currentUser!.reload();
+      print(_firebase.currentUser);
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;

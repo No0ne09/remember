@@ -19,6 +19,7 @@ class ContentScreen extends ConsumerStatefulWidget {
 class _ContentScreenState extends ConsumerState<ContentScreen> {
   int counter = 0;
   int currentIndex = 0;
+  final _authInstance = FirebaseAuth.instance;
 
   Widget get currentContent {
     switch (currentIndex) {
@@ -65,8 +66,8 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
               ref.read(indexProvider.notifier).state = 0;
+              _authInstance.signOut();
             },
             icon: const Icon(Icons.logout),
           )
