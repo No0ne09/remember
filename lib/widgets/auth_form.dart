@@ -50,7 +50,6 @@ class _AuthFormState extends State<AuthForm> {
     try {
       await _firebase.signInWithEmailAndPassword(
           email: email, password: password);
-      print(_firebase.currentUser);
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
@@ -68,7 +67,6 @@ class _AuthFormState extends State<AuthForm> {
           email: email, password: password);
       await userData.user!.updateDisplayName(username);
       await _firebase.currentUser!.reload();
-      print(_firebase.currentUser);
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;

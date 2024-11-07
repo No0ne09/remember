@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:remember/helpers/functions.dart';
 import 'package:remember/screens/map_screen.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
-import 'package:http/http.dart' as http;
 
 class NewLocationWidget extends StatefulWidget {
   const NewLocationWidget({super.key});
