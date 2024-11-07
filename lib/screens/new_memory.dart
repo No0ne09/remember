@@ -151,6 +151,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     setState(() {
       _isSubmitting = false;
     });
+    appBarKey.currentState!.animateTo(0);
     ref.read(indexProvider.notifier).state = 0;
   }
 
