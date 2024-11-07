@@ -6,9 +6,11 @@ import 'package:exif/exif.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/models/map_data.dart';
 import 'package:remember/widgets/base_textfield.dart';
@@ -16,16 +18,15 @@ import 'package:remember/widgets/main_button.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
 import 'package:remember/widgets/new_memory/new_location_widget.dart';
 import 'package:remember/widgets/new_memory/new_photo_widget.dart';
-import 'package:uuid/uuid.dart';
 
-class NewMemory extends StatefulWidget {
+class NewMemory extends ConsumerStatefulWidget {
   const NewMemory({super.key});
 
   @override
-  State<NewMemory> createState() => _NewMemoryState();
+  ConsumerState<NewMemory> createState() => _NewMemoryState();
 }
 
-class _NewMemoryState extends State<NewMemory> {
+class _NewMemoryState extends ConsumerState<NewMemory> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -33,6 +34,7 @@ class _NewMemoryState extends State<NewMemory> {
   String? _chosenDate;
   MapData? _chosenLocation;
   final id = uuid.v4();
+  bool _isSubmitting = false;
 
   Future<void> _checkDateTime() async {
     if (_chosenImage == null) return;
@@ -108,11 +110,19 @@ class _NewMemoryState extends State<NewMemory> {
       await showInfoPopup(context, "Brak połączenia z internetem.");
       return;
     }
+    setState(() {
+      _isSubmitting = true;
+    });
     final title = _titleController.text;
     final desc = _descriptionController.text;
     final user = FirebaseAuth.instance.currentUser!;
     final imageUrl = await _uploadImage(user);
-    if (imageUrl == null) return;
+    if (imageUrl == null) {
+      setState(() {
+        _isSubmitting = false;
+      });
+      return;
+    }
 
     await FirebaseFirestore.instance
         .collection('memories by user')
@@ -129,7 +139,10 @@ class _NewMemoryState extends State<NewMemory> {
       "Email": user.email,
       "imageUrl": imageUrl,
     });
-    print("test");
+    setState(() {
+      _isSubmitting = false;
+    });
+    ref.read(indexProvider.notifier).state = 0;
   }
 
   @override
@@ -205,10 +218,14 @@ class _NewMemoryState extends State<NewMemory> {
               const SizedBox(
                 height: 8,
               ),
-              MainButton(
-                onPressed: _submitMemory,
-                text: "Save memory",
-              ),
+              _isSubmitting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : MainButton(
+                      onPressed: _submitMemory,
+                      text: "Save memory",
+                    ),
             ],
           ),
         ),
