@@ -75,6 +75,8 @@ class _AuthFormState extends State<AuthForm> {
         'username': username,
         'email': email,
       });
+      await savePrefs('username', username);
+      await savePrefs("email", email);
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
