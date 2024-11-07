@@ -6,13 +6,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/models/map_data.dart';
 import 'package:remember/screens/map_screen.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
 import 'package:http/http.dart' as http;
 
 class NewLocationWidget extends StatefulWidget {
-  const NewLocationWidget({super.key});
+  const NewLocationWidget({required this.onPickedLocation, super.key});
 
+  final void Function(MapData locationInfo) onPickedLocation;
   @override
   State<NewLocationWidget> createState() => _NewLocationWidgetState();
 }
@@ -20,27 +22,29 @@ class NewLocationWidget extends StatefulWidget {
 class _NewLocationWidgetState extends State<NewLocationWidget> {
   String? _imageUrl;
   Future<void> _getLocation() async {
-    final GeoPoint? location =
+    final GeoPoint? coordinates =
         await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const MapScreen(isSelecting: true),
     ));
-    if (location == null) return;
-    final address = await _getAddress(location);
+    if (coordinates == null) return;
+    final address = await _getAddress(coordinates);
     if (address == null) return;
     setState(() {
-      _imageUrl = getStaticMap(location);
+      _imageUrl = getStaticMap(coordinates);
     });
+    widget
+        .onPickedLocation(MapData(coordinates: coordinates, address: address));
   }
 
-  Future<String?> _getAddress(GeoPoint location) async {
+  Future<String?> _getAddress(GeoPoint coordinates) async {
     final status = await checkConnection();
     if (!status) {
       if (!mounted) return null;
       await showInfoPopup(context, "Brak połączenia z internetem.");
       return null;
     }
-    final lat = location.latitude;
-    final lng = location.longitude;
+    final lat = coordinates.latitude;
+    final lng = coordinates.longitude;
 
     try {
       final url = Uri.parse(

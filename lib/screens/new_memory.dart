@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
+import 'package:remember/models/map_data.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/main_button.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
@@ -19,10 +20,12 @@ class NewMemory extends StatefulWidget {
 }
 
 class _NewMemoryState extends State<NewMemory> {
+  final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   File? _chosenImage;
-  String? _memoryDate;
+  String? _chosenDate;
+  MapData? _chosenLocation;
 
   Future<void> _checkDateTime() async {
     if (_chosenImage == null) return;
@@ -39,9 +42,9 @@ class _NewMemoryState extends State<NewMemory> {
   Future<void> _pickDateTime() async {
     final tempDateTime = await showDatePicker(
       locale: const Locale("pl"),
-      initialDate: _memoryDate == null
+      initialDate: _chosenDate == null
           ? DateTime.now()
-          : DateTime.tryParse(_memoryDate!),
+          : DateTime.tryParse(_chosenDate!),
       context: context,
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime.now(),
@@ -53,8 +56,17 @@ class _NewMemoryState extends State<NewMemory> {
     if (tempDateTime == null) return;
     final dateTime = getFormattedDate(tempDateTime);
     setState(() {
-      _memoryDate = dateTime;
+      _chosenDate = dateTime;
     });
+  }
+
+  Future<void> _submitMemory() async {
+    if (_formKey.currentState!.validate() &&
+        _chosenImage != null &&
+        _chosenDate != null &&
+        _chosenLocation != null) {}
+    final title = _titleController.text;
+    final desc = _titleController.text;
   }
 
   @override
@@ -69,63 +81,73 @@ class _NewMemoryState extends State<NewMemory> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            BaseTextfield(
-              validator: basicValidator,
-              hint: "Nazwij swoje wspomnienie",
-              controller: _titleController,
-              inputAction: TextInputAction.done,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                NewPhotoWidget(
-                  onChooseImage: (image) async {
-                    setState(() {
-                      _chosenImage = image;
-                    });
-                    await _checkDateTime();
-                  },
-                ),
-                Positioned(
-                  bottom: 8,
-                  child: MainButton(
-                    backgroundColor: Colors.blue,
-                    onPressed: () async {
-                      await _pickDateTime();
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              BaseTextfield(
+                validator: basicValidator,
+                hint: "Nazwij swoje wspomnienie",
+                controller: _titleController,
+                inputAction: TextInputAction.done,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  NewPhotoWidget(
+                    onChooseImage: (image) async {
+                      setState(() {
+                        _chosenImage = image;
+                      });
+                      await _checkDateTime();
                     },
-                    text: _memoryDate == null ? "Data nieznana" : _memoryDate!,
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            const NewLocationWidget(),
-            const SizedBox(
-              height: 8,
-            ),
-            MultilineTextfield(
-              validator: basicValidator,
-              label: "Opisz swoje wspomnienie",
-              controller: _descriptionController,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            MainButton(
-              onPressed: () {},
-              text: "Save memory",
-            ),
-          ],
+                  Positioned(
+                    bottom: 8,
+                    child: MainButton(
+                      backgroundColor: Colors.blue,
+                      onPressed: () async {
+                        await _pickDateTime();
+                      },
+                      text:
+                          _chosenDate == null ? "Data nieznana" : _chosenDate!,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              NewLocationWidget(
+                onPickedLocation: (locationInfo) {
+                  setState(() {
+                    _chosenLocation = locationInfo;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              MultilineTextfield(
+                validator: basicValidator,
+                label: "Opisz swoje wspomnienie",
+                controller: _descriptionController,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              MainButton(
+                onPressed: () {},
+                text: "Save memory",
+              ),
+            ],
+          ),
         ),
       ),
     );
