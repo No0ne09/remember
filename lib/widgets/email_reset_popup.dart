@@ -42,7 +42,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
           _isLoading = false;
         });
         if (!mounted) return;
-        handleAuthError(e, context);
+        handleFireBaseError(e.code, context);
         return;
       }
       if (!mounted) return;

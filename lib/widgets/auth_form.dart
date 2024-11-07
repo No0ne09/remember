@@ -57,7 +57,7 @@ class _AuthFormState extends State<AuthForm> {
         _isProcessing = false;
       });
       if (!mounted) return;
-      handleAuthError(e, context);
+      handleFireBaseError(e.code, context);
       return;
     }
   }
@@ -80,7 +80,7 @@ class _AuthFormState extends State<AuthForm> {
         _isProcessing = false;
       });
       if (!mounted) return;
-      handleAuthError(e, context);
+      handleFireBaseError(e.code, context);
       return;
     }
   }

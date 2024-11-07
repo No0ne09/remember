@@ -30,10 +30,9 @@ String getFormattedDate(DateTime date) {
   return DateFormat("yyyy-MM-dd").format(date);
 }
 
-Future<void> handleAuthError(
-    FirebaseAuthException e, BuildContext context) async {
+Future<void> handleFireBaseError(String code, BuildContext context) async {
   String message;
-  switch (e.code) {
+  switch (code) {
     case 'invalid-credential':
       message = "Upewnij się, że dane są poprawne.";
     case 'network-request-failed':
@@ -42,8 +41,11 @@ Future<void> handleAuthError(
       message = "Istnieje już konto powiązane z tym adresem email.";
     case 'invalid-email':
       message = "Upewnij się, podany adres email jest poprawny.";
+    case 'unavailable':
+      message =
+          "Nasze usługi są chwilowo niedostępne spróbuj ponownie później.";
     default:
-      message = "Wystąpił nieznany błąd.";
+      message = "Wystąpił nieznany błąd. Spróbuj ponownie później.";
   }
   await showDialog(
     context: context,
