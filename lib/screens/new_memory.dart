@@ -32,6 +32,7 @@ class _NewMemoryState extends State<NewMemory> {
   File? _chosenImage;
   String? _chosenDate;
   MapData? _chosenLocation;
+  final id = uuid.v4();
 
   Future<void> _checkDateTime() async {
     if (_chosenImage == null) return;
@@ -66,29 +67,33 @@ class _NewMemoryState extends State<NewMemory> {
     });
   }
 
-  Future<void> _submitMemory() async {
+  Future<String?> _uploadImage(User user) async {
     final storageRef = FirebaseStorage.instance
         .ref()
         .child('user_memories')
-        .child("test")
-        .child('tes.jpg');
+        .child(user.uid)
+        .child('$id.jpg');
     try {
-      final test = storageRef.putFile(_chosenImage!);
-      await test.timeout(Duration(seconds: 1), onTimeout: () async {
-        await test.cancel();
-        throw TimeoutException('Upload timed out');
-      });
+      final uploadTask = storageRef.putFile(_chosenImage!);
+      await uploadTask.timeout(
+        const Duration(seconds: 30),
+        onTimeout: () async {
+          await uploadTask.cancel();
+          throw TimeoutException(
+            'Nie udało się wysłać zdjęcia. Spróbuj ponownie później.',
+          );
+        },
+      );
+      final url = await storageRef.getDownloadURL();
+      return url;
     } on TimeoutException catch (e) {
-      if (!mounted) return;
+      if (!mounted) return null;
       showInfoPopup(context, e.message!);
-      return;
+      return null;
     }
+  }
 
-    final imageUrl = await storageRef.getDownloadURL();
-    if (imageUrl == '') return;
-    print(imageUrl);
-/*
-    await storageRef.putFile(_chosenImage!);
+  Future<void> _submitMemory() async {
     if (!_formKey.currentState!.validate() ||
         _chosenImage == null ||
         _chosenDate == null ||
@@ -106,16 +111,8 @@ class _NewMemoryState extends State<NewMemory> {
     final title = _titleController.text;
     final desc = _descriptionController.text;
     final user = FirebaseAuth.instance.currentUser!;
-    final id = uuid.v4();
-
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('user_memories')
-        .child(user.uid)
-        .child('$id.jpg');
-
-    await storageRef.putFile(_chosenImage!);
-    final imageUrl = await storageRef.getDownloadURL();
+    final imageUrl = await _uploadImage(user);
+    if (imageUrl == null) return;
 
     await FirebaseFirestore.instance
         .collection('memories by user')
@@ -132,7 +129,7 @@ class _NewMemoryState extends State<NewMemory> {
       "Email": user.email,
       "imageUrl": imageUrl,
     });
-    print("test");*/
+    print("test");
   }
 
   @override
