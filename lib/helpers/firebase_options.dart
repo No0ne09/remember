@@ -50,20 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB5wYDKNO0RIEKLF3z75-Z0zteONz-pN00',
-    appId: '1:920328765849:web:6ff00a59060b300e21d308',
-    messagingSenderId: '920328765849',
-    projectId: 'remember-df301',
-    authDomain: 'remember-df301.firebaseapp.com',
-    storageBucket: 'remember-df301.firebasestorage.app',
-    measurementId: 'G-K4J967WWZ1',
+    apiKey: 'AIzaSyCtbDYZ5_g0Q_Qfuc7OSPZTWMJLkhTFJbg',
+    appId: '1:941616843593:web:7fc9592580c6dea2e56898',
+    messagingSenderId: '941616843593',
+    projectId: 'rememberofficial-ac48f',
+    authDomain: 'rememberofficial-ac48f.firebaseapp.com',
+    storageBucket: 'rememberofficial-ac48f.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD3FQhGrxvo5sLtxC5Pn6k4oevz4Imhnxc',
-    appId: '1:920328765849:android:330f301fb3f3218e21d308',
-    messagingSenderId: '920328765849',
-    projectId: 'remember-df301',
-    storageBucket: 'remember-df301.firebasestorage.app',
+    apiKey: 'AIzaSyDiTSC5vqlRXMkind4OMADj063nC9JEoC8',
+    appId: '1:941616843593:android:6c5e4beaa8e67635e56898',
+    messagingSenderId: '941616843593',
+    projectId: 'rememberofficial-ac48f',
+    storageBucket: 'rememberofficial-ac48f.firebasestorage.app',
   );
 }
