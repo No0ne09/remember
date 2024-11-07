@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,6 +67,28 @@ class _NewMemoryState extends State<NewMemory> {
   }
 
   Future<void> _submitMemory() async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('user_memories')
+        .child("test")
+        .child('tes.jpg');
+    try {
+      final test = storageRef.putFile(_chosenImage!);
+      await test.timeout(Duration(seconds: 1), onTimeout: () async {
+        await test.cancel();
+        throw TimeoutException('Upload timed out');
+      });
+    } on TimeoutException catch (e) {
+      if (!mounted) return;
+      showInfoPopup(context, e.message!);
+      return;
+    }
+
+    final imageUrl = await storageRef.getDownloadURL();
+    if (imageUrl == '') return;
+    print(imageUrl);
+/*
+    await storageRef.putFile(_chosenImage!);
     if (!_formKey.currentState!.validate() ||
         _chosenImage == null ||
         _chosenDate == null ||
@@ -84,6 +107,7 @@ class _NewMemoryState extends State<NewMemory> {
     final desc = _descriptionController.text;
     final user = FirebaseAuth.instance.currentUser!;
     final id = uuid.v4();
+
     final storageRef = FirebaseStorage.instance
         .ref()
         .child('user_memories')
@@ -108,7 +132,7 @@ class _NewMemoryState extends State<NewMemory> {
       "Email": user.email,
       "imageUrl": imageUrl,
     });
-    print("test");
+    print("test");*/
   }
 
   @override
