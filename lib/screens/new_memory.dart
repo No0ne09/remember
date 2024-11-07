@@ -234,7 +234,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
                     )
                   : MainButton(
                       onPressed: _submitMemory,
-                      text: "Save memory",
+                      text: "Zapisz wspomnienie",
                     ),
             ],
           ),
