@@ -1,7 +1,11 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exif/exif.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/constants.dart';
 
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
@@ -11,6 +15,7 @@ import 'package:remember/widgets/main_button.dart';
 import 'package:remember/widgets/multiline_textfield.dart';
 import 'package:remember/widgets/new_memory/new_location_widget.dart';
 import 'package:remember/widgets/new_memory/new_photo_widget.dart';
+import 'package:uuid/uuid.dart';
 
 class NewMemory extends StatefulWidget {
   const NewMemory({super.key});
@@ -61,12 +66,49 @@ class _NewMemoryState extends State<NewMemory> {
   }
 
   Future<void> _submitMemory() async {
-    if (_formKey.currentState!.validate() &&
-        _chosenImage != null &&
-        _chosenDate != null &&
-        _chosenLocation != null) {}
+    if (!_formKey.currentState!.validate() ||
+        _chosenImage == null ||
+        _chosenDate == null ||
+        _chosenLocation == null) {
+      await showInfoPopup(
+          context, "Upewnij się, że uzupełniłeś wszystkie pola.");
+      return;
+    }
+    final status = await checkConnection();
+    if (!status) {
+      if (!mounted) return;
+      await showInfoPopup(context, "Brak połączenia z internetem.");
+      return;
+    }
     final title = _titleController.text;
-    final desc = _titleController.text;
+    final desc = _descriptionController.text;
+    final user = FirebaseAuth.instance.currentUser!;
+    final id = uuid.v4();
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('user_memories')
+        .child(user.uid)
+        .child('$id.jpg');
+
+    await storageRef.putFile(_chosenImage!);
+    final imageUrl = await storageRef.getDownloadURL();
+
+    await FirebaseFirestore.instance
+        .collection('memories by user')
+        .doc(user.uid)
+        .collection("memories")
+        .doc(id)
+        .set({
+      "geopoint": _chosenLocation!.coordinates,
+      "address": _chosenLocation!.address,
+      "title": title,
+      "description": desc,
+      "dateTime": _chosenDate,
+      "username": user.displayName,
+      "Email": user.email,
+      "imageUrl": imageUrl,
+    });
+    print("test");
   }
 
   @override
@@ -143,7 +185,7 @@ class _NewMemoryState extends State<NewMemory> {
                 height: 8,
               ),
               MainButton(
-                onPressed: () {},
+                onPressed: _submitMemory,
                 text: "Save memory",
               ),
             ],
