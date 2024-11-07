@@ -21,6 +21,7 @@ class NewMemoryContainer extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: defaultBorderRadius,

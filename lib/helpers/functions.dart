@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/widgets/info_popup.dart';
 
 void showToast(String text) {
@@ -45,8 +48,22 @@ Future<void> handleFireBaseError(String code, BuildContext context) async {
     default:
       message = "Wystąpił nieznany błąd. Spróbuj ponownie później.";
   }
+  await showInfoPopup(
+    context,
+    message,
+  );
+}
+
+Future<void> showInfoPopup(BuildContext context, String desc,
+    {String title = "Błąd"}) async {
   await showDialog(
     context: context,
-    builder: (context) => InfoPopup(title: "Błąd", desc: message),
+    builder: (context) => InfoPopup(title: title, desc: desc),
   );
+}
+
+String getStaticMap(GeoPoint location) {
+  final lat = location.latitude;
+  final lng = location.longitude;
+  return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng=&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$lng&key=$apiKey';
 }

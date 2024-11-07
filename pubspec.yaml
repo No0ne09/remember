@@ -54,6 +54,7 @@ dependencies:
   google_maps_flutter: ^2.9.0
   location: ^7.0.1
   http: ^1.2.2
+  cached_network_image: ^3.4.1
  
 
 dev_dependencies:

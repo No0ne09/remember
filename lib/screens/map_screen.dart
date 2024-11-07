@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:remember/helpers/constants.dart';
-import 'package:remember/widgets/info_popup.dart';
+import 'package:remember/helpers/functions.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
@@ -43,12 +43,9 @@ class _MapScreenState extends State<MapScreen> {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
         if (!mounted) return;
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Błąd",
-              desc: "Lokalizacja w twoim telefonie musi pozostać włączona."),
-        );
+        await showInfoPopup(
+            context, "Lokalizacja w twoim telefonie musi pozostać włączona.");
+
         return;
       }
     }
@@ -58,13 +55,9 @@ class _MapScreenState extends State<MapScreen> {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         if (!mounted) return;
-        await showDialog(
-          context: context,
-          builder: (context) => const InfoPopup(
-              title: "Błąd",
-              desc:
-                  "Musisz zezwolić aplikacji na dostęp do twojej lokalizacji."),
-        );
+        await showInfoPopup(context,
+            "Musisz zezwolić aplikacji na dostęp do twojej lokalizacji.");
+
         return;
       }
     }
