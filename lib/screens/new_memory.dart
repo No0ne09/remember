@@ -123,22 +123,31 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       });
       return;
     }
+    try {
+      await FirebaseFirestore.instance
+          .collection('memories by user')
+          .doc(user.uid)
+          .collection("memories")
+          .doc(id)
+          .set({
+        "geopoint": _chosenLocation!.coordinates,
+        "address": _chosenLocation!.address,
+        "title": title,
+        "description": desc,
+        "dateTime": _chosenDate,
+        "username": user.displayName,
+        "Email": user.email,
+        "imageUrl": imageUrl,
+      });
+    } on FirebaseException catch (e) {
+      if (!mounted) return;
+      handleFireBaseError(e.code, context);
+      setState(() {
+        _isSubmitting = false;
+      });
+      return;
+    }
 
-    await FirebaseFirestore.instance
-        .collection('memories by user')
-        .doc(user.uid)
-        .collection("memories")
-        .doc(id)
-        .set({
-      "geopoint": _chosenLocation!.coordinates,
-      "address": _chosenLocation!.address,
-      "title": title,
-      "description": desc,
-      "dateTime": _chosenDate,
-      "username": user.displayName,
-      "Email": user.email,
-      "imageUrl": imageUrl,
-    });
     setState(() {
       _isSubmitting = false;
     });
