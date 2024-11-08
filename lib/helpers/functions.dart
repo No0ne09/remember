@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/widgets/popups/info_popup.dart';
 
@@ -44,6 +45,8 @@ Future<void> handleFireBaseError(String code, BuildContext context) async {
     case 'unavailable':
       message =
           "Nasze usługi są chwilowo niedostępne spróbuj ponownie później.";
+    case 'canceled':
+      return;
     default:
       message = "Wystąpił nieznany błąd. Spróbuj ponownie później.";
   }
@@ -65,4 +68,9 @@ String getStaticMap(GeoPoint location) {
   final lat = location.latitude;
   final lng = location.longitude;
   return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng=&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$lng&key=$apiKey';
+}
+
+Future<String> getAppVersion() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  return packageInfo.version;
 }

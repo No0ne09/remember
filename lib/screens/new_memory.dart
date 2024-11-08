@@ -99,6 +99,10 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       if (!mounted) return null;
       showInfoPopup(context, e.message!);
       return null;
+    } on FirebaseException catch (e) {
+      if (!mounted) return null;
+      handleFireBaseError(e.code, context);
+      return null;
     }
   }
 
