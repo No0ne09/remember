@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:remember/widgets/memories_gallery/memory_card.dart';
 
 class MemoriesList extends StatefulWidget {
   const MemoriesList({super.key});
@@ -41,8 +43,8 @@ class _MemoriesListState extends State<MemoriesList> {
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
                 childCount: memories.length,
-                (context, index) => Text(
-                  memories[index].data().toString(),
+                (context, index) => MemoryCard(
+                  data: memories[index].data(),
                 ),
               ),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -52,11 +54,6 @@ class _MemoriesListState extends State<MemoriesList> {
               ),
             ),
           ],
-        );
-        return ListView.builder(
-          itemCount: memories.length,
-          itemBuilder: (context, index) =>
-              Text(memories[index].data().toString()),
         );
       },
     );
