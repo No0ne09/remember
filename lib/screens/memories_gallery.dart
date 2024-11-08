@@ -1,14 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/providers.dart';
 import 'package:remember/widgets/memories_gallery/memory_card.dart';
 
-class MemoriesGallery extends StatelessWidget {
+class MemoriesGallery extends ConsumerWidget {
   const MemoriesGallery({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final user = FirebaseAuth.instance.currentUser!;
+    final descending = ref.watch(memoryOrderProvider);
+    final overlay = ref.watch(memoryOrderProvider);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: StreamBuilder(
@@ -16,6 +21,7 @@ class MemoriesGallery extends StatelessWidget {
             .collection('memories_by_user')
             .doc(user.uid)
             .collection("memories")
+            .orderBy('dateTime', descending: descending)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -44,7 +50,7 @@ class MemoriesGallery extends StatelessWidget {
                   ),
                 ),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 400,
+                    maxCrossAxisExtent: overlay ? 500 : 300,
                     crossAxisSpacing: 4.0,
                     mainAxisSpacing: 4.0,
                     childAspectRatio: 3 / 3),

@@ -78,6 +78,26 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                 child: CustomAppBar(),
               )
             : null,
+        actions: ref.read(indexProvider) == 0
+            ? [
+                IconButton(
+                  onPressed: () {
+                    ref.read(memoryOrderProvider.notifier).update(
+                          (state) => !state,
+                        );
+                  },
+                  icon: const Icon(Icons.view_comfortable),
+                ),
+                IconButton(
+                  onPressed: () {
+                    ref.read(memoryOverlayProvider.notifier).update(
+                          (state) => !state,
+                        );
+                  },
+                  icon: const Icon(Icons.sort_outlined),
+                ),
+              ]
+            : [],
       ),
       body: Background(child: currentContent),
     );
