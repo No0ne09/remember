@@ -33,7 +33,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   File? _chosenImage;
   String? _chosenDate;
   MapData? _chosenLocation;
-  final id = uuid.v4();
+
   bool _isSubmitting = false;
 
   Future<void> _checkDateTime() async {
@@ -69,7 +69,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     });
   }
 
-  Future<String?> _uploadImage(User user) async {
+  Future<String?> _uploadImage(User user, String id) async {
     final storageRef = FirebaseStorage.instance
         .ref()
         .child('user_memories')
@@ -116,7 +116,8 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     final title = _titleController.text;
     final desc = _descriptionController.text;
     final user = FirebaseAuth.instance.currentUser!;
-    final imageUrl = await _uploadImage(user);
+    final id = uuid.v4();
+    final imageUrl = await _uploadImage(user, id);
     if (imageUrl == null) {
       setState(() {
         _isSubmitting = false;
