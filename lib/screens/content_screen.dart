@@ -7,7 +7,7 @@ import 'package:remember/screens/map.dart';
 import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/background.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
-import 'package:remember/widgets/user_drawer.dart';
+import 'package:remember/widgets/user_drawer/user_drawer.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {
   const ContentScreen({super.key});
@@ -51,7 +51,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     currentIndex = ref.watch(indexProvider);
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
-      drawer: UserDrawer(),
+      drawer: const UserDrawer(),
       appBar: AppBar(
         forceMaterialTransparency: true,
         centerTitle: true,

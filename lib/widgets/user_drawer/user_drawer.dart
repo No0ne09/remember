@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
+import 'package:remember/widgets/user_drawer/drawer_option.dart';
 
 class UserDrawer extends ConsumerStatefulWidget {
   const UserDrawer({super.key});
@@ -66,18 +67,18 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                   ],
                 ),
               ),
-              ListTile(
-                onTap: () async {},
-                title: const Text("Zresetuj hasło"),
-                leading: const Icon(Icons.password),
+              DrawerOption(
+                onTap: () {},
+                text: "Zresetuj hasło",
+                icon: Icons.password,
               ),
-              ListTile(
+              DrawerOption(
                 onTap: () {
                   ref.read(indexProvider.notifier).state = 0;
                   _authInstance.signOut();
                 },
-                leading: const Icon(Icons.exit_to_app_rounded),
-                title: const Text("Wyloguj się"),
+                text: "Wyloguj się",
+                icon: Icons.exit_to_app_rounded,
               ),
               const Spacer(),
               Text(
