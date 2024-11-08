@@ -40,7 +40,7 @@ class MemoryCard extends StatelessWidget {
                 ),
               ),
             ),
-            imageUrl: data["imageUrl"],
+            imageUrl: 'www.www',
             fit: BoxFit.cover,
           ),
           Positioned(
