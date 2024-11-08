@@ -70,26 +70,16 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
               ),
               DrawerOption(
                 onTap: () async {
-                  try {
-                    final newPassword = await showDialog(
-                      context: context,
-                      builder: (context) => const InAppResetPopup(),
-                    );
-                    // await _authInstance.currentUser!.updatePassword("tsettt");
-                  } on FirebaseAuthException catch (e) {
-                    if (!context.mounted) return;
-                    handleFireBaseError(e.code, context);
-                    return;
-                  }
+                  await showDialog(
+                    context: context,
+                    builder: (context) => const InAppResetPopup(),
+                  );
                 },
                 text: "Zresetuj hasło",
                 icon: Icons.password,
               ),
               DrawerOption(
-                onTap: () {
-                  ref.read(indexProvider.notifier).state = 0;
-                  _authInstance.signOut();
-                },
+                onTap: () {},
                 text: "Wyloguj się",
                 icon: Icons.exit_to_app_rounded,
               ),

@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/buttons/exit_button.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
@@ -12,14 +15,57 @@ class InAppResetPopup extends StatefulWidget {
 }
 
 class _InAppResetPopupState extends State<InAppResetPopup> {
+  final _currentPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final _authInstance = FirebaseAuth.instance;
+  bool _isResetting = false;
   @override
   void dispose() {
+    _currentPasswordController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void _resetPassword() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isResetting = true;
+      });
+      final oldPassword = _currentPasswordController.text;
+      final user = _authInstance.currentUser!;
+      try {
+        await _authInstance.currentUser!.reauthenticateWithCredential(
+            EmailAuthProvider.credential(
+                email: user.email!, password: oldPassword));
+      } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
+        handleFireBaseError(e.code, context);
+        setState(() {
+          _isResetting = false;
+        });
+        return;
+      }
+      final newPassword = _passwordController.text;
+      try {
+        await _authInstance.currentUser!.updatePassword(newPassword);
+      } on FirebaseException catch (e) {
+        if (!mounted) return;
+        handleFireBaseError(e.code, context);
+        setState(() {
+          _isResetting = false;
+        });
+        return;
+      }
+      if (!mounted) return;
+      Navigator.pop(context);
+      Navigator.pop(context);
+      showToast(
+          "Hasło zostało zmienione. Zaloguj się poniownie,aby kontynuować");
+      _authInstance.signOut();
+    }
   }
 
   @override
@@ -49,6 +95,13 @@ class _InAppResetPopupState extends State<InAppResetPopup> {
                 ),
                 BaseTextfield(
                   validator:
+                      registerPasswordValidator(_currentPasswordController),
+                  hint: "Aktualne hasło",
+                  isPassword: true,
+                  controller: _currentPasswordController,
+                ),
+                BaseTextfield(
+                  validator:
                       registerPasswordValidator(_confirmPasswordController),
                   hint: "Nowe hasło",
                   isPassword: true,
@@ -66,7 +119,10 @@ class _InAppResetPopupState extends State<InAppResetPopup> {
                 const SizedBox(
                   height: 8,
                 ),
-                MainButton(text: "Zresetuj hasło", onPressed: () {})
+                MainButton(
+                  text: "Zresetuj hasło",
+                  onPressed: _resetPassword,
+                )
               ],
             ),
           ),
