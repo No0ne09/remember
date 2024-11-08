@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/widgets/custom_cached_image.dart';
 
 class MemoryCard extends StatelessWidget {
   const MemoryCard({required this.data, super.key});
@@ -16,33 +16,7 @@ class MemoryCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CachedNetworkImage(
-            placeholder: (context, url) => const Center(
-              child: CircularProgressIndicator(),
-            ),
-            errorWidget: (context, url, error) => const Center(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      size: 50,
-                      Icons.error,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      "Nie udało się pobrać zdjęcia",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            imageUrl: 'www.www',
-            fit: BoxFit.cover,
-          ),
+          CustomCachedImage(imageUrl: data['imageUrl']),
           Positioned(
             bottom: 0,
             left: 0,
