@@ -82,7 +82,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
             ? [
                 IconButton(
                   onPressed: () {
-                    ref.read(memoryOrderProvider.notifier).update(
+                    ref.read(memoryOverlayProvider.notifier).update(
                           (state) => !state,
                         );
                   },
@@ -90,7 +90,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                 ),
                 IconButton(
                   onPressed: () {
-                    ref.read(memoryOverlayProvider.notifier).update(
+                    ref.read(memoryOrderProvider.notifier).update(
                           (state) => !state,
                         );
                   },

@@ -12,7 +12,7 @@ class MemoriesGallery extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = FirebaseAuth.instance.currentUser!;
     final descending = ref.watch(memoryOrderProvider);
-    final overlay = ref.watch(memoryOrderProvider);
+    final overlay = ref.watch(memoryOverlayProvider);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -50,10 +50,10 @@ class MemoriesGallery extends ConsumerWidget {
                   ),
                 ),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: overlay ? 500 : 300,
-                    crossAxisSpacing: 4.0,
-                    mainAxisSpacing: 4.0,
-                    childAspectRatio: 3 / 3),
+                  maxCrossAxisExtent: overlay ? 500 : 300,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                ),
               ),
             ],
           );

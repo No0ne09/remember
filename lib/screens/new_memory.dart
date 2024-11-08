@@ -144,8 +144,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         "description": desc,
         "dateTime": _chosenDate,
         "username": user.displayName,
-        "Email": user.email,
+        "email": user.email,
         "imageUrl": imageUrl,
+        "isFavourite": false,
       });
     } on FirebaseException catch (e) {
       if (!mounted) return;
