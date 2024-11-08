@@ -9,47 +9,50 @@ class MemoriesGallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('memories_by_user')
-          .doc(user.uid)
-          .collection("memories")
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (snapshot.hasError) {
-          return const Center(
-            child: Text("Wystąpił błąd."),
-          );
-        }
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const Center(
-            child: Text("Brak wspomnień"),
-          );
-        }
-        final memories = snapshot.data!.docs;
-        return CustomScrollView(
-          slivers: [
-            SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                childCount: memories.length,
-                (context, index) => MemoryCard(
-                  data: memories[index].data(),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('memories_by_user')
+            .doc(user.uid)
+            .collection("memories")
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text("Wystąpił błąd."),
+            );
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text("Brak wspomnień"),
+            );
+          }
+          final memories = snapshot.data!.docs;
+          return CustomScrollView(
+            slivers: [
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: memories.length,
+                  (context, index) => MemoryCard(
+                    data: memories[index].data(),
+                  ),
                 ),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 400,
+                    crossAxisSpacing: 4.0,
+                    mainAxisSpacing: 4.0,
+                    childAspectRatio: 3 / 3),
               ),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 500.0,
-                crossAxisSpacing: 5.0,
-                mainAxisSpacing: 5.0,
-              ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }
