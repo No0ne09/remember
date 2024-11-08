@@ -41,7 +41,14 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     final exif = await readExifFromFile(_chosenImage!);
     final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
-    if (exifDateTime == null) return;
+    if (exifDateTime == null) {
+      if (!mounted) return;
+      await showInfoPopup(context,
+          "Nie udało się odczytać daty ze zdjęcia. Musisz wybrać ją ręcznie.",
+          title: "Uwaga");
+      return;
+    }
+
     final tempDateTime =
         DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
 
