@@ -36,6 +36,23 @@ class _MemoriesListState extends State<MemoriesList> {
           );
         }
         final memories = snapshot.data!.docs;
+        return CustomScrollView(
+          slivers: [
+            SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                childCount: memories.length,
+                (context, index) => Text(
+                  memories[index].data().toString(),
+                ),
+              ),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 500.0,
+                crossAxisSpacing: 5.0,
+                mainAxisSpacing: 5.0,
+              ),
+            ),
+          ],
+        );
         return ListView.builder(
           itemCount: memories.length,
           itemBuilder: (context, index) =>
