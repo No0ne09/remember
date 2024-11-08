@@ -47,7 +47,18 @@ class MemoryCard extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Center(child: Text(data["title"])),
+            child: Container(
+              color: Colors.black.withOpacity(0.5),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                child: Text(
+                  data["title"],
+                  style: const TextStyle(color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
           ),
         ],
       ),
