@@ -53,6 +53,21 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
 
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
+      drawer: Drawer(
+        child: SafeArea(
+          child: Column(
+            children: [
+              IconButton(
+                onPressed: () {
+                  ref.read(indexProvider.notifier).state = 0;
+                  _authInstance.signOut();
+                },
+                icon: const Icon(Icons.account_circle_rounded),
+              )
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         forceMaterialTransparency: true,
         centerTitle: true,
@@ -63,15 +78,26 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                 child: CustomAppBar(),
               )
             : null,
-        actions: [
-          IconButton(
-            onPressed: () {
-              ref.read(indexProvider.notifier).state = 0;
-              _authInstance.signOut();
-            },
-            icon: const Icon(Icons.logout),
-          )
-        ],
+        actions: ref.read(indexProvider) == 0
+            ? [
+                IconButton(
+                  onPressed: () {
+                    ref.read(memoryOverlayProvider.notifier).update(
+                          (state) => !state,
+                        );
+                  },
+                  icon: const Icon(Icons.view_comfortable),
+                ),
+                IconButton(
+                  onPressed: () {
+                    ref.read(memoryOrderProvider.notifier).update(
+                          (state) => !state,
+                        );
+                  },
+                  icon: const Icon(Icons.sort_outlined),
+                ),
+              ]
+            : [],
       ),
       body: Background(child: currentContent),
     );

@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
-import 'package:remember/widgets/base_textfield.dart';
-import 'package:remember/widgets/email_reset_popup.dart';
-import 'package:remember/widgets/main_button.dart';
+import 'package:remember/widgets/textfields/base_textfield.dart';
+import 'package:remember/widgets/popups/email_reset_popup.dart';
+import 'package:remember/widgets/buttons/main_button.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});

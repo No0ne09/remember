@@ -13,9 +13,9 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/models/map_data.dart';
-import 'package:remember/widgets/base_textfield.dart';
-import 'package:remember/widgets/main_button.dart';
-import 'package:remember/widgets/multiline_textfield.dart';
+import 'package:remember/widgets/textfields/base_textfield.dart';
+import 'package:remember/widgets/buttons/main_button.dart';
+import 'package:remember/widgets/textfields/multiline_textfield.dart';
 import 'package:remember/widgets/new_memory/new_location_widget.dart';
 import 'package:remember/widgets/new_memory/new_photo_widget.dart';
 
@@ -41,7 +41,14 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     final exif = await readExifFromFile(_chosenImage!);
     final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
-    if (exifDateTime == null) return;
+    if (exifDateTime == null) {
+      if (!mounted) return;
+      await showInfoPopup(context,
+          "Nie udało się odczytać daty ze zdjęcia. Musisz wybrać ją ręcznie.",
+          title: "Uwaga");
+      return;
+    }
+
     final tempDateTime =
         DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
 
@@ -126,7 +133,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     }
     try {
       await FirebaseFirestore.instance
-          .collection('memories by user')
+          .collection('memories_by_user')
           .doc(user.uid)
           .collection("memories")
           .doc(id)
@@ -137,8 +144,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         "description": desc,
         "dateTime": _chosenDate,
         "username": user.displayName,
-        "Email": user.email,
+        "email": user.email,
         "imageUrl": imageUrl,
+        "isFavourite": false,
       });
     } on FirebaseException catch (e) {
       if (!mounted) return;

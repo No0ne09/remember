@@ -5,3 +5,10 @@ final indexProvider = StateProvider<int>(
     return 0;
   },
 );
+
+final memoryOrderProvider = StateProvider<bool>(
+  (ref) => true,
+);
+final memoryOverlayProvider = StateProvider<bool>(
+  (ref) => true,
+);

@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/models/map_data.dart';
 import 'package:remember/screens/map_screen.dart';
+import 'package:remember/widgets/custom_cached_image.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
 import 'package:http/http.dart' as http;
 
@@ -78,9 +78,8 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       },
       child: _imageUrl == null
           ? null
-          : CachedNetworkImage(
+          : CustomCachedImage(
               imageUrl: _imageUrl!,
-              fit: BoxFit.cover,
             ),
     );
   }
