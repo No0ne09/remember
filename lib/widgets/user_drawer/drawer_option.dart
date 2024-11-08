@@ -15,8 +15,8 @@ class DrawerOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      leading: const Icon(Icons.exit_to_app_rounded),
-      title: const Text("Wyloguj się"),
+      leading: Icon(icon),
+      title: Text(text),
     );
   }
 }
