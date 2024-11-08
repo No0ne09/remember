@@ -35,8 +35,11 @@ class _MemoriesListState extends State<MemoriesList> {
             child: Text("Brak wspomnień"),
           );
         }
-        return Center(
-          child: Text(snapshot.data!.docs.toString()),
+        final memories = snapshot.data!.docs;
+        return ListView.builder(
+          itemCount: memories.length,
+          itemBuilder: (context, index) =>
+              Text(memories[index].data().toString()),
         );
       },
     );
