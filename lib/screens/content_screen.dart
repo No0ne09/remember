@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,21 +64,27 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
             : null,
         actions: ref.read(indexProvider) == 0
             ? [
-                IconButton(
-                  onPressed: () {
-                    ref.read(memoryOverlayProvider.notifier).update(
-                          (state) => !state,
-                        );
-                  },
-                  icon: const Icon(Icons.view_comfortable),
+                Tooltip(
+                  message: "Zmień rozmiar kafelków",
+                  child: IconButton(
+                    onPressed: () {
+                      ref.read(memoryOverlayProvider.notifier).update(
+                            (state) => !state,
+                          );
+                    },
+                    icon: const Icon(Icons.view_comfortable),
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    ref.read(memoryOrderProvider.notifier).update(
-                          (state) => !state,
-                        );
-                  },
-                  icon: const Icon(Icons.sort_outlined),
+                Tooltip(
+                  message: "Odwróć sortowanie",
+                  child: IconButton(
+                    onPressed: () {
+                      ref.read(memoryOrderProvider.notifier).update(
+                            (state) => !state,
+                          );
+                    },
+                    icon: const Icon(Icons.sort_outlined),
+                  ),
                 ),
               ]
             : [],
