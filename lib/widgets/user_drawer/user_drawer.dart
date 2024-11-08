@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
-import 'package:remember/widgets/password_reset/in_app_reset_popup.dart';
+import 'package:remember/widgets/popups/password_reset/in_app_reset_popup.dart';
 
 class UserDrawer extends ConsumerStatefulWidget {
   const UserDrawer({super.key});

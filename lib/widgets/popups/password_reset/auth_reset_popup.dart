@@ -46,7 +46,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
         return;
       }
       if (!mounted) return;
-      showToast("Sprawdź swoją skrzynkę");
+      showToast("Sprawdź swoją skrzynkę", context);
       Navigator.pop(context);
     }
   }

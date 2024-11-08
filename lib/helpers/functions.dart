@@ -10,13 +10,27 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/widgets/popups/info_popup.dart';
 
-void showToast(String text) {
-  Fluttertoast.showToast(
-      msg: text,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      fontSize: 16.0);
+void showToast(
+  String text,
+  BuildContext context,
+) {
+  final ftoast = FToast().init(context);
+  ftoast.removeCustomToast();
+  ftoast.showToast(
+    toastDuration: const Duration(seconds: 5),
+    gravity: ToastGravity.BOTTOM,
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.white,
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.blue, fontSize: 20),
+      ),
+    ),
+  );
 }
 
 Future<bool> checkConnection() async {

@@ -64,7 +64,8 @@ class _InAppResetPopupState extends State<InAppResetPopup> {
       Navigator.pop(context);
       Navigator.pop(context);
       showToast(
-          "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.");
+          "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.",
+          context);
       logOut(widget.ref);
     }
   }
