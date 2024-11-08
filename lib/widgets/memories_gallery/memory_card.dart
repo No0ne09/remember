@@ -10,9 +10,20 @@ class MemoryCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
-      child: CachedNetworkImage(
-        imageUrl: data["imageUrl"],
-        fit: BoxFit.cover,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CachedNetworkImage(
+            imageUrl: data["imageUrl"],
+            fit: BoxFit.cover,
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Center(child: Text(data["title"])),
+          ),
+        ],
       ),
     );
   }
