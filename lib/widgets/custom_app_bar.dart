@@ -35,7 +35,7 @@ class CustomAppBar extends ConsumerWidget {
           ),
         TabItem(
           icon: Icons.map_outlined,
-          title: 'Mapa wspomnień',
+          title: 'Twoja mapa',
           activeIcon: Icon(Icons.map),
         ),
       ],
