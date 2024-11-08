@@ -9,11 +9,37 @@ class MemoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.hardEdge,
-      shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+      shape: RoundedRectangleBorder(
+        borderRadius: defaultBorderRadius,
+        side: const BorderSide(color: Colors.black, width: 2),
+      ),
       child: Stack(
         fit: StackFit.expand,
         children: [
           CachedNetworkImage(
+            placeholder: (context, url) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => const Center(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      size: 50,
+                      Icons.error,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      "Nie udało się pobrać zdjęcia",
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             imageUrl: data["imageUrl"],
             fit: BoxFit.cover,
           ),
