@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
-import 'package:remember/widgets/info_popup.dart';
+import 'package:remember/widgets/exit_button.dart';
+
+import 'package:remember/widgets/main_button.dart';
 
 class EmailResetPopup extends StatefulWidget {
   const EmailResetPopup({super.key});
@@ -36,25 +38,14 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       } on FirebaseAuthException catch (e) {
-        if (e.code == "network-request-failed") {
-          if (!mounted) {
-            return;
-          }
-          await showDialog(
-            context: context,
-            builder: (context) => const InfoPopup(
-                title: "Uwaga",
-                desc: "Upewnij się, posiadasz połączenie z internetem."),
-          );
-          setState(() {
-            _isLoading = false;
-          });
-          return;
-        }
-      }
-      if (!mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        if (!mounted) return;
+        handleFireBaseError(e.code, context);
         return;
       }
+      if (!mounted) return;
       showToast("Sprawdź swoją skrzynkę");
       Navigator.pop(context);
     }
@@ -71,18 +62,10 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
+            const Row(
               children: [
-                const Spacer(),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const CircleAvatar(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      child: Icon(Icons.close),
-                    ))
+                Spacer(),
+                ExitButton(),
               ],
             ),
             Text(
@@ -107,7 +90,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
               children: [
                 BaseTextfield(
                   validator: emailValidator,
-                  label: "E-mail",
+                  hint: "E-mail",
                   controller: _emailController,
                 ),
                 const SizedBox(
@@ -115,9 +98,9 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
                 ),
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
+                    : MainButton(
                         onPressed: _resetPassword,
-                        child: const Text("Wyślij wiadomość"),
+                        text: "Wyślij wiadomość",
                       ),
               ],
             ),

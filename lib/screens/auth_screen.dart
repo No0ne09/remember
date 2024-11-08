@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember/widgets/auth_form.dart';
+import 'package:remember/widgets/background.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -21,8 +22,10 @@ class AuthScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: AuthForm(),
+      body: const Background(
+        child: Center(
+          child: AuthForm(),
+        ),
       ),
     );
   }

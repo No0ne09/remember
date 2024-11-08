@@ -2,6 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/providers.dart';
 
 class CustomAppBar extends ConsumerWidget {
@@ -10,6 +11,7 @@ class CustomAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ConvexAppBar(
+      key: appBarKey,
       activeColor: Colors.white,
       initialActiveIndex: 0,
       top: 0,

@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/base_textfield.dart';
 import 'package:remember/widgets/email_reset_popup.dart';
-import 'package:remember/widgets/info_popup.dart';
+import 'package:remember/widgets/main_button.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
@@ -21,7 +20,7 @@ class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isLogin = true;
-  bool _isProccesing = false;
+  bool _isProcessing = false;
   final _firebase = FirebaseAuth.instance;
   @override
   void dispose() {
@@ -32,30 +31,10 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
   }
 
-  Future<void> _handleAuthError(FirebaseAuthException e) async {
-    String message;
-    switch (e.code) {
-      case 'invalid-credential':
-        message = "Upewnij się, że dane są poprawne.";
-      case 'network-request-failed':
-        message = "Upewnij się, posiadasz połączenie z internetem.";
-      case 'email-already-in-use':
-        message = "Istnieje już konto powiązane z tym adresem email.";
-      case 'invalid-email':
-        message = "Upewnij się, podany adres email jest poprawny.";
-      default:
-        message = "Wystąpił nieznany błąd.";
-    }
-    await showDialog(
-      context: context,
-      builder: (context) => InfoPopup(title: "Błąd", desc: message),
-    );
-  }
-
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isProccesing = true;
+        _isProcessing = true;
       });
       final username = _usernameController.text;
       final email = _emailController.text.toLowerCase();
@@ -73,9 +52,10 @@ class _AuthFormState extends State<AuthForm> {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _isProccesing = false;
+        _isProcessing = false;
       });
-      _handleAuthError(e);
+      if (!mounted) return;
+      handleFireBaseError(e.code, context);
       return;
     }
   }
@@ -85,19 +65,14 @@ class _AuthFormState extends State<AuthForm> {
     try {
       final userData = await _firebase.createUserWithEmailAndPassword(
           email: email, password: password);
-
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(userData.user!.uid)
-          .set({
-        'username': username,
-        'email': email,
-      });
+      await userData.user!.updateDisplayName(username);
+      await _firebase.currentUser!.reload();
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _isProccesing = false;
+        _isProcessing = false;
       });
-      _handleAuthError(e);
+      if (!mounted) return;
+      handleFireBaseError(e.code, context);
       return;
     }
   }
@@ -119,16 +94,15 @@ class _AuthFormState extends State<AuthForm> {
                 onPressed: () {
                   setState(() {
                     _isLogin = !_isLogin;
-                    _emailController.clear();
-                    _usernameController.clear();
-                    _passwordController.clear();
-                    _confirmPasswordController.clear();
                   });
                 },
                 child: Text(
                   _isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?",
                   overflow: TextOverflow.visible,
                 ),
+              ),
+              const SizedBox(
+                height: 8,
               ),
               Card(
                   color: Theme.of(context).colorScheme.onTertiary,
@@ -141,19 +115,19 @@ class _AuthFormState extends State<AuthForm> {
                         children: [
                           if (!_isLogin)
                             BaseTextfield(
-                              label: "Nazwa użytkownika",
+                              hint: "Nazwa użytkownika",
                               validator: basicValidator,
                               controller: _usernameController,
                             ),
                           BaseTextfield(
-                            label: "Adres email",
+                            hint: "Adres email",
                             isEmail: true,
                             validator: emailValidator,
                             controller: _emailController,
                           ),
                           _isLogin
                               ? BaseTextfield(
-                                  label: "Hasło",
+                                  hint: "Hasło",
                                   isPassword: true,
                                   validator: basicValidator,
                                   controller: _passwordController,
@@ -161,14 +135,14 @@ class _AuthFormState extends State<AuthForm> {
                               : Column(
                                   children: [
                                     BaseTextfield(
-                                      label: "Hasło",
+                                      hint: "Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _confirmPasswordController),
                                       controller: _passwordController,
                                     ),
                                     BaseTextfield(
-                                      label: "Powtórz Hasło",
+                                      hint: "Powtórz Hasło",
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _passwordController),
@@ -204,16 +178,15 @@ class _AuthFormState extends State<AuthForm> {
               const SizedBox(
                 height: 8,
               ),
-              _isProccesing
+              _isProcessing
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
+                      child: MainButton(
                         onPressed: _validate,
-                        child:
-                            Text(_isLogin ? "Zaloguj się" : "Zarejestruj się"),
+                        text: _isLogin ? "Zaloguj się" : "Zarejestruj się",
                       ),
                     ),
             ],

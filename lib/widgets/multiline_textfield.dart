@@ -41,6 +41,7 @@ class _MultilineTextfieldState extends State<MultilineTextfield> {
           height: 8,
         ),
         TextFormField(
+          validator: widget.validator,
           focusNode: _focusNode,
           onTapOutside: (event) {
             _focusNode.unfocus();
@@ -50,6 +51,7 @@ class _MultilineTextfieldState extends State<MultilineTextfield> {
             filled: true,
             enabledBorder: textFieldBorder,
             focusedBorder: textFieldBorder,
+            border: textFieldBorder,
           ),
           controller: widget.controller,
           keyboardType: TextInputType.emailAddress,

@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: 
+                 sdk: flutter 
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +45,19 @@ dependencies:
   connectivity_plus: ^6.1.0
   convex_bottom_bar: ^3.2.0
   flutter_riverpod: ^2.6.1
+  image_picker: ^1.1.2
+  exif: ^3.3.0
+  intl: ^0.19.0
+  flutter_svg_provider: ^1.0.7
+  flutter_dotenv: ^5.2.1
+  web: ^1.1.0
+  google_maps_flutter: ^2.9.0
+  location: ^7.0.1
+  http: ^1.2.2
+  cached_network_image: ^3.4.1
+  firebase_storage: ^12.3.4
+  uuid: ^4.5.1
+ 
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +81,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-   - assets/logo.png
+   - assets/
+   - .env
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
