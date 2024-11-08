@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:remember/helpers/providers.dart';
-import 'package:remember/widgets/memories_gallery/memory_card.dart';
+import 'package:remember/widgets/memories_gallery/memories_list.dart';
 
 class MemoriesGallery extends ConsumerWidget {
   const MemoriesGallery({super.key});
@@ -11,9 +10,6 @@ class MemoriesGallery extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = FirebaseAuth.instance.currentUser!;
-    final descending = ref.watch(memoryOrderProvider);
-    final overlay = ref.watch(memoryOverlayProvider);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: StreamBuilder(
@@ -21,7 +17,6 @@ class MemoriesGallery extends ConsumerWidget {
             .collection('memories_by_user')
             .doc(user.uid)
             .collection("memories")
-            .orderBy('dateTime', descending: descending)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -40,23 +35,7 @@ class MemoriesGallery extends ConsumerWidget {
             );
           }
           final memories = snapshot.data!.docs;
-          return CustomScrollView(
-            slivers: [
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: memories.length,
-                  (context, index) => MemoryCard(
-                    data: memories[index].data(),
-                  ),
-                ),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: overlay ? 500 : 300,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
-                ),
-              ),
-            ],
-          );
+          return MemoriesList(memories: memories);
         },
       ),
     );

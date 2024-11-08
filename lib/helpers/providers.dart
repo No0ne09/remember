@@ -10,5 +10,5 @@ final memoryOrderProvider = StateProvider<bool>(
   (ref) => true,
 );
 final memoryOverlayProvider = StateProvider<bool>(
-  (ref) => false,
+  (ref) => true,
 );
