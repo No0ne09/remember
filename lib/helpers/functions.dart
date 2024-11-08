@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:remember/helpers/constants.dart';
-import 'package:remember/widgets/info_popup.dart';
+import 'package:remember/widgets/popups/info_popup.dart';
 
 void showToast(String text) {
   Fluttertoast.showToast(

@@ -13,9 +13,9 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/models/map_data.dart';
-import 'package:remember/widgets/base_textfield.dart';
-import 'package:remember/widgets/main_button.dart';
-import 'package:remember/widgets/multiline_textfield.dart';
+import 'package:remember/widgets/textfields/base_textfield.dart';
+import 'package:remember/widgets/buttons/main_button.dart';
+import 'package:remember/widgets/textfields/multiline_textfield.dart';
 import 'package:remember/widgets/new_memory/new_location_widget.dart';
 import 'package:remember/widgets/new_memory/new_photo_widget.dart';
 
