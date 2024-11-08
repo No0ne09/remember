@@ -31,31 +31,55 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: SafeArea(
-        child: Column(
-          children: [
-            DrawerHeader(
-              child: Center(
-                child: Text(
-                    'Cześć, ${_authInstance.currentUser!.displayName}! 👋'),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DrawerHeader(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Cześć, ${_authInstance.currentUser!.displayName}! 👋',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        _authInstance.currentUser!.email!,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: Colors.black.withOpacity(0.4),
+                                ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            ListTile(
-              onTap: () async {},
-              title: const Text("Zresetuj hasło"),
-              leading: const Icon(Icons.password),
-            ),
-            const Spacer(),
-            ListTile(
-              onTap: () {
-                ref.read(indexProvider.notifier).state = 0;
-                _authInstance.signOut();
-              },
-              leading: const Icon(Icons.exit_to_app_rounded),
-              title: const Text("Wyloguj się"),
-            ),
-            Text(appVersion),
-          ],
+              ListTile(
+                onTap: () async {},
+                title: const Text("Zresetuj hasło"),
+                leading: const Icon(Icons.password),
+              ),
+              ListTile(
+                onTap: () {
+                  ref.read(indexProvider.notifier).state = 0;
+                  _authInstance.signOut();
+                },
+                leading: const Icon(Icons.exit_to_app_rounded),
+                title: const Text("Wyloguj się"),
+              ),
+              const Spacer(),
+              const Text("Re(me)mber"),
+              Text('v$appVersion'),
+            ],
+          ),
         ),
       ),
     );
