@@ -32,7 +32,7 @@ class MemoryCard extends StatelessWidget {
                     ),
                     Text(
                       "Nie udało się pobrać zdjęcia",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                       ),
                     ),
