@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 
@@ -31,35 +32,38 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: MediaQuery.of(context).size.width * 0.75,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DrawerHeader(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Cześć, ${_authInstance.currentUser!.displayName}! 👋',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Text(
-                        _authInstance.currentUser!.email!,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: Colors.black.withOpacity(0.4),
-                                ),
-                      ),
-                    ],
-                  ),
+                decoration: backgroundDecoration,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${_authInstance.currentUser!.displayName}',
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      '${_authInstance.currentUser!.email}',
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
               ListTile(
@@ -76,8 +80,11 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                 title: const Text("Wyloguj się"),
               ),
               const Spacer(),
-              const Text("Re(me)mber"),
-              Text('v$appVersion'),
+              Text(
+                textAlign: TextAlign.center,
+                "Re(me)mber \n v$appVersion",
+                style: const TextStyle(color: Colors.grey),
+              ),
             ],
           ),
         ),
