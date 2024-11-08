@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/buttons/exit_button.dart';
@@ -8,7 +8,8 @@ import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 
 class InAppResetPopup extends StatefulWidget {
-  const InAppResetPopup({super.key});
+  const InAppResetPopup({required this.ref, super.key});
+  final WidgetRef ref;
 
   @override
   State<InAppResetPopup> createState() => _InAppResetPopupState();
@@ -63,8 +64,8 @@ class _InAppResetPopupState extends State<InAppResetPopup> {
       Navigator.pop(context);
       Navigator.pop(context);
       showToast(
-          "Hasło zostało zmienione. Zaloguj się poniownie,aby kontynuować");
-      _authInstance.signOut();
+          "Hasło zostało zmienione. Zaloguj się poniownie, aby kontynuować.");
+      logOut(widget.ref);
     }
   }
 
@@ -119,10 +120,14 @@ class _InAppResetPopupState extends State<InAppResetPopup> {
                 const SizedBox(
                   height: 8,
                 ),
-                MainButton(
-                  text: "Zresetuj hasło",
-                  onPressed: _resetPassword,
-                )
+                _isResetting
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : MainButton(
+                        text: "Zresetuj hasło",
+                        onPressed: _resetPassword,
+                      )
               ],
             ),
           ),
