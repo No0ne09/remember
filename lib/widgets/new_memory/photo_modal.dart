@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:remember/widgets/buttons/exit_button.dart';
+import 'package:remember/widgets/modal_base.dart';
 
 import 'package:remember/widgets/new_memory/photo_modal_button.dart';
 
@@ -27,46 +27,31 @@ class PhotoModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height / 2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
+    return ModalBase(
+      child: Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Row(
-              children: [
-                Spacer(),
-                ExitButton(),
-              ],
+            Expanded(
+              child: PhotoModalButton(
+                onTap: () async {
+                  await _choosePhoto(ImageSource.gallery, context);
+                },
+                text: "Wybierz z galerii",
+                icon: Icons.image_rounded,
+              ),
+            ),
+            const SizedBox(
+              width: 8,
             ),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: PhotoModalButton(
-                      onTap: () async {
-                        await _choosePhoto(ImageSource.gallery, context);
-                      },
-                      text: "Wybierz z galerii",
-                      icon: Icons.image_rounded,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: PhotoModalButton(
-                      onTap: () async {
-                        await _choosePhoto(ImageSource.camera, context);
-                      },
-                      text: "Zrób zdjęcie",
-                      icon: Icons.camera_enhance_rounded,
-                    ),
-                  ),
-                ],
+              child: PhotoModalButton(
+                onTap: () async {
+                  await _choosePhoto(ImageSource.camera, context);
+                },
+                text: "Zrób zdjęcie",
+                icon: Icons.camera_enhance_rounded,
               ),
             ),
           ],

@@ -5,6 +5,7 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
+import 'package:remember/widgets/user_drawer/password_reset_modal.dart';
 
 class UserDrawer extends ConsumerStatefulWidget {
   const UserDrawer({super.key});
@@ -68,7 +69,19 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                 ),
               ),
               DrawerOption(
-                onTap: () {},
+                onTap: () async {
+                  try {
+                    final newPassword = await showModalBottomSheet(
+                      context: context,
+                      builder: (context) => const PasswordResetModal(),
+                    );
+                    // await _authInstance.currentUser!.updatePassword("tsettt");
+                  } on FirebaseAuthException catch (e) {
+                    if (!context.mounted) return;
+                    handleFireBaseError(e.code, context);
+                    return;
+                  }
+                },
                 text: "Zresetuj hasło",
                 icon: Icons.password,
               ),
