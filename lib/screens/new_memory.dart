@@ -133,7 +133,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     }
     try {
       await FirebaseFirestore.instance
-          .collection('memories by user')
+          .collection('memories_by_user')
           .doc(user.uid)
           .collection("memories")
           .doc(id)
