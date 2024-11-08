@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
-import 'package:remember/widgets/popups/password_reset/auth_reset_popup.dart';
+import 'package:remember/widgets/popups/auth_reset_popup.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 
 class AuthForm extends StatefulWidget {

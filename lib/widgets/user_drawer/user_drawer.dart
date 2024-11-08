@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
-import 'package:remember/widgets/popups/password_reset/in_app_reset_popup.dart';
+import 'package:remember/screens/in_app_password_reset.dart';
 
 class UserDrawer extends ConsumerStatefulWidget {
   const UserDrawer({super.key});
@@ -69,10 +69,11 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
               ),
               DrawerOption(
                 onTap: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) => InAppResetPopup(
-                      ref: ref,
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => InAppPasswordReset(
+                        ref: ref,
+                      ),
                     ),
                   );
                 },
