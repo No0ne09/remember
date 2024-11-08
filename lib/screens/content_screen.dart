@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +7,7 @@ import 'package:remember/screens/map.dart';
 import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/background.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
+import 'package:remember/widgets/user_drawer.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {
   const ContentScreen({super.key});
@@ -19,7 +19,6 @@ class ContentScreen extends ConsumerStatefulWidget {
 class _ContentScreenState extends ConsumerState<ContentScreen> {
   int counter = 0;
   int currentIndex = 0;
-  final _authInstance = FirebaseAuth.instance;
 
   Widget get currentContent {
     switch (currentIndex) {
@@ -53,21 +52,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
 
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            children: [
-              IconButton(
-                onPressed: () {
-                  ref.read(indexProvider.notifier).state = 0;
-                  _authInstance.signOut();
-                },
-                icon: const Icon(Icons.account_circle_rounded),
-              )
-            ],
-          ),
-        ),
-      ),
+      drawer: UserDrawer(),
       appBar: AppBar(
         forceMaterialTransparency: true,
         centerTitle: true,
