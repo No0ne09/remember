@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +50,6 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
   @override
   Widget build(BuildContext context) {
     currentIndex = ref.watch(indexProvider);
-
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
       drawer: UserDrawer(),

@@ -13,6 +13,7 @@ class UserDrawer extends ConsumerStatefulWidget {
 
 class _UserDrawerState extends ConsumerState<UserDrawer> {
   final _authInstance = FirebaseAuth.instance;
+
   String appVersion = '';
   @override
   void initState() {
@@ -33,10 +34,16 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
       child: SafeArea(
         child: Column(
           children: [
-            const DrawerHeader(child: Center(child: Text("Siemaaaa"))),
+            DrawerHeader(
+              child: Center(
+                child: Text(
+                    'Cześć, ${_authInstance.currentUser!.displayName}! 👋'),
+              ),
+            ),
             ListTile(
-              onTap: () {},
-              title: Text("Zresetuj hasło"),
+              onTap: () async {},
+              title: const Text("Zresetuj hasło"),
+              leading: const Icon(Icons.password),
             ),
             const Spacer(),
             ListTile(
