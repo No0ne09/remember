@@ -101,7 +101,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Set<Marker> get markersList {
+  Set<Marker> get _markersList {
     if (widget.isSelecting && _pickedPosition != null) {
       return {
         Marker(
@@ -156,7 +156,7 @@ class _MapScreenState extends State<MapScreen> {
               target: widget.initialPosition,
               zoom: zoom,
             ),
-            markers: markersList,
+            markers: _markersList,
             onTap: widget.isSelecting == false
                 ? null
                 : (markerPosition) {
