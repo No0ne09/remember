@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/screens/new_memory.dart';
 import 'package:remember/screens/map.dart';
@@ -46,9 +47,23 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     }
   }
 
+  void _showOfflineWarning() async {
+    final status = await checkConnection();
+    if (status || !mounted) return;
+    await showInfoPopup(
+      context,
+      "Nie masz połączenia z internetem. Niektóre z funkcji aplikacji mogą nie działać prawidłowo.",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _currentIndex = ref.watch(indexProvider);
+    Future.delayed(
+      Duration.zero,
+      () => _showOfflineWarning(),
+    );
+
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
       drawer: const UserDrawer(),
