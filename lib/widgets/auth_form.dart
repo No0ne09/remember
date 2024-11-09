@@ -51,9 +51,9 @@ class _AuthFormState extends ConsumerState<AuthForm> {
 
   Future<void> _loginUser(String email, String password) async {
     try {
+      ref.read(indexProvider.notifier).state = 0;
       await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
-      ref.read(indexProvider.notifier).state = 0;
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
@@ -67,9 +67,10 @@ class _AuthFormState extends ConsumerState<AuthForm> {
   Future<void> _registerUser(
       String email, String password, String username) async {
     try {
+      ref.read(indexProvider.notifier).state = 0;
       final userData = await _authInstance.createUserWithEmailAndPassword(
           email: email, password: password);
-      ref.read(indexProvider.notifier).state = 0;
+      await _authInstance.currentUser!.sendEmailVerification();
       await userData.user!.updateDisplayName(username);
       await _authInstance.currentUser!.reload();
     } on FirebaseAuthException catch (e) {
