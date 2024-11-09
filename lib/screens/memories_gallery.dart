@@ -9,16 +9,18 @@ class MemoriesGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return Placeholder();
     final user = FirebaseAuth.instance.currentUser!;
+    final stream = FirebaseFirestore.instance
+        .collection('memories_by_user')
+        .doc(user.uid)
+        .collection("memories")
+        .snapshots();
+    print("tset");
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('memories_by_user')
-            .doc(user.uid)
-            .collection("memories")
-            .snapshots(),
+        stream: stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
