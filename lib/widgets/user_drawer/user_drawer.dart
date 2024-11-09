@@ -82,7 +82,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
               ),
               DrawerOption(
                 onTap: () {
-                  logOut(ref);
+                  _authInstance.signOut();
                 },
                 text: "Wyloguj się",
                 icon: Icons.exit_to_app_rounded,

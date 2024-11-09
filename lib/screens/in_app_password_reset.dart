@@ -66,7 +66,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
       showToast(
           "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.",
           context);
-      logOut(widget.ref);
+      _authInstance.signOut();
     }
   }
 

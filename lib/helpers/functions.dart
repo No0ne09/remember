@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:remember/helpers/constants.dart';
-import 'package:remember/helpers/providers.dart';
 import 'package:remember/widgets/popups/info_popup.dart';
 
 void showToast(
@@ -90,9 +87,4 @@ String getStaticMap(GeoPoint location) {
 Future<String> getAppVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
-}
-
-void logOut(WidgetRef ref) {
-  ref.read(indexProvider.notifier).state = 0;
-  FirebaseAuth.instance.signOut();
 }

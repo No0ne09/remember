@@ -1,19 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 import 'package:remember/widgets/popups/auth_reset_popup.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 
-class AuthForm extends StatefulWidget {
+class AuthForm extends ConsumerStatefulWidget {
   const AuthForm({super.key});
 
   @override
-  State<AuthForm> createState() => _AuthFormState();
+  ConsumerState<AuthForm> createState() => _AuthFormState();
 }
 
-class _AuthFormState extends State<AuthForm> {
+class _AuthFormState extends ConsumerState<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -50,6 +52,7 @@ class _AuthFormState extends State<AuthForm> {
     try {
       await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
+      ref.read(indexProvider.notifier).state = 0;
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
@@ -65,6 +68,7 @@ class _AuthFormState extends State<AuthForm> {
     try {
       final userData = await _authInstance.createUserWithEmailAndPassword(
           email: email, password: password);
+      ref.read(indexProvider.notifier).state = 0;
       await userData.user!.updateDisplayName(username);
       await _authInstance.currentUser!.reload();
     } on FirebaseAuthException catch (e) {
