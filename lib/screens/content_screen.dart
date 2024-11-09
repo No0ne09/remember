@@ -17,11 +17,10 @@ class ContentScreen extends ConsumerStatefulWidget {
 }
 
 class _ContentScreenState extends ConsumerState<ContentScreen> {
-  int counter = 0;
-  int currentIndex = 0;
+  int _currentIndex = 0;
 
-  Widget get currentContent {
-    switch (currentIndex) {
+  Widget get _currentContent {
+    switch (_currentIndex) {
       case 0:
         return const MemoriesGallery();
       case 1:
@@ -33,8 +32,8 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     }
   }
 
-  String get pageTitle {
-    switch (currentIndex) {
+  String get _pageTitle {
+    switch (_currentIndex) {
       case 0:
         return "Re(me)mber";
       case 1:
@@ -48,14 +47,14 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    currentIndex = ref.watch(indexProvider);
+    _currentIndex = ref.watch(indexProvider);
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
       drawer: const UserDrawer(),
       appBar: AppBar(
         forceMaterialTransparency: true,
         centerTitle: true,
-        title: Text(pageTitle),
+        title: Text(_pageTitle),
         bottom: kIsWeb
             ? const PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
@@ -89,7 +88,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
               ]
             : [],
       ),
-      body: Background(child: currentContent),
+      body: Background(child: _currentContent),
     );
   }
 }
