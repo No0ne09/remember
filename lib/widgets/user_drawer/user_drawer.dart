@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
 import 'package:remember/screens/in_app_password_reset.dart';
 
@@ -77,20 +78,20 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                     ),
                   );
                 },
-                text: "Zresetuj hasło",
+                text: resetPassword,
                 icon: Icons.password,
               ),
               DrawerOption(
                 onTap: () {
                   _authInstance.signOut();
                 },
-                text: "Wyloguj się",
+                text: logOut,
                 icon: Icons.exit_to_app_rounded,
               ),
               const Spacer(),
               Text(
                 textAlign: TextAlign.center,
-                "Re(me)mber \n v$_appVersion",
+                "$appName \n v$_appVersion",
                 style: const TextStyle(color: Colors.grey),
               ),
             ],

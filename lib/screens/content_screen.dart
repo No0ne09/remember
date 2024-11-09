@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/new_memory.dart';
 import 'package:remember/screens/map.dart';
 import 'package:remember/screens/memories_gallery.dart';
@@ -37,13 +38,13 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
   String get _pageTitle {
     switch (_currentIndex) {
       case 0:
-        return "Re(me)mber";
+        return appName;
       case 1:
-        return kIsWeb ? "Mapa wspomnień" : "Zapisz wspomnienie";
+        return kIsWeb ? memoryMap : saveMemory;
       case 2:
-        return "Mapa wspomnień";
+        return memoryMap;
       default:
-        return "Re(me)mber";
+        return appName;
     }
   }
 
@@ -52,7 +53,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     if (status || !mounted) return;
     await showInfoPopup(
       context,
-      "Nie masz połączenia z internetem. Niektóre z funkcji aplikacji mogą nie działać prawidłowo.",
+      noConnectionPopUpInfo,
     );
   }
 
@@ -80,7 +81,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
         actions: ref.read(indexProvider) == 0
             ? [
                 Tooltip(
-                  message: "Zmień rozmiar kafelków",
+                  message: changeSize,
                   child: AnimatedToggleButton(
                     activeIcon: Icons.view_comfy_sharp,
                     inactiveIcon: Icons.view_cozy_rounded,
@@ -88,7 +89,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
                   ),
                 ),
                 Tooltip(
-                  message: "Odwróć sortowanie",
+                  message: sort,
                   child: AnimatedToggleButton(
                     activeIcon: Icons.south_rounded,
                     inactiveIcon: Icons.north_outlined,

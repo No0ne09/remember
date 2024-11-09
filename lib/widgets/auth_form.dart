@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 import 'package:remember/widgets/popups/auth_reset_popup.dart';
@@ -101,7 +102,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                   });
                 },
                 child: Text(
-                  _isLogin ? "Nie masz jeszcze konta?" : "Masz już konto?",
+                  _isLogin ? noAccount : haveAccount,
                   overflow: TextOverflow.visible,
                 ),
               ),
@@ -119,19 +120,19 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                         children: [
                           if (!_isLogin)
                             BaseTextfield(
-                              hint: "Nazwa użytkownika",
+                              hint: username,
                               validator: basicValidator,
                               controller: _usernameController,
                             ),
                           BaseTextfield(
-                            hint: "Adres email",
+                            hint: "E-mail",
                             isEmail: true,
                             validator: emailValidator,
                             controller: _emailController,
                           ),
                           _isLogin
                               ? BaseTextfield(
-                                  hint: "Hasło",
+                                  hint: password,
                                   isPassword: true,
                                   validator: basicValidator,
                                   controller: _passwordController,
@@ -139,14 +140,14 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                               : Column(
                                   children: [
                                     BaseTextfield(
-                                      hint: "Hasło",
+                                      hint: password,
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _confirmPasswordController),
                                       controller: _passwordController,
                                     ),
                                     BaseTextfield(
-                                      hint: "Powtórz Hasło",
+                                      hint: confirmPassword,
                                       isPassword: true,
                                       validator: registerPasswordValidator(
                                           _passwordController),
@@ -168,7 +169,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                                   );
                                 },
                                 child: const Text(
-                                  "Nie pamiętam hasła",
+                                  passwordReset,
                                   style: TextStyle(
                                     decoration: TextDecoration.underline,
                                   ),
@@ -190,7 +191,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                       width: double.infinity,
                       child: MainButton(
                         onPressed: _validate,
-                        text: _isLogin ? "Zaloguj się" : "Zarejestruj się",
+                        text: _isLogin ? login : register,
                       ),
                     ),
             ],

@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/popups/info_popup.dart';
 
 void showToast(
@@ -49,20 +50,19 @@ Future<void> handleFireBaseError(String code, BuildContext context) async {
   String message;
   switch (code) {
     case 'invalid-credential':
-      message = "Upewnij się, że wprowadzone dane są poprawne.";
+      message = invalidCredentials;
     case 'network-request-failed':
-      message = "Upewnij się, posiadasz połączenie z internetem.";
+      message = noConnection;
     case 'email-already-in-use':
-      message = "Istnieje już konto powiązane z tym adresem email.";
+      message = emailTaken;
     case 'invalid-email':
-      message = "Upewnij się, podany adres email jest poprawny.";
+      message = invalidEmail;
     case 'unavailable':
-      message =
-          "Nasze usługi są chwilowo niedostępne spróbuj ponownie później.";
+      message = serviceUnavailable;
     case 'canceled':
       return;
     default:
-      message = "Wystąpił nieznany błąd. Spróbuj ponownie później.";
+      message = unknownError;
   }
   await showInfoPopup(
     context,
@@ -71,7 +71,7 @@ Future<void> handleFireBaseError(String code, BuildContext context) async {
 }
 
 Future<void> showInfoPopup(BuildContext context, String desc,
-    {String title = "Błąd"}) async {
+    {String title = error}) async {
   await showDialog(
     context: context,
     builder: (context) => InfoPopup(title: title, desc: desc),

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/strings.dart';
 
 class CustomCachedImage extends StatelessWidget {
   const CustomCachedImage({
@@ -27,7 +28,7 @@ class CustomCachedImage extends StatelessWidget {
                   color: Colors.white,
                 ),
                 Text(
-                  "Nie udało się pobrać zdjęcia",
+                  failedDownload,
                   style: TextStyle(
                     color: Colors.white,
                   ),

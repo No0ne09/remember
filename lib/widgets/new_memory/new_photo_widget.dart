@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
 import 'package:remember/widgets/new_memory/photo_modal.dart';
 
@@ -38,7 +39,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
   Widget build(BuildContext context) {
     return NewMemoryContainer(
       height: MediaQuery.of(context).size.width,
-      text: "Nie wybrano zdjęcia",
+      text: noPhotoChosen,
       icon: Icons.camera_alt,
       onTap: () async {
         await _showPhotoModal();

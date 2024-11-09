@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/strings.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
@@ -43,8 +44,7 @@ class _MapScreenState extends State<MapScreen> {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
         if (!mounted) return;
-        await showInfoPopup(
-            context, "Lokalizacja w twoim telefonie musi pozostać włączona.");
+        await showInfoPopup(context, locationTurnedOff);
 
         return;
       }
@@ -55,8 +55,7 @@ class _MapScreenState extends State<MapScreen> {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         if (!mounted) return;
-        await showInfoPopup(context,
-            "Musisz zezwolić aplikacji na dostęp do twojej lokalizacji.");
+        await showInfoPopup(context, noLocationPermission);
 
         return;
       }
@@ -107,7 +106,7 @@ class _MapScreenState extends State<MapScreen> {
         Marker(
             markerId: const MarkerId('picked_location'),
             position: _pickedPosition!,
-            infoWindow: const InfoWindow(title: "Twoja lokalizacja")),
+            infoWindow: const InfoWindow(title: yourLocation)),
       };
     }
 

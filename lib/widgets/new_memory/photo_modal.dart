@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/buttons/exit_button.dart';
 
 import 'package:remember/widgets/new_memory/photo_modal_button.dart';
@@ -50,7 +51,7 @@ class PhotoModal extends StatelessWidget {
                       onTap: () async {
                         await _choosePhoto(ImageSource.gallery, context);
                       },
-                      text: "Wybierz z galerii",
+                      text: pickGallery,
                       icon: Icons.image_rounded,
                     ),
                   ),
@@ -62,7 +63,7 @@ class PhotoModal extends StatelessWidget {
                       onTap: () async {
                         await _choosePhoto(ImageSource.camera, context);
                       },
-                      text: "Zrób zdjęcie",
+                      text: takePhoto,
                       icon: Icons.camera_enhance_rounded,
                     ),
                   ),

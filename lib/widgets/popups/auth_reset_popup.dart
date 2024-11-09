@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 import 'package:remember/widgets/buttons/exit_button.dart';
@@ -42,7 +43,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
         return;
       }
       if (!mounted) return;
-      showToast("Sprawdź swoją skrzynkę", context);
+      showToast(checkInbox, context);
       Navigator.pop(context);
     }
   }
@@ -65,7 +66,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
               ],
             ),
             Text(
-              "Resetowanie hasła",
+              passwordResetting,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontWeight: FontWeight.bold,
                     color: scheme.onPrimaryFixed,
@@ -75,7 +76,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
               height: 30,
             ),
             Text(
-              "Na podany adres e-mail otrzymasz wiadomość, która pozwoli Ci na zmianę hasła.",
+              emailSend,
               style: TextStyle(color: scheme.onPrimaryFixed),
             ),
             const SizedBox(
@@ -96,7 +97,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
                     ? const Center(child: CircularProgressIndicator())
                     : MainButton(
                         onPressed: _resetPassword,
-                        text: "Wyślij wiadomość",
+                        text: sendMail,
                       ),
               ],
             ),

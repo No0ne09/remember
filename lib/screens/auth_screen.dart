@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/auth_form.dart';
 import 'package:remember/widgets/background.dart';
 
@@ -14,7 +15,7 @@ class AuthScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Re(me)mber"),
+            const Text(appName),
             SizedBox(
               height: kToolbarHeight,
               child: Image.asset("assets/logo.png"),
