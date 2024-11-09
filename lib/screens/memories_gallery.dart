@@ -8,7 +8,6 @@ class MemoriesGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
     final user = FirebaseAuth.instance.currentUser!;
     return Padding(
       padding: const EdgeInsets.all(8.0),

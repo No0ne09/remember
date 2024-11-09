@@ -15,9 +15,17 @@ class MemoriesList extends ConsumerWidget {
     final descending = ref.watch(memoryOrderProvider);
     final sortedMemories = List.from(memories)
       ..sort((a, b) {
-        final dateA = a.data()['dateTime'] as String;
-        final dateB = b.data()['dateTime'] as String;
-        return descending ? dateB.compareTo(dateA) : dateA.compareTo(dateB);
+        final memoryDateA = a.data()['memoryDate'] as String;
+        final memoryDateB = b.data()['memoryDate'] as String;
+        final comparison = descending
+            ? memoryDateB.compareTo(memoryDateA)
+            : memoryDateA.compareTo(memoryDateB);
+        if (comparison != 0) return comparison;
+        final uploadTimeStampA = a.data()['uploadTimeStamp'] as Timestamp;
+        final uploadTimeStampB = b.data()['uploadTimeStamp'] as Timestamp;
+        return descending
+            ? uploadTimeStampB.compareTo(uploadTimeStampA)
+            : uploadTimeStampA.compareTo(uploadTimeStampB);
       });
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> favouriteMemories =
         [];
