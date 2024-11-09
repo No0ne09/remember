@@ -86,15 +86,15 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
       body: Background(
         child: Center(
           child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: height > width ? width : width / 2,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: height > width ? width : width / 2,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,

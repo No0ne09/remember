@@ -24,21 +24,21 @@ class BaseTextfield extends StatefulWidget {
 }
 
 class _BaseTextfieldState extends State<BaseTextfield> {
-  late FocusNode focusNode;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
-    focusNode = FocusNode();
+    _focusNode = FocusNode();
   }
 
   @override
   void dispose() {
-    focusNode.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
-  bool hidden = true;
+  bool _hidden = true;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,12 +47,12 @@ class _BaseTextfieldState extends State<BaseTextfield> {
         keyboardType: TextInputType.emailAddress,
         controller: widget.controller,
         textInputAction: widget.inputAction,
-        obscureText: widget.isPassword ? hidden : false,
+        obscureText: widget.isPassword ? _hidden : false,
         obscuringCharacter: "●",
-        focusNode: focusNode,
+        focusNode: _focusNode,
         validator: widget.validator,
         onTapOutside: (event) {
-          focusNode.unfocus();
+          _focusNode.unfocus();
         },
         decoration: InputDecoration(
           filled: true,
@@ -62,10 +62,10 @@ class _BaseTextfieldState extends State<BaseTextfield> {
                   child: IconButton(
                     onPressed: () {
                       setState(() {
-                        hidden = !hidden;
+                        _hidden = !_hidden;
                       });
                     },
-                    icon: hidden
+                    icon: _hidden
                         ? const Icon(Icons.visibility_off)
                         : const Icon(Icons.visibility),
                   ),

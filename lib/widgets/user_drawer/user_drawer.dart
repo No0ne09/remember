@@ -16,7 +16,7 @@ class UserDrawer extends ConsumerStatefulWidget {
 class _UserDrawerState extends ConsumerState<UserDrawer> {
   final _authInstance = FirebaseAuth.instance;
 
-  String appVersion = '';
+  String _appVersion = '';
   @override
   void initState() {
     super.initState();
@@ -26,7 +26,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   void _getVersion() async {
     final version = await getAppVersion();
     setState(() {
-      appVersion = version;
+      _appVersion = version;
     });
   }
 
@@ -90,7 +90,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
               const Spacer(),
               Text(
                 textAlign: TextAlign.center,
-                "Re(me)mber \n v$appVersion",
+                "Re(me)mber \n v$_appVersion",
                 style: const TextStyle(color: Colors.grey),
               ),
             ],

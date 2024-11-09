@@ -18,10 +18,6 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   bool _isLoading = false;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
