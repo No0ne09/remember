@@ -6,6 +6,7 @@ import 'package:remember/screens/new_memory.dart';
 import 'package:remember/screens/map.dart';
 import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/background.dart';
+import 'package:remember/widgets/buttons/animated_toggle_button.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
 import 'package:remember/widgets/user_drawer/user_drawer.dart';
 
@@ -65,24 +66,18 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
             ? [
                 Tooltip(
                   message: "Zmień rozmiar kafelków",
-                  child: IconButton(
-                    onPressed: () {
-                      ref.read(memoryOverlayProvider.notifier).update(
-                            (state) => !state,
-                          );
-                    },
-                    icon: const Icon(Icons.view_comfortable),
+                  child: AnimatedToggleButton(
+                    activeIcon: Icons.view_comfy_sharp,
+                    inactiveIcon: Icons.view_cozy_rounded,
+                    provider: memoryOverlayProvider,
                   ),
                 ),
                 Tooltip(
                   message: "Odwróć sortowanie",
-                  child: IconButton(
-                    onPressed: () {
-                      ref.read(memoryOrderProvider.notifier).update(
-                            (state) => !state,
-                          );
-                    },
-                    icon: const Icon(Icons.sort_outlined),
+                  child: AnimatedToggleButton(
+                    activeIcon: Icons.south_rounded,
+                    inactiveIcon: Icons.north_outlined,
+                    provider: memoryOrderProvider,
                   ),
                 ),
               ]
