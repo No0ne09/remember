@@ -99,6 +99,10 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       if (!mounted) return null;
       showInfoPopup(context, e.message!);
       return null;
+    } on FirebaseException catch (e) {
+      if (!mounted) return null;
+      handleFireBaseError(e.code, context);
+      return null;
     }
   }
 
@@ -142,7 +146,8 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         "address": _chosenLocation!.address,
         "title": title,
         "description": desc,
-        "dateTime": _chosenDate,
+        "memoryDate": _chosenDate,
+        "uploadTimeStamp": Timestamp.now(),
         "username": user.displayName,
         "email": user.email,
         "imageUrl": imageUrl,

@@ -1,13 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/screens/new_memory.dart';
 import 'package:remember/screens/map.dart';
 import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/background.dart';
+import 'package:remember/widgets/buttons/animated_toggle_button.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
+import 'package:remember/widgets/user_drawer/user_drawer.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {
   const ContentScreen({super.key});
@@ -17,12 +19,10 @@ class ContentScreen extends ConsumerStatefulWidget {
 }
 
 class _ContentScreenState extends ConsumerState<ContentScreen> {
-  int counter = 0;
-  int currentIndex = 0;
-  final _authInstance = FirebaseAuth.instance;
+  int _currentIndex = 0;
 
-  Widget get currentContent {
-    switch (currentIndex) {
+  Widget get _currentContent {
+    switch (_currentIndex) {
       case 0:
         return const MemoriesGallery();
       case 1:
@@ -34,8 +34,8 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     }
   }
 
-  String get pageTitle {
-    switch (currentIndex) {
+  String get _pageTitle {
+    switch (_currentIndex) {
       case 0:
         return "Re(me)mber";
       case 1:
@@ -47,31 +47,30 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     }
   }
 
+  void _showOfflineWarning() async {
+    final status = await checkConnection();
+    if (status || !mounted) return;
+    await showInfoPopup(
+      context,
+      "Nie masz połączenia z internetem. Niektóre z funkcji aplikacji mogą nie działać prawidłowo.",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    currentIndex = ref.watch(indexProvider);
+    _currentIndex = ref.watch(indexProvider);
+    Future.delayed(
+      Duration.zero,
+      () => _showOfflineWarning(),
+    );
 
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(
-            children: [
-              IconButton(
-                onPressed: () {
-                  ref.read(indexProvider.notifier).state = 0;
-                  _authInstance.signOut();
-                },
-                icon: const Icon(Icons.account_circle_rounded),
-              )
-            ],
-          ),
-        ),
-      ),
+      drawer: const UserDrawer(),
       appBar: AppBar(
         forceMaterialTransparency: true,
         centerTitle: true,
-        title: Text(pageTitle),
+        title: Text(_pageTitle),
         bottom: kIsWeb
             ? const PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
@@ -80,26 +79,26 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
             : null,
         actions: ref.read(indexProvider) == 0
             ? [
-                IconButton(
-                  onPressed: () {
-                    ref.read(memoryOverlayProvider.notifier).update(
-                          (state) => !state,
-                        );
-                  },
-                  icon: const Icon(Icons.view_comfortable),
+                Tooltip(
+                  message: "Zmień rozmiar kafelków",
+                  child: AnimatedToggleButton(
+                    activeIcon: Icons.view_comfy_sharp,
+                    inactiveIcon: Icons.view_cozy_rounded,
+                    provider: memoryOverlayProvider,
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    ref.read(memoryOrderProvider.notifier).update(
-                          (state) => !state,
-                        );
-                  },
-                  icon: const Icon(Icons.sort_outlined),
+                Tooltip(
+                  message: "Odwróć sortowanie",
+                  child: AnimatedToggleButton(
+                    activeIcon: Icons.south_rounded,
+                    inactiveIcon: Icons.north_outlined,
+                    provider: memoryOrderProvider,
+                  ),
                 ),
               ]
             : [],
       ),
-      body: Background(child: currentContent),
+      body: Background(child: _currentContent),
     );
   }
 }

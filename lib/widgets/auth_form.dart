@@ -1,19 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
-import 'package:remember/widgets/popups/email_reset_popup.dart';
+import 'package:remember/widgets/popups/auth_reset_popup.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 
-class AuthForm extends StatefulWidget {
+class AuthForm extends ConsumerStatefulWidget {
   const AuthForm({super.key});
 
   @override
-  State<AuthForm> createState() => _AuthFormState();
+  ConsumerState<AuthForm> createState() => _AuthFormState();
 }
 
-class _AuthFormState extends State<AuthForm> {
+class _AuthFormState extends ConsumerState<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -21,7 +23,7 @@ class _AuthFormState extends State<AuthForm> {
   final _confirmPasswordController = TextEditingController();
   bool _isLogin = true;
   bool _isProcessing = false;
-  final _firebase = FirebaseAuth.instance;
+  final _authInstance = FirebaseAuth.instance;
   @override
   void dispose() {
     _usernameController.dispose();
@@ -48,8 +50,9 @@ class _AuthFormState extends State<AuthForm> {
 
   Future<void> _loginUser(String email, String password) async {
     try {
-      await _firebase.signInWithEmailAndPassword(
+      await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
+      ref.read(indexProvider.notifier).state = 0;
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
@@ -63,10 +66,11 @@ class _AuthFormState extends State<AuthForm> {
   Future<void> _registerUser(
       String email, String password, String username) async {
     try {
-      final userData = await _firebase.createUserWithEmailAndPassword(
+      final userData = await _authInstance.createUserWithEmailAndPassword(
           email: email, password: password);
+      ref.read(indexProvider.notifier).state = 0;
       await userData.user!.updateDisplayName(username);
-      await _firebase.currentUser!.reload();
+      await _authInstance.currentUser!.reload();
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isProcessing = false;
@@ -160,7 +164,7 @@ class _AuthFormState extends State<AuthForm> {
                                   await showDialog(
                                     context: context,
                                     builder: (context) =>
-                                        const EmailResetPopup(),
+                                        const AuthResetPopup(),
                                   );
                                 },
                                 child: const Text(

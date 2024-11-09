@@ -7,21 +7,17 @@ import 'package:remember/widgets/buttons/exit_button.dart';
 
 import 'package:remember/widgets/buttons/main_button.dart';
 
-class EmailResetPopup extends StatefulWidget {
-  const EmailResetPopup({super.key});
+class AuthResetPopup extends StatefulWidget {
+  const AuthResetPopup({super.key});
 
   @override
-  State<EmailResetPopup> createState() => _EmailResetPopupState();
+  State<AuthResetPopup> createState() => _AuthResetPopupState();
 }
 
-class _EmailResetPopupState extends State<EmailResetPopup> {
+class _AuthResetPopupState extends State<AuthResetPopup> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   bool _isLoading = false;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -46,7 +42,7 @@ class _EmailResetPopupState extends State<EmailResetPopup> {
         return;
       }
       if (!mounted) return;
-      showToast("Sprawdź swoją skrzynkę");
+      showToast("Sprawdź swoją skrzynkę", context);
       Navigator.pop(context);
     }
   }
