@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/models/map_data.dart';
 import 'package:remember/screens/map_screen.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
@@ -40,7 +41,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
     final status = await checkConnection();
     if (!status) {
       if (!mounted) return null;
-      await showInfoPopup(context, "Brak połączenia z internetem.");
+      await showInfoPopup(context, noConnection);
       return null;
     }
     final lat = coordinates.latitude;
@@ -57,11 +58,11 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       }
     } on SocketException {
       if (!mounted) return null;
-      await showInfoPopup(context, "Brak połączenia z internetem.");
+      await showInfoPopup(context, noConnection);
       return null;
     } catch (e) {
       if (!mounted) return null;
-      await showInfoPopup(context, "Wystąpił błąd. Spróbuj ponownie później");
+      await showInfoPopup(context, unknownError);
       return null;
     }
     return null;
@@ -71,7 +72,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
   Widget build(BuildContext context) {
     return NewMemoryContainer(
       height: MediaQuery.of(context).size.height / 4,
-      text: "Nie podano lokalizacji",
+      text: noLocationChosen,
       icon: Icons.location_off,
       onTap: () async {
         _getLocation();

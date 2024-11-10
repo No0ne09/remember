@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/widgets/background.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
@@ -63,9 +64,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
       if (!mounted) return;
       Navigator.pop(context);
       Navigator.pop(context);
-      showToast(
-          "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.",
-          context);
+      showToast(passwordChanged, context);
       _authInstance.signOut();
     }
   }
@@ -77,7 +76,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Resetowanie hasła",
+          passwordReset,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -102,14 +101,14 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                           BaseTextfield(
                             validator: registerPasswordValidator(
                                 _currentPasswordController),
-                            hint: "Aktualne hasło",
+                            hint: currentPassword,
                             isPassword: true,
                             controller: _currentPasswordController,
                           ),
                           BaseTextfield(
                             validator: registerPasswordValidator(
                                 _confirmPasswordController),
-                            hint: "Nowe hasło",
+                            hint: newPassword,
                             isPassword: true,
                             controller: _passwordController,
                           ),
@@ -120,7 +119,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                             isPassword: true,
                             validator:
                                 registerPasswordValidator(_passwordController),
-                            hint: "Powtórz nowe hasło",
+                            hint: confirmNewPassword,
                             controller: _confirmPasswordController,
                           ),
                           const SizedBox(
@@ -131,7 +130,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                                   child: CircularProgressIndicator(),
                                 )
                               : MainButton(
-                                  text: "Zresetuj hasło",
+                                  text: resetPassword,
                                   onPressed: _resetPassword,
                                 )
                         ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/providers.dart';
+import 'package:remember/helpers/strings.dart';
 
 class CustomAppBar extends ConsumerWidget {
   const CustomAppBar({super.key});
@@ -20,7 +21,7 @@ class CustomAppBar extends ConsumerWidget {
       items: const [
         TabItem(
           icon: Icons.browse_gallery_outlined,
-          title: 'Wspomnienia',
+          title: memories,
           activeIcon: Icon(
             Icons.browse_gallery,
           ),
@@ -28,14 +29,14 @@ class CustomAppBar extends ConsumerWidget {
         if (!kIsWeb)
           TabItem(
             icon: Icons.add_a_photo_outlined,
-            title: 'Zapamiętaj',
+            title: remember,
             activeIcon: Icon(
               Icons.add_a_photo,
             ),
           ),
         TabItem(
           icon: Icons.map_outlined,
-          title: 'Twoja mapa',
+          title: memoryMap,
           activeIcon: Icon(Icons.map),
         ),
       ],

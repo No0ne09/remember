@@ -22,3 +22,8 @@ const backgroundDecoration = BoxDecoration(
         color: Colors.transparent,
       )),
 );
+const contactMail = "bplociennik03@gmail.com";
+const subject = "Re(me)mber - Kontakt";
+const reportBugUrl = "https://forms.gle/19q6WbGBDQN4y2sN9";
+const reportBug = "Zgłoś błąd";
+const support = "Pomoc techniczna";

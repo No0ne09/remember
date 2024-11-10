@@ -42,7 +42,6 @@ class App extends StatelessWidget {
       ],
       supportedLocales: const [
         Locale('pl'),
-        Locale('en'),
       ],
       debugShowCheckedModeBanner: false,
       home: PopScope(

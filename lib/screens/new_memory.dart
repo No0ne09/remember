@@ -11,6 +11,7 @@ import 'package:remember/helpers/constants.dart';
 
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
 import 'package:remember/models/map_data.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
@@ -43,9 +44,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
 
     if (exifDateTime == null) {
       if (!mounted) return;
-      await showInfoPopup(context,
-          "Nie udało się odczytać daty ze zdjęcia. Musisz wybrać ją ręcznie.",
-          title: "Uwaga");
+      await showInfoPopup(context, noExif, title: warning);
       return;
     }
 
@@ -89,7 +88,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         onTimeout: () async {
           await uploadTask.cancel();
           throw TimeoutException(
-            'Nie udało się wysłać zdjęcia. Spróbuj ponownie później.',
+            uploadError,
           );
         },
       );
@@ -111,14 +110,13 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         _chosenImage == null ||
         _chosenDate == null ||
         _chosenLocation == null) {
-      await showInfoPopup(
-          context, "Upewnij się, że uzupełniłeś wszystkie pola.");
+      await showInfoPopup(context, notFilled);
       return;
     }
     final status = await checkConnection();
     if (!status) {
       if (!mounted) return;
-      await showInfoPopup(context, "Brak połączenia z internetem.");
+      await showInfoPopup(context, noConnection);
       return;
     }
     setState(() {
@@ -187,7 +185,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
             children: [
               BaseTextfield(
                 validator: basicValidator,
-                hint: "Nazwij swoje wspomnienie",
+                hint: nameMemory,
                 controller: _titleController,
                 inputAction: TextInputAction.done,
               ),
@@ -212,8 +210,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
                       onPressed: () async {
                         await _pickDateTime();
                       },
-                      text:
-                          _chosenDate == null ? "Data nieznana" : _chosenDate!,
+                      text: _chosenDate == null ? unknownDate : _chosenDate!,
                     ),
                   ),
                 ],
@@ -236,7 +233,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
               ),
               MultilineTextfield(
                 validator: basicValidator,
-                label: "Opisz swoje wspomnienie",
+                label: describeMemory,
                 controller: _descriptionController,
               ),
               const SizedBox(
@@ -248,7 +245,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
                     )
                   : MainButton(
                       onPressed: _submitMemory,
-                      text: "Zapisz wspomnienie",
+                      text: saveMemory,
                     ),
             ],
           ),
