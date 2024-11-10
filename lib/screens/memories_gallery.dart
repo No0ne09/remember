@@ -9,7 +9,7 @@ class MemoriesGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return Placeholder();
+    return Placeholder();
     final user = FirebaseAuth.instance.currentUser!;
     final stream = FirebaseFirestore.instance
         .collection('memories_by_user')
