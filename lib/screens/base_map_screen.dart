@@ -148,6 +148,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
         children: [
           GoogleMap(
             zoomControlsEnabled: false,
+            mapToolbarEnabled: !widget.isSelecting,
             onMapCreated: (controller) {
               _controller = controller;
             },
