@@ -30,8 +30,8 @@ class _MemoriesMapState extends State<MemoriesMap> {
         Marker(
           markerId: MarkerId(doc.id),
           infoWindow: InfoWindow(
-            title: data["title"],
-            snippet: data["memoryDate"],
+            title: data["memoryDate"],
+            snippet: data["title"],
           ),
           position: LatLng(
             data["geopoint"].latitude,
