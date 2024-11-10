@@ -6,6 +6,7 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
 import 'package:remember/screens/in_app_password_reset.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserDrawer extends ConsumerStatefulWidget {
   const UserDrawer({super.key});
@@ -82,13 +83,26 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                 icon: Icons.password,
               ),
               DrawerOption(
+                onTap: () {},
+                text: "Zgłoś błąd",
+                icon: Icons.bug_report,
+              ),
+              DrawerOption(
+                onTap: () {
+                  openURL(Uri.parse("mailto:$contactMail?subject=$subject"),
+                      LaunchMode.platformDefault);
+                },
+                text: "Pomoc techniczna",
+                icon: Icons.help_center,
+              ),
+              const Spacer(),
+              DrawerOption(
                 onTap: () {
                   _authInstance.signOut();
                 },
                 text: logOut,
                 icon: Icons.exit_to_app_rounded,
               ),
-              const Spacer(),
               Text(
                 textAlign: TextAlign.center,
                 "$appName \n v$_appVersion",
