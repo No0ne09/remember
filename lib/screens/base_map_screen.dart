@@ -6,8 +6,8 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({
+class BaseMapScreen extends StatefulWidget {
+  const BaseMapScreen({
     required this.isSelecting,
     this.initialPosition = const LatLng(51.77689791254236, 19.489274125911784),
     this.markers = const {},
@@ -19,10 +19,10 @@ class MapScreen extends StatefulWidget {
   final Set<Marker> markers;
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<BaseMapScreen> createState() => _BaseMapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _BaseMapScreenState extends State<BaseMapScreen> {
   late final GoogleMapController _controller;
   bool _isGettingCurrentLocation = false;
   LatLng? _pickedPosition;

@@ -7,7 +7,7 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/models/map_data.dart';
-import 'package:remember/screens/map_screen.dart';
+import 'package:remember/screens/base_map_screen.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +25,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
   Future<void> _getLocation() async {
     final GeoPoint? coordinates =
         await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const MapScreen(isSelecting: true),
+      builder: (context) => const BaseMapScreen(isSelecting: true),
     ));
     if (coordinates == null) return;
     final address = await _getAddress(coordinates);
