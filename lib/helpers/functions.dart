@@ -43,7 +43,7 @@ Future<bool> checkConnection() async {
 }
 
 String getFormattedDate(DateTime date) {
-  return DateFormat("yyyy-MM-dd").format(date);
+  return DateFormat("dd.MM.yyyy").format(date);
 }
 
 Future<void> handleFireBaseError(String code, BuildContext context) async {
