@@ -83,16 +83,21 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                 icon: Icons.password,
               ),
               DrawerOption(
-                onTap: () {},
-                text: "Zgłoś błąd",
+                onTap: () async {
+                  await launchUrl(
+                    Uri.parse(reportBugUrl),
+                  );
+                },
+                text: reportBug,
                 icon: Icons.bug_report,
               ),
               DrawerOption(
-                onTap: () {
-                  openURL(Uri.parse("mailto:$contactMail?subject=$subject"),
-                      LaunchMode.platformDefault);
+                onTap: () async {
+                  await launchUrl(
+                    Uri.parse("mailto:$contactMail?subject=$subject"),
+                  );
                 },
-                text: "Pomoc techniczna",
+                text: support,
                 icon: Icons.help_center,
               ),
               const Spacer(),

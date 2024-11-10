@@ -7,7 +7,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/popups/info_popup.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 void showToast(
   String text,
@@ -88,8 +87,4 @@ String getStaticMap(GeoPoint location) {
 Future<String> getAppVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
-}
-
-void openURL(Uri url, LaunchMode mode) async {
-  launchUrl(url, mode: mode);
 }
