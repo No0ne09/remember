@@ -56,3 +56,5 @@ const login = "Zaloguj się";
 const register = "Zarejestruj się";
 const passwordChanged =
     "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.";
+const reportBug = "Zgłoś błąd";
+const support = "Pomoc techniczna";

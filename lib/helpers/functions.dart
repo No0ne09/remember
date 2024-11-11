@@ -21,11 +21,11 @@ void showToast(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.inversePrimary,
       ),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.black, fontSize: 20),
+        style: const TextStyle(fontSize: 20),
       ),
     ),
   );

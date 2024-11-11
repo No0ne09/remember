@@ -97,7 +97,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     _isLogin = !_isLogin;
                   });
