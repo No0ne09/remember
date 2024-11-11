@@ -41,19 +41,19 @@ class App extends StatelessWidget {
         colorScheme: lightScheme,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: lightScheme.tertiary,
+            backgroundColor: lightScheme.inversePrimary,
           ),
         ),
       ),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: darkScheme,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: darkScheme.inversePrimary,
+          brightness: Brightness.dark,
+          colorScheme: darkScheme,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: darkScheme.inversePrimary,
+            ),
           ),
-        ),
-      ),
+          cardTheme: CardTheme(color: darkScheme.surfaceContainerLowest)),
       title: appName,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

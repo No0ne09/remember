@@ -13,7 +13,10 @@ class TitleWidget extends StatelessWidget {
         children: [
           SizedBox(
             height: kToolbarHeight,
-            child: Image.asset("assets/logo.png"),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset("assets/logo.png"),
+            ),
           ),
           const Text(appName),
         ],
