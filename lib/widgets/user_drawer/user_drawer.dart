@@ -30,7 +30,6 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
 
   Future<void> _getVersion() async {
     final version = await getAppVersion();
-    print("ver");
     setState(() {
       _appVersion = version;
     });
@@ -38,7 +37,6 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
 
   void _getConnection() async {
     final res = await checkConnection();
-    print("con");
     setState(() {
       _connection = res ? online : offline;
     });
@@ -46,7 +44,6 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    print("build");
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Padding(
