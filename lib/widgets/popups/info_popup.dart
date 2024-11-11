@@ -11,7 +11,6 @@ class InfoPopup extends StatelessWidget {
   final String desc;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return AlertDialog(
       actions: [
         ElevatedButton(
