@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -86,4 +87,20 @@ String getStaticMap(GeoPoint location) {
 Future<String> getAppVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
+}
+
+BoxDecoration getBackgroundDecoration(BuildContext context) {
+  return BoxDecoration(
+    image: DecorationImage(
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).colorScheme.primary,
+          BlendMode.srcIn,
+        ),
+        opacity: 0.1,
+        fit: BoxFit.contain,
+        image: const Svg(
+          'assets/background.svg',
+          color: Colors.transparent,
+        )),
+  );
 }

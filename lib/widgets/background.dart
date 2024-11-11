@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remember/helpers/constants.dart';
+import 'package:remember/helpers/functions.dart';
 
 class Background extends StatelessWidget {
   const Background({
@@ -11,7 +11,7 @@ class Background extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      decoration: backgroundDecoration,
+      decoration: getBackgroundDecoration(context),
       child: child,
     );
   }
