@@ -146,7 +146,6 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
             floatingActionButton: widget.isSelecting
                 ? FloatingActionButton(
                     onPressed: _getCurrentLocation,
-                    backgroundColor: Colors.white,
                     child: _isGettingCurrentLocation
                         ? const CircularProgressIndicator()
                         : const Icon(Icons.my_location_outlined),
@@ -159,10 +158,12 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                     automaticallyImplyLeading: false,
                     actions: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
+                        padding: const EdgeInsets.all(10.0),
+                        child: FloatingActionButton.large(
                           onPressed: _savePlace,
-                          child: const Icon(Icons.save_rounded),
+                          child: const Icon(
+                            Icons.save_rounded,
+                          ),
                         ),
                       ),
                     ],

@@ -49,6 +49,10 @@ class App extends StatelessWidget {
             foregroundColor: lightScheme.primary,
           ),
         ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: lightScheme.surface,
+          foregroundColor: lightScheme.primary,
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -65,6 +69,10 @@ class App extends StatelessWidget {
           style: IconButton.styleFrom(
             foregroundColor: darkScheme.primary,
           ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: darkScheme.surface,
+          foregroundColor: darkScheme.primary,
         ),
       ),
       title: appName,
