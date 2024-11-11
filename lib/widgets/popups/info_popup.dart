@@ -11,6 +11,7 @@ class InfoPopup extends StatelessWidget {
   final String desc;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return AlertDialog(
       actions: [
         ElevatedButton(
@@ -18,7 +19,9 @@ class InfoPopup extends StatelessWidget {
             Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
+              backgroundColor: theme.brightness == Brightness.light
+                  ? theme.colorScheme.error
+                  : theme.colorScheme.errorContainer,
               foregroundColor: Colors.white),
           child: const Text("Ok"),
         ),

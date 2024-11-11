@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 
 /*For dev purposes only. If you want to compile app for android this needs to be commented out*/
 //import 'package:remember/helpers/dev_web_api_parsing.dart';
@@ -36,6 +37,23 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: lightScheme,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: lightScheme.tertiary,
+          ),
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: darkScheme,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: darkScheme.inversePrimary,
+          ),
+        ),
+      ),
       title: appName,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

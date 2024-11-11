@@ -13,7 +13,6 @@ class CustomAppBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ConvexAppBar(
       key: appBarKey,
-      activeColor: Colors.white,
       initialActiveIndex: 0,
       top: 0,
       height: 60,

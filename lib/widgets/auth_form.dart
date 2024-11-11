@@ -111,76 +111,74 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                 height: 8,
               ),
               Card(
-                  color: Theme.of(context).colorScheme.onTertiary,
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (!_isLogin)
-                            BaseTextfield(
-                              hint: username,
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!_isLogin)
+                        BaseTextfield(
+                          hint: username,
+                          validator: basicValidator,
+                          controller: _usernameController,
+                        ),
+                      BaseTextfield(
+                        hint: "E-mail",
+                        isEmail: true,
+                        validator: emailValidator,
+                        controller: _emailController,
+                      ),
+                      _isLogin
+                          ? BaseTextfield(
+                              hint: password,
+                              isPassword: true,
                               validator: basicValidator,
-                              controller: _usernameController,
-                            ),
-                          BaseTextfield(
-                            hint: "E-mail",
-                            isEmail: true,
-                            validator: emailValidator,
-                            controller: _emailController,
-                          ),
-                          _isLogin
-                              ? BaseTextfield(
+                              controller: _passwordController,
+                            )
+                          : Column(
+                              children: [
+                                BaseTextfield(
                                   hint: password,
                                   isPassword: true,
-                                  validator: basicValidator,
+                                  validator: registerPasswordValidator(
+                                      _confirmPasswordController),
                                   controller: _passwordController,
-                                )
-                              : Column(
-                                  children: [
-                                    BaseTextfield(
-                                      hint: password,
-                                      isPassword: true,
-                                      validator: registerPasswordValidator(
-                                          _confirmPasswordController),
-                                      controller: _passwordController,
-                                    ),
-                                    BaseTextfield(
-                                      hint: confirmPassword,
-                                      isPassword: true,
-                                      validator: registerPasswordValidator(
-                                          _passwordController),
-                                      controller: _confirmPasswordController,
-                                    ),
-                                  ],
                                 ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          if (_isLogin)
-                            ExcludeFocus(
-                              child: TextButton(
-                                onPressed: () async {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const AuthResetPopup(),
-                                  );
-                                },
-                                child: const Text(
-                                  passwordReset,
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                  ),
+                                BaseTextfield(
+                                  hint: confirmPassword,
+                                  isPassword: true,
+                                  validator: registerPasswordValidator(
+                                      _passwordController),
+                                  controller: _confirmPasswordController,
                                 ),
+                              ],
+                            ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      if (_isLogin)
+                        ExcludeFocus(
+                          child: TextButton(
+                            onPressed: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) => const AuthResetPopup(),
+                              );
+                            },
+                            child: const Text(
+                              passwordReset,
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
                               ),
                             ),
-                        ],
-                      ),
-                    ),
-                  )),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              )),
               const SizedBox(
                 height: 8,
               ),
