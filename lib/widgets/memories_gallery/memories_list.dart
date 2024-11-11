@@ -32,7 +32,7 @@ class MemoriesList extends ConsumerWidget {
         [];
     final List<QueryDocumentSnapshot<Map<String, dynamic>>> basicMemories = [];
     for (final memory in sortedMemories) {
-      final isFavourite = memory.data()['isFavourite'] as bool? ?? false;
+      final isFavourite = memory.data()['isFavourite'] as bool;
       isFavourite ? favouriteMemories.add(memory) : basicMemories.add(memory);
     }
 
