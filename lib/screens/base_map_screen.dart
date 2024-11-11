@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 
 class BaseMapScreen extends StatefulWidget {
   const BaseMapScreen({
@@ -119,6 +120,8 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
   @override
   Widget build(BuildContext context) {
     final Widget content = GoogleMap(
+      style:
+          Theme.of(context).brightness == Brightness.dark ? darkMapStyle : null,
       zoomControlsEnabled: false,
       mapToolbarEnabled: !widget.isSelecting,
       onMapCreated: (controller) {
