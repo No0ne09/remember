@@ -16,7 +16,7 @@ class MemoriesGallery extends StatelessWidget {
         .doc(user.uid)
         .collection("memories")
         .snapshots();
-    print("tset");
+    print("stream");
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

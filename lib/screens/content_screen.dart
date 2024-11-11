@@ -46,12 +46,16 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => _showOfflineWarning(),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     _currentIndex = ref.watch(indexProvider);
-    Future.delayed(
-      Duration.zero,
-      () => _showOfflineWarning(),
-    );
 
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
