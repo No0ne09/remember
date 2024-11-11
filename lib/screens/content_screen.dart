@@ -5,7 +5,7 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/new_memory.dart';
-import 'package:remember/screens/map.dart';
+import 'package:remember/screens/memories_map.dart';
 import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/background.dart';
 import 'package:remember/widgets/buttons/animated_toggle_button.dart';
@@ -27,9 +27,9 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
       case 0:
         return const MemoriesGallery();
       case 1:
-        return kIsWeb ? const MapWidget() : const NewMemory();
+        return kIsWeb ? const MemoriesMap() : const NewMemory();
       case 2:
-        return const MapWidget();
+        return const MemoriesMap();
       default:
         return const MemoriesGallery();
     }

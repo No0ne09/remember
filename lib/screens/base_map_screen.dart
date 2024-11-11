@@ -6,8 +6,8 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({
+class BaseMapScreen extends StatefulWidget {
+  const BaseMapScreen({
     required this.isSelecting,
     this.initialPosition = const LatLng(51.77689791254236, 19.489274125911784),
     this.markers = const {},
@@ -19,10 +19,10 @@ class MapScreen extends StatefulWidget {
   final Set<Marker> markers;
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<BaseMapScreen> createState() => _BaseMapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _BaseMapScreenState extends State<BaseMapScreen> {
   late final GoogleMapController _controller;
   bool _isGettingCurrentLocation = false;
   LatLng? _pickedPosition;
@@ -118,54 +118,55 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: widget.isSelecting
-          ? FloatingActionButton(
-              onPressed: _getCurrentLocation,
-              backgroundColor: Colors.white,
-              child: _isGettingCurrentLocation
-                  ? const CircularProgressIndicator()
-                  : const Icon(Icons.my_location_outlined),
-            )
-          : null,
-      extendBodyBehindAppBar: true,
-      appBar: widget.isSelecting
-          ? AppBar(
-              forceMaterialTransparency: true,
-              automaticallyImplyLeading: false,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: _savePlace,
-                    child: const Icon(Icons.save_rounded),
-                  ),
-                ),
-              ],
-            )
-          : null,
-      body: Stack(
-        children: [
-          GoogleMap(
-            zoomControlsEnabled: false,
-            onMapCreated: (controller) {
-              _controller = controller;
-            },
-            initialCameraPosition: CameraPosition(
-              target: widget.initialPosition,
-              zoom: zoom,
-            ),
-            markers: _markersList,
-            onTap: widget.isSelecting == false
-                ? null
-                : (markerPosition) {
-                    setState(() {
-                      _pickedPosition = markerPosition;
-                    });
-                  },
-          ),
-        ],
+    final Widget content = GoogleMap(
+      zoomControlsEnabled: false,
+      mapToolbarEnabled: !widget.isSelecting,
+      onMapCreated: (controller) {
+        _controller = controller;
+      },
+      initialCameraPosition: CameraPosition(
+        target: widget.initialPosition,
+        zoom: zoom,
       ),
+      markers: _markersList,
+      onTap: widget.isSelecting == false
+          ? null
+          : (markerPosition) {
+              setState(() {
+                _pickedPosition = markerPosition;
+              });
+            },
     );
+
+    return widget.isSelecting
+        ? Scaffold(
+            floatingActionButton: widget.isSelecting
+                ? FloatingActionButton(
+                    onPressed: _getCurrentLocation,
+                    backgroundColor: Colors.white,
+                    child: _isGettingCurrentLocation
+                        ? const CircularProgressIndicator()
+                        : const Icon(Icons.my_location_outlined),
+                  )
+                : null,
+            extendBodyBehindAppBar: true,
+            appBar: widget.isSelecting
+                ? AppBar(
+                    forceMaterialTransparency: true,
+                    automaticallyImplyLeading: false,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: _savePlace,
+                          child: const Icon(Icons.save_rounded),
+                        ),
+                      ),
+                    ],
+                  )
+                : null,
+            body: content,
+          )
+        : content;
   }
 }
