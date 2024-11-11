@@ -59,12 +59,14 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                     const SizedBox(
                       height: 8,
                     ),
-                    Text(
-                      '${_authInstance.currentUser!.email}',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                      overflow: TextOverflow.ellipsis,
+                    Opacity(
+                      opacity: 0.4,
+                      child: Text(
+                        '${_authInstance.currentUser!.email}',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
