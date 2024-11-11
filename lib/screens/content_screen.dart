@@ -10,6 +10,7 @@ import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/background.dart';
 import 'package:remember/widgets/buttons/animated_toggle_button.dart';
 import 'package:remember/widgets/custom_app_bar.dart';
+import 'package:remember/widgets/title_widget.dart';
 import 'package:remember/widgets/user_drawer/user_drawer.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {
@@ -35,19 +36,6 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
     }
   }
 
-  String get _pageTitle {
-    switch (_currentIndex) {
-      case 0:
-        return appName;
-      case 1:
-        return kIsWeb ? memoryMap : saveMemory;
-      case 2:
-        return memoryMap;
-      default:
-        return appName;
-    }
-  }
-
   void _showOfflineWarning() async {
     final status = await checkConnection();
     if (status || !mounted) return;
@@ -70,8 +58,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
       drawer: const UserDrawer(),
       appBar: AppBar(
         forceMaterialTransparency: true,
-        centerTitle: true,
-        title: Text(_pageTitle),
+        title: const TitleWidget(),
         bottom: kIsWeb
             ? const PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
