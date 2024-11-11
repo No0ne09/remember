@@ -3,13 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:uuid/uuid.dart';
 
-OutlineInputBorder getTextFieldBorder({Color color = Colors.transparent}) {
-  return OutlineInputBorder(
-    borderRadius: defaultBorderRadius,
-    borderSide: BorderSide(color: color),
-  );
-}
-
 final defaultBorderRadius = BorderRadius.circular(25);
 const zoom = 17.0;
 final apiKey = dotenv.env["API_KEY"];

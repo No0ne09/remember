@@ -1,4 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:remember/helpers/constants.dart';
+
+OutlineInputBorder getTextFieldBorder({Color color = Colors.transparent}) {
+  return OutlineInputBorder(
+    borderRadius: defaultBorderRadius,
+    borderSide: BorderSide(color: color),
+  );
+}
+
+BoxDecoration getBackgroundDecoration(BuildContext context) {
+  return BoxDecoration(
+    image: DecorationImage(
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).colorScheme.primary,
+          BlendMode.srcIn,
+        ),
+        opacity: 0.1,
+        fit: BoxFit.contain,
+        image: const Svg(
+          'assets/background.svg',
+          color: Colors.transparent,
+        )),
+  );
+}
 
 const lightScheme = ColorScheme(
   brightness: Brightness.light,

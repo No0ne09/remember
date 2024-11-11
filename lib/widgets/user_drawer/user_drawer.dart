@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
 import 'package:remember/screens/in_app_password_reset.dart';
 import 'package:url_launcher/url_launcher.dart';
