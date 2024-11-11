@@ -118,55 +118,55 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: widget.isSelecting
-          ? FloatingActionButton(
-              onPressed: _getCurrentLocation,
-              backgroundColor: Colors.white,
-              child: _isGettingCurrentLocation
-                  ? const CircularProgressIndicator()
-                  : const Icon(Icons.my_location_outlined),
-            )
-          : null,
-      extendBodyBehindAppBar: true,
-      appBar: widget.isSelecting
-          ? AppBar(
-              forceMaterialTransparency: true,
-              automaticallyImplyLeading: false,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: _savePlace,
-                    child: const Icon(Icons.save_rounded),
-                  ),
-                ),
-              ],
-            )
-          : null,
-      body: Stack(
-        children: [
-          GoogleMap(
-            zoomControlsEnabled: false,
-            mapToolbarEnabled: !widget.isSelecting,
-            onMapCreated: (controller) {
-              _controller = controller;
-            },
-            initialCameraPosition: CameraPosition(
-              target: widget.initialPosition,
-              zoom: zoom,
-            ),
-            markers: _markersList,
-            onTap: widget.isSelecting == false
-                ? null
-                : (markerPosition) {
-                    setState(() {
-                      _pickedPosition = markerPosition;
-                    });
-                  },
-          ),
-        ],
+    final Widget content = GoogleMap(
+      zoomControlsEnabled: false,
+      mapToolbarEnabled: !widget.isSelecting,
+      onMapCreated: (controller) {
+        _controller = controller;
+      },
+      initialCameraPosition: CameraPosition(
+        target: widget.initialPosition,
+        zoom: zoom,
       ),
+      markers: _markersList,
+      onTap: widget.isSelecting == false
+          ? null
+          : (markerPosition) {
+              setState(() {
+                _pickedPosition = markerPosition;
+              });
+            },
     );
+
+    return widget.isSelecting
+        ? Scaffold(
+            floatingActionButton: widget.isSelecting
+                ? FloatingActionButton(
+                    onPressed: _getCurrentLocation,
+                    backgroundColor: Colors.white,
+                    child: _isGettingCurrentLocation
+                        ? const CircularProgressIndicator()
+                        : const Icon(Icons.my_location_outlined),
+                  )
+                : null,
+            extendBodyBehindAppBar: true,
+            appBar: widget.isSelecting
+                ? AppBar(
+                    forceMaterialTransparency: true,
+                    automaticallyImplyLeading: false,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: _savePlace,
+                          child: const Icon(Icons.save_rounded),
+                        ),
+                      ),
+                    ],
+                  )
+                : null,
+            body: content,
+          )
+        : content;
   }
 }
