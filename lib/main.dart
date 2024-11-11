@@ -34,44 +34,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: lightScheme,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: lightScheme.inversePrimary,
-          ),
-        ),
-        iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-            foregroundColor: lightScheme.primary,
-          ),
-        ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: lightScheme.surface,
-          foregroundColor: lightScheme.primary,
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: darkScheme,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: darkScheme.inversePrimary,
-          ),
-        ),
-        cardTheme: CardTheme(
-          color: darkScheme.surfaceContainerLowest,
-        ),
-        iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-            foregroundColor: darkScheme.primary,
-          ),
-        ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: darkScheme.surface,
-          foregroundColor: darkScheme.primary,
-        ),
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       title: appName,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

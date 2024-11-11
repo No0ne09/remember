@@ -98,6 +98,44 @@ const darkScheme = ColorScheme(
   surfaceContainerHighest: Color(0xff333537),
 );
 
+final lightTheme = ThemeData(
+  colorScheme: lightScheme,
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: lightScheme.inversePrimary,
+    ),
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(
+      foregroundColor: lightScheme.primary,
+    ),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: lightScheme.surface,
+    foregroundColor: lightScheme.primary,
+  ),
+);
+final darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: darkScheme,
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: darkScheme.inversePrimary,
+    ),
+  ),
+  cardTheme: CardTheme(
+    color: darkScheme.surfaceContainerLowest,
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(
+      foregroundColor: darkScheme.primary,
+    ),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: darkScheme.surface,
+    foregroundColor: darkScheme.primary,
+  ),
+);
 const darkMapStyle = '''[
   {
     "elementType": "geometry",
