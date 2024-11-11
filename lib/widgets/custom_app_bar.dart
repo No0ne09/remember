@@ -16,6 +16,7 @@ class CustomAppBar extends ConsumerWidget {
       backgroundColor: colorScheme.surface,
       color: colorScheme.inverseSurface,
       activeColor: colorScheme.primary,
+      elevation: 0,
       key: appBarKey,
       initialActiveIndex: 0,
       top: 0,
