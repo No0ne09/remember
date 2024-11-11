@@ -206,7 +206,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
                   Positioned(
                     bottom: 8,
                     child: MainButton(
-                      backgroundColor: Colors.blue,
                       onPressed: () async {
                         await _pickDateTime();
                       },

@@ -50,7 +50,6 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
     return AlertDialog(
       insetPadding: const EdgeInsets.all(10),
       content: Form(
@@ -69,15 +68,13 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
               passwordResetting,
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: scheme.onPrimaryFixed,
                   ),
             ),
             const SizedBox(
               height: 30,
             ),
-            Text(
+            const Text(
               emailSend,
-              style: TextStyle(color: scheme.onPrimaryFixed),
             ),
             const SizedBox(
               height: 10,
