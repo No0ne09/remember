@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remember/widgets/auth_form.dart';
-import 'package:remember/widgets/background.dart';
-import 'package:remember/widgets/title_widget.dart';
+import 'package:remember/widgets/decoration/background.dart';
+import 'package:remember/widgets/decoration/title_widget.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
