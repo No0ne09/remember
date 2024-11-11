@@ -145,6 +145,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
         ? Scaffold(
             floatingActionButton: widget.isSelecting
                 ? FloatingActionButton(
+                    heroTag: "Locate",
                     onPressed: _getCurrentLocation,
                     child: _isGettingCurrentLocation
                         ? const CircularProgressIndicator()
@@ -160,6 +161,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: FloatingActionButton.large(
+                          heroTag: "Save",
                           onPressed: _savePlace,
                           child: const Icon(
                             Icons.save_rounded,
