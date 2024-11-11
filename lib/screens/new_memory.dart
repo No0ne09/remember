@@ -44,10 +44,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       await showInfoPopup(context, noExif, title: warning);
       return;
     }
-
-    final tempDateTime =
-        DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
-    _formatDate(tempDateTime);
+    setState(() {
+      _chosenDate = exifDateTime.split(' ')[0].replaceAll(':', '-');
+    });
   }
 
   Future<void> _pickDateTime() async {
@@ -60,14 +59,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime.now(),
     );
-    _formatDate(tempDateTime);
-  }
-
-  void _formatDate(DateTime? tempDateTime) {
     if (tempDateTime == null) return;
-    final dateTime = getFormattedDate(tempDateTime);
     setState(() {
-      _chosenDate = dateTime;
+      _chosenDate = tempDateTime.toString().split(' ')[0];
     });
   }
 
