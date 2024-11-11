@@ -28,12 +28,6 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
   bool _isGettingCurrentLocation = false;
   LatLng? _pickedPosition;
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   Future<void> _getCurrentLocation() async {
     final location = Location();
     bool serviceEnabled;
