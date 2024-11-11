@@ -144,6 +144,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         "uploadTimeStamp": Timestamp.now(),
         "username": user.displayName,
         "email": user.email,
+        "userId": user.uid,
         "imageUrl": imageUrl,
         "isFavourite": false,
       });
