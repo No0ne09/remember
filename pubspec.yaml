@@ -47,7 +47,6 @@ dependencies:
   flutter_riverpod: ^2.6.1
   image_picker: ^1.1.2
   exif: ^3.3.0
-  intl: ^0.19.0
   flutter_svg_provider: ^1.0.7
   flutter_dotenv: ^5.2.1
   web: ^1.1.0

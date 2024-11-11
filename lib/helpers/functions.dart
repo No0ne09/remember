@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/strings.dart';
@@ -39,10 +38,6 @@ Future<bool> checkConnection() async {
     return true;
   }
   return false;
-}
-
-String getFormattedDate(DateTime date) {
-  return DateFormat("yyyy-MM-dd").format(date);
 }
 
 Future<void> handleFireBaseError(String code, BuildContext context) async {
