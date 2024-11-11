@@ -58,3 +58,5 @@ const passwordChanged =
     "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.";
 const reportBug = "Zgłoś błąd";
 const support = "Pomoc techniczna";
+const offline = "Jesteś Offline";
+const online = "Jesteś Online";

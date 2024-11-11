@@ -20,21 +20,33 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   final _authInstance = FirebaseAuth.instance;
 
   String _appVersion = '';
+  String _connection = offline;
   @override
   void initState() {
     super.initState();
     _getVersion();
+    _getConnection();
   }
 
-  void _getVersion() async {
+  Future<void> _getVersion() async {
     final version = await getAppVersion();
+    print("ver");
     setState(() {
       _appVersion = version;
     });
   }
 
+  void _getConnection() async {
+    final res = await checkConnection();
+    print("con");
+    setState(() {
+      _connection = res ? online : offline;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("build");
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.75,
       child: Padding(
@@ -54,6 +66,16 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                       '${_authInstance.currentUser!.displayName}',
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      _connection,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
