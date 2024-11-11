@@ -36,7 +36,6 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
 
   Future<void> _getCurrentLocation() async {
     final location = Location();
-
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     LocationData locationData;
@@ -46,18 +45,15 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
       if (!serviceEnabled) {
         if (!mounted) return;
         await showInfoPopup(context, locationTurnedOff);
-
         return;
       }
     }
-
     permissionGranted = await location.hasPermission();
     if (permissionGranted != PermissionStatus.granted) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         if (!mounted) return;
         await showInfoPopup(context, noLocationPermission);
-
         return;
       }
     }
@@ -70,10 +66,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     });
     final lat = locationData.latitude;
     final lng = locationData.longitude;
-    if (lat == null || lng == null) {
-      return;
-    }
-
+    if (lat == null || lng == null) return;
     setState(() {
       _pickedPosition = LatLng(lat, lng);
     });
@@ -110,10 +103,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
             infoWindow: const InfoWindow(title: yourLocation)),
       };
     }
-
-    if (!widget.isSelecting) {
-      return widget.markers;
-    }
+    if (!widget.isSelecting) return widget.markers;
     return {};
   }
 

@@ -49,7 +49,10 @@ class _AuthFormState extends ConsumerState<AuthForm> {
     }
   }
 
-  Future<void> _loginUser(String email, String password) async {
+  Future<void> _loginUser(
+    String email,
+    String password,
+  ) async {
     try {
       ref.read(indexProvider.notifier).state = 0;
       await _authInstance.signInWithEmailAndPassword(
@@ -65,7 +68,10 @@ class _AuthFormState extends ConsumerState<AuthForm> {
   }
 
   Future<void> _registerUser(
-      String email, String password, String username) async {
+    String email,
+    String password,
+    String username,
+  ) async {
     try {
       ref.read(indexProvider.notifier).state = 0;
       final userData = await _authInstance.createUserWithEmailAndPassword(

@@ -22,6 +22,7 @@ class NewLocationWidget extends StatefulWidget {
 
 class _NewLocationWidgetState extends State<NewLocationWidget> {
   String? _imageUrl;
+
   Future<void> _getLocation() async {
     final GeoPoint? coordinates =
         await Navigator.of(context).push(MaterialPageRoute(

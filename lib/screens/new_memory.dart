@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exif/exif.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
-
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/strings.dart';
@@ -34,7 +32,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   File? _chosenImage;
   String? _chosenDate;
   MapData? _chosenLocation;
-
   bool _isSubmitting = false;
 
   Future<void> _checkDateTime() async {
@@ -50,7 +47,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
 
     final tempDateTime =
         DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
-
     _formatDate(tempDateTime);
   }
 

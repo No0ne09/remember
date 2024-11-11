@@ -56,7 +56,6 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
   @override
   Widget build(BuildContext context) {
     _currentIndex = ref.watch(indexProvider);
-
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
       drawer: const UserDrawer(),

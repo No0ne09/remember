@@ -55,6 +55,8 @@ class _BaseTextfieldState extends State<BaseTextfield> {
           _focusNode.unfocus();
         },
         decoration: InputDecoration(
+          errorStyle: const TextStyle(color: Colors.red),
+          errorBorder: getTextFieldBorder(color: Colors.red),
           filled: true,
           hintText: widget.hint,
           suffixIcon: widget.isPassword
@@ -71,9 +73,9 @@ class _BaseTextfieldState extends State<BaseTextfield> {
                   ),
                 )
               : null,
-          enabledBorder: textFieldBorder,
-          focusedBorder: textFieldBorder,
-          border: textFieldBorder,
+          enabledBorder: getTextFieldBorder(),
+          focusedBorder: getTextFieldBorder(),
+          border: getTextFieldBorder(),
         ),
       ),
     );
