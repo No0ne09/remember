@@ -9,6 +9,14 @@ OutlineInputBorder getTextFieldBorder({Color color = Colors.transparent}) {
   );
 }
 
+ButtonStyle getSmallRedButtonStyle(BuildContext context) {
+  final scheme = Theme.of(context).colorScheme;
+  return ElevatedButton.styleFrom(
+    backgroundColor: scheme.error,
+    foregroundColor: scheme.onError,
+  );
+}
+
 BoxDecoration getBackgroundDecoration(BuildContext context,
     {fit = BoxFit.cover}) {
   return BoxDecoration(
@@ -149,7 +157,7 @@ final darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkScheme.surfaceContainerLowest,
+    color: darkScheme.surfaceContainer,
   ),
   iconButtonTheme: IconButtonThemeData(
     style: IconButton.styleFrom(

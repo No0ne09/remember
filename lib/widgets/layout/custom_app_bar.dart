@@ -14,7 +14,7 @@ class CustomAppBar extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return ConvexAppBar(
       backgroundColor: colorScheme.surface,
-      color: colorScheme.inverseSurface,
+      color: colorScheme.primary,
       activeColor: colorScheme.primary,
       elevation: 0,
       key: appBarKey,

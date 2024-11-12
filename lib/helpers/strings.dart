@@ -64,3 +64,5 @@ const imageSaved = "Zdjęcie zostało zapisane w galerii.";
 const eraseMemory = "Wymaż wspomnienie";
 const ensureErase =
     "Czy na pewno chcesz wymazać to wspomnienie? Tego procesu nie da się odwrócić.";
+const yes = "TAK";
+const no = "NIE";

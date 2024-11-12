@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 
 class ConfirmationPopup extends StatelessWidget {
   const ConfirmationPopup({
@@ -18,17 +19,14 @@ class ConfirmationPopup extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("NIE"),
+          child: const Text(no),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-          ),
+          style: getSmallRedButtonStyle(context),
           onPressed: () {
             Navigator.pop(context, true);
           },
-          child: Text("TAK"),
+          child: const Text(yes),
         ),
       ],
     );

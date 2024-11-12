@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
-import 'package:remember/widgets/decoration/background.dart';
+import 'package:remember/widgets/layout/background.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 

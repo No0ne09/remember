@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remember/helpers/theme.dart';
 
 class InfoPopup extends StatelessWidget {
   const InfoPopup({
@@ -17,10 +18,7 @@ class InfoPopup extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-          ),
+          style: getSmallRedButtonStyle(context),
           child: const Text("Ok"),
         ),
       ],
@@ -28,14 +26,9 @@ class InfoPopup extends StatelessWidget {
         title,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            desc,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ],
+      content: Text(
+        desc,
+        style: const TextStyle(fontSize: 16),
       ),
     );
   }

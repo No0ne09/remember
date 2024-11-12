@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/base_map_screen.dart';
-import 'package:remember/widgets/decoration/infotext.dart';
+import 'package:remember/widgets/layout/infotext.dart';
 
 class MemoriesMap extends StatefulWidget {
   const MemoriesMap({super.key});

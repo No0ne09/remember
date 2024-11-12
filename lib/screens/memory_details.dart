@@ -11,8 +11,8 @@ import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
-import 'package:remember/widgets/decoration/background.dart';
-import 'package:remember/widgets/decoration/title_widget.dart';
+import 'package:remember/widgets/layout/background.dart';
+import 'package:remember/widgets/layout/title_widget.dart';
 import 'package:remember/widgets/memory_details/memory_pageview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:remember/widgets/popups/confirmation_popup.dart';
@@ -225,10 +225,13 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                     ),
                   ),
                   if (!landscape)
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: _memoryDetailsColumn,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: _memoryDetailsColumn,
+                        ),
                       ),
                     ),
                   const SizedBox(
