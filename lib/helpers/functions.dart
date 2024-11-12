@@ -75,7 +75,8 @@ Future<void> showInfoPopup(BuildContext context, String desc,
 String getStaticMap(GeoPoint location) {
   final lat = location.latitude;
   final lng = location.longitude;
-  return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng=&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$lng&key=$apiKey';
+
+  return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$lng&key=$apiKey';
 }
 
 Future<String> getAppVersion() async {
