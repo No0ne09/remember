@@ -55,7 +55,8 @@ class _MemoryPageviewState extends State<MemoryPageview> {
   }
 
   void _showMap() {
-    final position = LatLng(widget.location.latitude, widget.location.latitude);
+    final position =
+        LatLng(widget.location.latitude, widget.location.longitude);
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => BaseMapScreen(
         isSelecting: false,
@@ -77,14 +78,14 @@ class _MemoryPageviewState extends State<MemoryPageview> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        width: width,
-        height: height / 1.7,
-        child: Stack(
-          children: [
-            PageView(
+    return Column(
+      children: [
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(
+            width: width,
+            height: height / 1.7,
+            child: PageView(
               onPageChanged: (value) {
                 setState(() {
                   _currentPage = value;
@@ -108,25 +109,21 @@ class _MemoryPageviewState extends State<MemoryPageview> {
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: PageviewButton(
-                onPressed: () {
-                  final direction = _currentPage == 0
-                      ? _pageController.nextPage
-                      : _pageController.previousPage;
-                  direction(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                icon:
-                    _currentPage == 0 ? Icons.arrow_forward : Icons.arrow_back,
-              ),
-            )
-          ],
+          ),
         ),
-      ),
+        PageviewButton(
+          onPressed: () {
+            final direction = _currentPage == 0
+                ? _pageController.nextPage
+                : _pageController.previousPage;
+            direction(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          },
+          icon: _currentPage == 0 ? Icons.arrow_forward : Icons.arrow_back,
+        )
+      ],
     );
   }
 }
