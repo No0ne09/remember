@@ -61,3 +61,6 @@ const support = "Pomoc techniczna";
 const offline = "Jesteś Offline";
 const online = "Jesteś Online";
 const imageSaved = "Zdjęcie zostało zapisane w galerii.";
+const eraseMemory = "Wymaż wspomnienie";
+const ensureErase =
+    "Czy na pewno chcesz wymazać to wspomnienie? Tego procesu nie da się odwrócić.";

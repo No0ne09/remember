@@ -4,8 +4,9 @@ import 'package:remember/screens/memory_details.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 
 class MemoryCard extends StatelessWidget {
-  const MemoryCard({required this.data, super.key});
+  const MemoryCard({required this.data, required this.id, super.key});
   final Map<String, dynamic> data;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -43,7 +44,10 @@ class MemoryCard extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MemoryDetails(data: data),
+                  builder: (context) => MemoryDetails(
+                    data: data,
+                    id: id,
+                  ),
                 ));
               },
             ),

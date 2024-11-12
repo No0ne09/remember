@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
@@ -11,10 +14,16 @@ import 'package:remember/widgets/decoration/background.dart';
 import 'package:remember/widgets/decoration/title_widget.dart';
 import 'package:remember/widgets/memory_details/memory_pageview.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:remember/widgets/popups/confirmation_popup.dart';
 
 class MemoryDetails extends StatefulWidget {
-  const MemoryDetails({required this.data, super.key});
+  const MemoryDetails({
+    required this.data,
+    required this.id,
+    super.key,
+  });
   final Map<String, dynamic> data;
+  final String id;
 
   @override
   State<MemoryDetails> createState() => _MemoryDetailsState();
@@ -22,6 +31,9 @@ class MemoryDetails extends StatefulWidget {
 
 class _MemoryDetailsState extends State<MemoryDetails> {
   bool _isDownloading = false;
+  final _firestore = FirebaseFirestore.instance;
+  final _user = FirebaseAuth.instance.currentUser!.uid;
+
   Widget get _dataColumn {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,9 +99,41 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     showToast(imageSaved, context);
   }
 
-  Future<void> _deleteMemory() async {}
+  Future<void> _deleteMemory() async {
+    final status = await _checkInternet();
+    if (!status || !mounted) return;
+    final ensure = await showDialog(
+      context: context,
+      builder: (context) => const ConfirmationPopup(
+        text: ensureErase,
+      ),
+    );
+    if (ensure != true) return;
+    try {
+      _firestore
+          .collection('memories_by_user')
+          .doc(_user)
+          .collection('memories')
+          .doc(widget.id)
+          .delete();
+      final image = FirebaseStorage.instance
+          .ref()
+          .child('user_memories')
+          .child(_user)
+          .child('${widget.id}.jpg');
+      image.delete();
+    } on FirebaseException catch (e) {
+      if (!mounted) return;
+      handleFireBaseError(e.code, context);
+      return;
+    }
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(widget.data);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final landscape = width > height;
@@ -118,7 +162,6 @@ class _MemoryDetailsState extends State<MemoryDetails> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     textAlign: TextAlign.center,
@@ -157,11 +200,12 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                       ),
                     ),
                   const SizedBox(
-                    height: 8,
+                    height: 100,
                   ),
                   MainButton(
-                    text: "Usuń",
-                    onPressed: () {},
+                    color: Colors.red,
+                    text: eraseMemory,
+                    onPressed: _deleteMemory,
                   ),
                 ],
               ),
