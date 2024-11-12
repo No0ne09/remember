@@ -95,9 +95,12 @@ class _MemoryPageviewState extends State<MemoryPageview> {
               children: [
                 GestureDetector(
                   onLongPress: _showFullScreenImage,
-                  child: CustomCachedImage(
-                    imageUrl: widget.imageUrl,
-                    fit: BoxFit.contain,
+                  child: Container(
+                    color: Colors.black,
+                    child: CustomCachedImage(
+                      imageUrl: widget.imageUrl,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 GestureDetector(
