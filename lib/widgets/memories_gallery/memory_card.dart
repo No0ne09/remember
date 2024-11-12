@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/screens/memory_details.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 
 class MemoryCard extends StatelessWidget {
@@ -16,7 +17,12 @@ class MemoryCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CustomCachedImage(imageUrl: data['imageUrl']),
+          Hero(
+            tag: data['imageUrl'],
+            child: CustomCachedImage(
+              imageUrl: data['imageUrl'],
+            ),
+          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -32,6 +38,16 @@ class MemoryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+            ),
+          ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MemoryDetails(data: data),
+                ));
+              },
             ),
           ),
         ],
