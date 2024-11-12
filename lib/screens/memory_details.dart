@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
+import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
@@ -31,6 +32,7 @@ class MemoryDetails extends StatefulWidget {
 
 class _MemoryDetailsState extends State<MemoryDetails> {
   bool _isDownloading = false;
+  late bool _isFavourite;
   final _firestore = FirebaseFirestore.instance;
   final _user = FirebaseAuth.instance.currentUser!.uid;
 
@@ -70,6 +72,16 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     setState(() {
       _isDownloading = true;
     });
+    kIsWeb
+        ? await WebImageDownloader.downloadImageFromWeb(widget.data['imageUrl'],
+            imageType: ImageType.jpeg, name: widget.data['title'])
+        : await _downloadAndroid();
+    setState(() {
+      _isDownloading = false;
+    });
+  }
+
+  Future<void> _downloadAndroid() async {
     final directory = await getDownloadsDirectory();
     final path = '${directory!.path}/${widget.data["title"]}.jpg';
     try {
@@ -93,9 +105,6 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     final file = File(path);
     await file.delete();
     if (!mounted) return;
-    setState(() {
-      _isDownloading = false;
-    });
     showToast(imageSaved, context);
   }
 
@@ -131,9 +140,26 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     Navigator.pop(context);
   }
 
+  Future<void> _toggleFavourite() async {
+    setState(() {
+      _isFavourite = !_isFavourite;
+    });
+    _firestore
+        .collection('memories_by_user')
+        .doc(_user)
+        .collection('memories')
+        .doc(widget.id)
+        .update({"isFavourite": _isFavourite});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavourite = widget.data["isFavourite"];
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.data);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final landscape = width > height;
@@ -143,16 +169,17 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         automaticallyImplyLeading: !kIsWeb,
         title: const TitleWidget(),
         actions: [
-          if (!kIsWeb)
-            IconButton(
-              onPressed: _isDownloading ? null : _downloadImage,
-              icon: _isDownloading
-                  ? const CircularProgressIndicator()
-                  : const Icon(Icons.download),
-            ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.star),
+            onPressed: _isDownloading ? null : _downloadImage,
+            icon: _isDownloading
+                ? const CircularProgressIndicator()
+                : const Icon(Icons.download),
+          ),
+          IconButton(
+            onPressed: _toggleFavourite,
+            icon: _isFavourite
+                ? const Icon(Icons.star)
+                : const Icon(Icons.star_border),
           ),
         ],
       ),
