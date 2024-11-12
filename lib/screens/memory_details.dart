@@ -21,6 +21,7 @@ class MemoryDetails extends StatefulWidget {
 }
 
 class _MemoryDetailsState extends State<MemoryDetails> {
+  bool _isDownloading = false;
   Widget get _dataColumn {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,6 +49,9 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       await showInfoPopup(context, noConnection);
       return;
     }
+    setState(() {
+      _isDownloading = true;
+    });
     final directory = await getDownloadsDirectory();
     final path = '${directory!.path}/${widget.data["title"]}.jpg';
     try {
@@ -55,16 +59,25 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     } on SocketException catch (_) {
       if (!mounted) return;
       await showInfoPopup(context, noConnection);
+      setState(() {
+        _isDownloading = false;
+      });
       return;
     } catch (_) {
       if (!mounted) return;
       await showInfoPopup(context, unknownError);
+      setState(() {
+        _isDownloading = false;
+      });
       return;
     }
     await Gal.putImage(path);
     final file = File(path);
     await file.delete();
     if (!mounted) return;
+    setState(() {
+      _isDownloading = false;
+    });
     showToast(imageSaved, context);
   }
 
@@ -81,8 +94,10 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         actions: [
           if (!kIsWeb)
             IconButton(
-              onPressed: _downloadImage,
-              icon: const Icon(Icons.download),
+              onPressed: _isDownloading ? null : _downloadImage,
+              icon: _isDownloading
+                  ? const CircularProgressIndicator()
+                  : const Icon(Icons.download),
             ),
           IconButton(
             onPressed: () {},
