@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/widgets/decoration/infotext.dart';
 import 'package:remember/widgets/memories_gallery/memories_list.dart';
 
 class MemoriesGallery extends StatelessWidget {
@@ -9,14 +10,14 @@ class MemoriesGallery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return const Placeholder();
     final user = FirebaseAuth.instance.currentUser!;
     final stream = FirebaseFirestore.instance
         .collection('memories_by_user')
         .doc(user.uid)
         .collection("memories")
         .snapshots();
-    print("tset");
+    //print("stream");
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -29,14 +30,10 @@ class MemoriesGallery extends StatelessWidget {
             );
           }
           if (snapshot.hasError) {
-            return const Center(
-              child: Text(unknownError),
-            );
+            return const Infotext(text: unknownError);
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text(noMemories),
-            );
+            return const Infotext(text: noMemories);
           }
 
           final memories = snapshot.data!.docs;

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
 import 'package:remember/screens/in_app_password_reset.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,16 +20,25 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   final _authInstance = FirebaseAuth.instance;
 
   String _appVersion = '';
+  String _connection = offline;
   @override
   void initState() {
     super.initState();
     _getVersion();
+    _getConnection();
   }
 
-  void _getVersion() async {
+  Future<void> _getVersion() async {
     final version = await getAppVersion();
     setState(() {
       _appVersion = version;
+    });
+  }
+
+  void _getConnection() async {
+    final res = await checkConnection();
+    setState(() {
+      _connection = res ? online : offline;
     });
   }
 
@@ -44,7 +54,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DrawerHeader(
-                decoration: backgroundDecoration,
+                decoration: getBackgroundDecoration(context),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,11 +70,23 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                       height: 8,
                     ),
                     Text(
-                      '${_authInstance.currentUser!.email}',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
+                      _connection,
                       overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Opacity(
+                      opacity: 0.4,
+                      child: Text(
+                        '${_authInstance.currentUser!.email}',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),

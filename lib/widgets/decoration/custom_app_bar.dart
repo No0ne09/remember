@@ -11,23 +11,29 @@ class CustomAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ConvexAppBar(
+      backgroundColor: colorScheme.surface,
+      color: colorScheme.inverseSurface,
+      activeColor: colorScheme.primary,
+      elevation: 0,
       key: appBarKey,
-      activeColor: Colors.white,
       initialActiveIndex: 0,
       top: 0,
       height: 60,
       style: TabStyle.custom,
-      items: const [
+      items: [
         TabItem(
+          isIconBlend: true,
           icon: Icons.browse_gallery_outlined,
           title: memories,
           activeIcon: Icon(
             Icons.browse_gallery,
+            color: colorScheme.surface,
           ),
         ),
         if (!kIsWeb)
-          TabItem(
+          const TabItem(
             icon: Icons.add_a_photo_outlined,
             title: remember,
             activeIcon: Icon(
@@ -37,7 +43,10 @@ class CustomAppBar extends ConsumerWidget {
         TabItem(
           icon: Icons.map_outlined,
           title: memoryMap,
-          activeIcon: Icon(Icons.map),
+          activeIcon: Icon(
+            Icons.map,
+            color: colorScheme.surface,
+          ),
         ),
       ],
       onTap: (index) {

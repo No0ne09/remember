@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
-import 'package:remember/widgets/background.dart';
+import 'package:remember/widgets/decoration/background.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 
@@ -17,16 +17,16 @@ class InAppPasswordReset extends StatefulWidget {
 }
 
 class _InAppPasswordResetState extends State<InAppPasswordReset> {
-  final _currentPasswordController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _oldPasswordController = TextEditingController();
+  final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _authInstance = FirebaseAuth.instance;
   bool _isResetting = false;
   @override
   void dispose() {
-    _currentPasswordController.dispose();
-    _passwordController.dispose();
+    _oldPasswordController.dispose();
+    _newPasswordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
@@ -36,7 +36,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
       setState(() {
         _isResetting = true;
       });
-      final oldPassword = _currentPasswordController.text;
+      final oldPassword = _oldPasswordController.text;
       final user = _authInstance.currentUser!;
       try {
         await _authInstance.currentUser!.reauthenticateWithCredential(
@@ -50,7 +50,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
         });
         return;
       }
-      final newPassword = _passwordController.text;
+      final newPassword = _newPasswordController.text;
       try {
         await _authInstance.currentUser!.updatePassword(newPassword);
       } on FirebaseException catch (e) {
@@ -100,25 +100,25 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                         children: [
                           BaseTextfield(
                             validator: registerPasswordValidator(
-                                _currentPasswordController),
+                                _oldPasswordController),
                             hint: currentPassword,
                             isPassword: true,
-                            controller: _currentPasswordController,
+                            controller: _oldPasswordController,
                           ),
                           BaseTextfield(
                             validator: registerPasswordValidator(
                                 _confirmPasswordController),
                             hint: newPassword,
                             isPassword: true,
-                            controller: _passwordController,
+                            controller: _newPasswordController,
                           ),
                           const SizedBox(
                             height: 8,
                           ),
                           BaseTextfield(
                             isPassword: true,
-                            validator:
-                                registerPasswordValidator(_passwordController),
+                            validator: registerPasswordValidator(
+                                _newPasswordController),
                             hint: confirmNewPassword,
                             controller: _confirmPasswordController,
                           ),

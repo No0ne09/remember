@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remember/helpers/constants.dart';
+import 'package:remember/helpers/theme.dart';
 
 class MultilineTextfield extends StatefulWidget {
   const MultilineTextfield(
@@ -48,10 +48,12 @@ class _MultilineTextfieldState extends State<MultilineTextfield> {
           },
           textAlign: TextAlign.center,
           decoration: InputDecoration(
+            errorStyle: const TextStyle(color: Colors.red),
+            errorBorder: getTextFieldBorder(color: Colors.red),
             filled: true,
-            enabledBorder: textFieldBorder,
-            focusedBorder: textFieldBorder,
-            border: textFieldBorder,
+            enabledBorder: getTextFieldBorder(),
+            focusedBorder: getTextFieldBorder(),
+            border: getTextFieldBorder(),
           ),
           controller: widget.controller,
           keyboardType: TextInputType.emailAddress,

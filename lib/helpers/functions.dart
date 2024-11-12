@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/strings.dart';
@@ -13,7 +12,6 @@ void showToast(
   BuildContext context,
 ) {
   final ftoast = FToast().init(context);
-  ftoast.removeCustomToast();
   ftoast.showToast(
     toastDuration: const Duration(seconds: 5),
     gravity: ToastGravity.BOTTOM,
@@ -21,11 +19,11 @@ void showToast(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.inversePrimary,
       ),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.blue, fontSize: 20),
+        style: const TextStyle(fontSize: 20),
       ),
     ),
   );
@@ -40,10 +38,6 @@ Future<bool> checkConnection() async {
     return true;
   }
   return false;
-}
-
-String getFormattedDate(DateTime date) {
-  return DateFormat("yyyy-MM-dd").format(date);
 }
 
 Future<void> handleFireBaseError(String code, BuildContext context) async {

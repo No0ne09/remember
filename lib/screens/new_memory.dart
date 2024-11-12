@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:exif/exif.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
-
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/strings.dart';
@@ -34,7 +32,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   File? _chosenImage;
   String? _chosenDate;
   MapData? _chosenLocation;
-
   bool _isSubmitting = false;
 
   Future<void> _checkDateTime() async {
@@ -47,11 +44,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       await showInfoPopup(context, noExif, title: warning);
       return;
     }
-
-    final tempDateTime =
-        DateTime.tryParse(exifDateTime.substring(0, 10).replaceAll(":", '-'));
-
-    _formatDate(tempDateTime);
+    setState(() {
+      _chosenDate = exifDateTime.split(' ')[0].replaceAll(':', '-');
+    });
   }
 
   Future<void> _pickDateTime() async {
@@ -64,14 +59,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       firstDate: DateTime(DateTime.now().year - 5),
       lastDate: DateTime.now(),
     );
-    _formatDate(tempDateTime);
-  }
-
-  void _formatDate(DateTime? tempDateTime) {
     if (tempDateTime == null) return;
-    final dateTime = getFormattedDate(tempDateTime);
     setState(() {
-      _chosenDate = dateTime;
+      _chosenDate = tempDateTime.toString().split(' ')[0];
     });
   }
 
@@ -148,6 +138,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         "uploadTimeStamp": Timestamp.now(),
         "username": user.displayName,
         "email": user.email,
+        "userId": user.uid,
         "imageUrl": imageUrl,
         "isFavourite": false,
       });
@@ -206,7 +197,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
                   Positioned(
                     bottom: 8,
                     child: MainButton(
-                      backgroundColor: Colors.blue,
                       onPressed: () async {
                         await _pickDateTime();
                       },

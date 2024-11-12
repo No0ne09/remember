@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 
 class BaseMapScreen extends StatefulWidget {
   const BaseMapScreen({
@@ -27,15 +28,8 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
   bool _isGettingCurrentLocation = false;
   LatLng? _pickedPosition;
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   Future<void> _getCurrentLocation() async {
     final location = Location();
-
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     LocationData locationData;
@@ -45,18 +39,15 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
       if (!serviceEnabled) {
         if (!mounted) return;
         await showInfoPopup(context, locationTurnedOff);
-
         return;
       }
     }
-
     permissionGranted = await location.hasPermission();
     if (permissionGranted != PermissionStatus.granted) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         if (!mounted) return;
         await showInfoPopup(context, noLocationPermission);
-
         return;
       }
     }
@@ -69,10 +60,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     });
     final lat = locationData.latitude;
     final lng = locationData.longitude;
-    if (lat == null || lng == null) {
-      return;
-    }
-
+    if (lat == null || lng == null) return;
     setState(() {
       _pickedPosition = LatLng(lat, lng);
     });
@@ -109,16 +97,15 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
             infoWindow: const InfoWindow(title: yourLocation)),
       };
     }
-
-    if (!widget.isSelecting) {
-      return widget.markers;
-    }
+    if (!widget.isSelecting) return widget.markers;
     return {};
   }
 
   @override
   Widget build(BuildContext context) {
     final Widget content = GoogleMap(
+      style:
+          Theme.of(context).brightness == Brightness.dark ? darkMapStyle : null,
       zoomControlsEnabled: false,
       mapToolbarEnabled: !widget.isSelecting,
       onMapCreated: (controller) {
@@ -142,8 +129,8 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
         ? Scaffold(
             floatingActionButton: widget.isSelecting
                 ? FloatingActionButton(
+                    heroTag: "Locate",
                     onPressed: _getCurrentLocation,
-                    backgroundColor: Colors.white,
                     child: _isGettingCurrentLocation
                         ? const CircularProgressIndicator()
                         : const Icon(Icons.my_location_outlined),
@@ -156,10 +143,13 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                     automaticallyImplyLeading: false,
                     actions: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
+                        padding: const EdgeInsets.all(10.0),
+                        child: FloatingActionButton.large(
+                          heroTag: "Save",
                           onPressed: _savePlace,
-                          child: const Icon(Icons.save_rounded),
+                          child: const Icon(
+                            Icons.save_rounded,
+                          ),
                         ),
                       ),
                     ],
