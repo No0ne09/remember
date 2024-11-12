@@ -20,8 +20,10 @@ class ContentScreen extends ConsumerStatefulWidget {
   ConsumerState<ContentScreen> createState() => _ContentScreenState();
 }
 
-class _ContentScreenState extends ConsumerState<ContentScreen> {
+class _ContentScreenState extends ConsumerState<ContentScreen>
+    with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
+  late final AnimationController _animationController;
 
   Widget get _currentContent {
     switch (_currentIndex) {
@@ -48,14 +50,27 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) => _showOfflineWarning(),
     );
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _currentIndex = ref.watch(indexProvider);
+    _animationController.reset();
+    _animationController.forward();
     return Scaffold(
       bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
       drawer: const UserDrawer(),
@@ -89,7 +104,15 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
               ]
             : [],
       ),
-      body: Background(child: _currentContent),
+      body: Background(
+          child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) => FadeTransition(
+          opacity: Tween(begin: 0.0, end: 1.0).animate(_animationController),
+          child: child,
+        ),
+        child: _currentContent,
+      )),
     );
   }
 }
