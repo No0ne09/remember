@@ -1,7 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:remember/helpers/functions.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
-import 'package:remember/widgets/custom_cached_image.dart';
 import 'package:remember/widgets/decoration/title_widget.dart';
 import 'package:remember/widgets/memory_details/memory_pageview.dart';
 
@@ -18,6 +17,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: !kIsWeb,
         title: const TitleWidget(),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.star))],
       ),
@@ -28,8 +28,10 @@ class _MemoryDetailsState extends State<MemoryDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MemoryPageview(
-                  imageUrl: widget.data['imageUrl'],
-                  location: widget.data["geopoint"]),
+                imageUrl: widget.data['imageUrl'],
+                location: widget.data["geopoint"],
+                title: widget.data['title'],
+              ),
               Text(
                 textAlign: TextAlign.start,
                 "${widget.data['memoryDate']},\n${widget.data['title']}",
@@ -44,16 +46,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.displaySmall),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomCachedImage(
-                        imageUrl: getStaticMap(widget.data["geopoint"]),
-                        fit: BoxFit.cover),
-                  ),
-                  Text(widget.data["address"])
-                ],
-              ),
+              Text(widget.data["address"]),
               Row(
                 children: [
                   MainButton(

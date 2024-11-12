@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:remember/helpers/functions.dart';
+import 'package:remember/screens/base_map_screen.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 import 'package:remember/widgets/memory_details/pageview_button.dart';
 
@@ -7,10 +10,12 @@ class MemoryPageview extends StatefulWidget {
   const MemoryPageview({
     required this.imageUrl,
     required this.location,
+    required this.title,
     super.key,
   });
   final String imageUrl;
   final GeoPoint location;
+  final String title;
 
   @override
   State<MemoryPageview> createState() => _MemoryPageviewState();
@@ -49,6 +54,24 @@ class _MemoryPageviewState extends State<MemoryPageview> {
     );
   }
 
+  void _showMap() {
+    final position = LatLng(widget.location.latitude, widget.location.latitude);
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => BaseMapScreen(
+        isSelecting: false,
+        initialPosition: position,
+        markers: {
+          Marker(
+              markerId: MarkerId(widget.title),
+              infoWindow: InfoWindow(
+                title: widget.title,
+              ),
+              position: position),
+        },
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -58,7 +81,7 @@ class _MemoryPageviewState extends State<MemoryPageview> {
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
         width: width,
-        height: height / 2,
+        height: height / 1.7,
         child: Stack(
           children: [
             PageView(
@@ -76,14 +99,17 @@ class _MemoryPageviewState extends State<MemoryPageview> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                Container(
-                  color: Colors.green,
-                )
+                GestureDetector(
+                  onLongPress: _showMap,
+                  child: CustomCachedImage(
+                    imageUrl: getStaticMap(widget.location),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ],
             ),
             Align(
-              alignment:
-                  _currentPage == 0 ? Alignment.topRight : Alignment.topLeft,
+              alignment: Alignment.bottomCenter,
               child: PageviewButton(
                 onPressed: () {
                   final direction = _currentPage == 0
