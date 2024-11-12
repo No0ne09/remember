@@ -127,7 +127,7 @@ final lightTheme = ThemeData(
   colorScheme: lightScheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: lightScheme.inversePrimary,
+      backgroundColor: lightScheme.primaryContainer,
     ),
   ),
   iconButtonTheme: IconButtonThemeData(
@@ -136,8 +136,8 @@ final lightTheme = ThemeData(
     ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: lightScheme.surface,
-    foregroundColor: lightScheme.primary,
+    backgroundColor: lightScheme.tertiaryContainer,
+    foregroundColor: lightScheme.onTertiaryContainer,
   ),
 );
 final darkTheme = ThemeData(
@@ -145,7 +145,7 @@ final darkTheme = ThemeData(
   colorScheme: darkScheme,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: darkScheme.inversePrimary,
+      backgroundColor: darkScheme.primaryContainer,
     ),
   ),
   cardTheme: CardTheme(
@@ -157,8 +157,8 @@ final darkTheme = ThemeData(
     ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: darkScheme.surface,
-    foregroundColor: darkScheme.primary,
+    backgroundColor: darkScheme.tertiaryContainer,
+    foregroundColor: darkScheme.onTertiaryContainer,
   ),
 );
 const darkMapStyle = '''[
