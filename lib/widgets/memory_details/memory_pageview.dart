@@ -75,7 +75,6 @@ class _MemoryPageviewState extends State<MemoryPageview> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
     return Column(
@@ -83,7 +82,6 @@ class _MemoryPageviewState extends State<MemoryPageview> {
         Card(
           clipBehavior: Clip.antiAlias,
           child: SizedBox(
-            width: width,
             height: height / 1.7,
             child: PageView(
               onPageChanged: (value) {
@@ -104,7 +102,7 @@ class _MemoryPageviewState extends State<MemoryPageview> {
                   onLongPress: _showMap,
                   child: CustomCachedImage(
                     imageUrl: getStaticMap(widget.location),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               ],
