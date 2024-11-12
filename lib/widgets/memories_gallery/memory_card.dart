@@ -17,12 +17,9 @@ class MemoryCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Hero(
-            tag: data['imageUrl'],
-            child: CustomCachedImage(
-              imageUrl: data['imageUrl'],
-              fit: BoxFit.cover,
-            ),
+          CustomCachedImage(
+            imageUrl: data['imageUrl'],
+            fit: BoxFit.cover,
           ),
           Positioned(
             bottom: 0,

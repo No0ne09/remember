@@ -3,6 +3,7 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 import 'package:remember/widgets/decoration/title_widget.dart';
+import 'package:remember/widgets/memory_details/memory_pageview.dart';
 
 class MemoryDetails extends StatefulWidget {
   const MemoryDetails({required this.data, super.key});
@@ -13,31 +14,8 @@ class MemoryDetails extends StatefulWidget {
 }
 
 class _MemoryDetailsState extends State<MemoryDetails> {
-  void _showFullScreenImage() {
-    showDialog(
-      barrierColor: Colors.black,
-      context: context,
-      builder: (context) {
-        return GestureDetector(
-          child: Hero(
-            tag: widget.data["imageUrl"],
-            child: CustomCachedImage(
-              imageUrl: widget.data['imageUrl'],
-              fit: BoxFit.contain,
-            ),
-          ),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const TitleWidget(),
@@ -49,29 +27,9 @@ class _MemoryDetailsState extends State<MemoryDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                color: Colors.red,
-                child: SizedBox(
-                  width: width,
-                  height: height / 2,
-                  child: PageView(
-                    children: [
-                      GestureDetector(
-                        onLongPress: _showFullScreenImage,
-                        child: Hero(
-                            tag: widget.data['imageUrl'],
-                            child: CustomCachedImage(
-                              imageUrl: widget.data['imageUrl'],
-                              fit: BoxFit.contain,
-                            )),
-                      ),
-                      Container(
-                        color: Colors.green,
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              MemoryPageview(
+                  imageUrl: widget.data['imageUrl'],
+                  location: widget.data["geopoint"]),
               Text(
                 textAlign: TextAlign.start,
                 "${widget.data['memoryDate']}, ${widget.data['title']}",
