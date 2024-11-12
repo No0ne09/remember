@@ -32,7 +32,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                   location: widget.data["geopoint"]),
               Text(
                 textAlign: TextAlign.start,
-                "${widget.data['memoryDate']}, ${widget.data['title']}",
+                "${widget.data['memoryDate']},\n${widget.data['title']}",
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall!
