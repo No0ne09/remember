@@ -9,10 +9,10 @@ class MemoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      clipBehavior: Clip.hardEdge,
+      elevation: 4,
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: defaultBorderRadius,
-        side: const BorderSide(color: Colors.black, width: 2),
       ),
       child: Stack(
         fit: StackFit.expand,
