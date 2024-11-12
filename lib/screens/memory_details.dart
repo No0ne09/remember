@@ -36,7 +36,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
   final _firestore = FirebaseFirestore.instance;
   final _user = FirebaseAuth.instance.currentUser!.uid;
 
-  Widget get _dataColumn {
+  Widget get _memoryDetailsColumn {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -219,7 +219,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                         ),
                         if (landscape)
                           Expanded(
-                            child: _dataColumn,
+                            child: _memoryDetailsColumn,
                           ),
                       ],
                     ),
@@ -228,11 +228,11 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: _dataColumn,
+                        child: _memoryDetailsColumn,
                       ),
                     ),
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
                   MainButton(
                     color: Colors.red,
