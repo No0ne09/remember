@@ -1,9 +1,16 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gal/gal.dart';
+import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/decoration/background.dart';
 import 'package:remember/widgets/decoration/title_widget.dart';
 import 'package:remember/widgets/memory_details/memory_pageview.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MemoryDetails extends StatefulWidget {
   const MemoryDetails({required this.data, super.key});
@@ -14,7 +21,7 @@ class MemoryDetails extends StatefulWidget {
 }
 
 class _MemoryDetailsState extends State<MemoryDetails> {
-  Widget get dataColum {
+  Widget get _dataColumn {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -34,6 +41,33 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     );
   }
 
+  Future<void> _downloadImage() async {
+    final status = await checkConnection();
+    if (!status) {
+      if (!mounted) return;
+      await showInfoPopup(context, noConnection);
+      return;
+    }
+    final directory = await getDownloadsDirectory();
+    final path = '${directory!.path}/${widget.data["title"]}.jpg';
+    try {
+      await Dio().download(widget.data['imageUrl'], path);
+    } on SocketException catch (_) {
+      if (!mounted) return;
+      await showInfoPopup(context, noConnection);
+      return;
+    } catch (_) {
+      if (!mounted) return;
+      await showInfoPopup(context, unknownError);
+      return;
+    }
+    await Gal.putImage(path);
+    final file = File(path);
+    await file.delete();
+    if (!mounted) return;
+    showToast(imageSaved, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -44,7 +78,17 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         forceMaterialTransparency: true,
         automaticallyImplyLeading: !kIsWeb,
         title: const TitleWidget(),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.star))],
+        actions: [
+          if (!kIsWeb)
+            IconButton(
+              onPressed: _downloadImage,
+              icon: const Icon(Icons.download),
+            ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.star),
+          ),
+        ],
       ),
       body: Background(
         child: Center(
@@ -78,7 +122,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                         ),
                         if (landscape)
                           Expanded(
-                            child: dataColum,
+                            child: _dataColumn,
                           ),
                       ],
                     ),
@@ -87,24 +131,15 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: dataColum,
+                        child: _dataColumn,
                       ),
                     ),
                   const SizedBox(
                     height: 8,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MainButton(
-                        text: "Zapisz",
-                        onPressed: () {},
-                      ),
-                      MainButton(
-                        text: "Usuń",
-                        onPressed: () {},
-                      )
-                    ],
+                  MainButton(
+                    text: "Usuń",
+                    onPressed: () {},
                   ),
                 ],
               ),
