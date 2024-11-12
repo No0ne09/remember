@@ -5,10 +5,12 @@ import 'package:remember/helpers/strings.dart';
 class CustomCachedImage extends StatelessWidget {
   const CustomCachedImage({
     required this.imageUrl,
+    required this.fit,
     super.key,
   });
 
   final String imageUrl;
+  final BoxFit fit;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
@@ -39,7 +41,7 @@ class CustomCachedImage extends StatelessWidget {
         );
       },
       imageUrl: imageUrl,
-      fit: BoxFit.cover,
+      fit: fit,
     );
   }
 }

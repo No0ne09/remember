@@ -82,6 +82,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
           ? null
           : CustomCachedImage(
               imageUrl: _imageUrl!,
+              fit: BoxFit.cover,
             ),
     );
   }
