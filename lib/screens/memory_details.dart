@@ -144,12 +144,17 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     setState(() {
       _isFavourite = !_isFavourite;
     });
-    _firestore
-        .collection('memories_by_user')
-        .doc(_user)
-        .collection('memories')
-        .doc(widget.id)
-        .update({"isFavourite": _isFavourite});
+    try {
+      _firestore
+          .collection('memories_by_user')
+          .doc(_user)
+          .collection('memories')
+          .doc(widget.id)
+          .update({"isFavourite": _isFavourite});
+    } on FirebaseException catch (e) {
+      if (!mounted) return;
+      handleFireBaseError(e.code, context);
+    }
   }
 
   @override
