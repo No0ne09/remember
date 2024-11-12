@@ -12,3 +12,5 @@ GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
 const contactMail = "bplociennik03@gmail.com";
 const subject = "Re(me)mber - Kontakt";
 const reportBugUrl = "https://forms.gle/19q6WbGBDQN4y2sN9";
+const autoReportUrl =
+    'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfc8LHOvEqb0dS7zJU6C3kidwxaDK9a3xxenTMzck-4PwkAKg/formResponse';
