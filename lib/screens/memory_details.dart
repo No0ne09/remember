@@ -42,13 +42,19 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     );
   }
 
-  Future<void> _downloadImage() async {
+  Future<bool> _checkInternet() async {
     final status = await checkConnection();
     if (!status) {
-      if (!mounted) return;
+      if (!mounted) return false;
       await showInfoPopup(context, noConnection);
-      return;
+      return false;
     }
+    return true;
+  }
+
+  Future<void> _downloadImage() async {
+    final check = await _checkInternet();
+    if (!check) return;
     setState(() {
       _isDownloading = true;
     });
@@ -81,6 +87,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     showToast(imageSaved, context);
   }
 
+  Future<void> _deleteMemory() async {}
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
