@@ -54,7 +54,8 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DrawerHeader(
-                decoration: getBackgroundDecoration(context),
+                decoration:
+                    getBackgroundDecoration(context, fit: BoxFit.contain),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
