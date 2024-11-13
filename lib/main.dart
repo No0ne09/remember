@@ -73,24 +73,21 @@ class App extends StatelessWidget {
         Locale('pl'),
       ],
       debugShowCheckedModeBanner: false,
-      home: PopScope(
-        canPop: false,
-        child: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-            if (!snapshot.hasData) {
-              return const AuthScreen();
-            }
-            return const ContentScreen();
-          },
-        ),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          if (!snapshot.hasData) {
+            return const AuthScreen();
+          }
+          return const ContentScreen();
+        },
       ),
     );
   }
