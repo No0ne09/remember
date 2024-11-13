@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -38,8 +39,9 @@ void main() async {
           await http.post(
             Uri.parse(autoReportUrl),
             body: {
-              'entry.1191287436': res, // przykład dla pola tekstowego
-              'entry.1479404169': version, // przykład dla kolejnego pola
+              'entry.1191287436': res,
+              'entry.1479404169': version,
+              'entry.517717971': kIsWeb.toString(),
             },
           );
         } catch (_) {}

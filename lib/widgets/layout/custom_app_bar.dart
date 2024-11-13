@@ -33,11 +33,12 @@ class CustomAppBar extends ConsumerWidget {
           ),
         ),
         if (!kIsWeb)
-          const TabItem(
+          TabItem(
             icon: Icons.add_a_photo_outlined,
             title: remember,
             activeIcon: Icon(
               Icons.add_a_photo,
+              color: colorScheme.surface,
             ),
           ),
         TabItem(

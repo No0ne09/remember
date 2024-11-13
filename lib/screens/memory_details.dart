@@ -140,7 +140,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     Navigator.pop(context);
   }
 
-  Future<void> _toggleFavourite() async {
+  void _toggleFavourite() {
     setState(() {
       _isFavourite = !_isFavourite;
     });
@@ -174,17 +174,23 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         automaticallyImplyLeading: !kIsWeb,
         title: const TitleWidget(),
         actions: [
-          IconButton(
-            onPressed: _isDownloading ? null : _downloadImage,
-            icon: _isDownloading
-                ? const CircularProgressIndicator()
-                : const Icon(Icons.download),
+          Tooltip(
+            message: download,
+            child: IconButton(
+              onPressed: _isDownloading ? null : _downloadImage,
+              icon: _isDownloading
+                  ? const CircularProgressIndicator()
+                  : const Icon(Icons.download),
+            ),
           ),
-          IconButton(
-            onPressed: _toggleFavourite,
-            icon: _isFavourite
-                ? const Icon(Icons.star)
-                : const Icon(Icons.star_border),
+          Tooltip(
+            message: toggleFavourite,
+            child: IconButton(
+              onPressed: _toggleFavourite,
+              icon: _isFavourite
+                  ? const Icon(Icons.star)
+                  : const Icon(Icons.star_border),
+            ),
           ),
         ],
       ),

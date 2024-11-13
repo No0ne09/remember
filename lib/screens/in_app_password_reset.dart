@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/validators.dart';
@@ -9,8 +8,7 @@ import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/textfields/base_textfield.dart';
 
 class InAppPasswordReset extends StatefulWidget {
-  const InAppPasswordReset({required this.ref, super.key});
-  final WidgetRef ref;
+  const InAppPasswordReset({super.key});
 
   @override
   State<InAppPasswordReset> createState() => _InAppPasswordResetState();

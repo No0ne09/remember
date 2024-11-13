@@ -96,9 +96,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
                 onTap: () async {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => InAppPasswordReset(
-                        ref: ref,
-                      ),
+                      builder: (context) => const InAppPasswordReset(),
                     ),
                   );
                 },
