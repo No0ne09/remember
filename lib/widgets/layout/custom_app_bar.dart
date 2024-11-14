@@ -14,7 +14,7 @@ class CustomAppBar extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return ConvexAppBar(
       backgroundColor: colorScheme.surface,
-      color: colorScheme.inverseSurface,
+      color: colorScheme.primary,
       activeColor: colorScheme.primary,
       elevation: 0,
       key: appBarKey,
@@ -33,11 +33,12 @@ class CustomAppBar extends ConsumerWidget {
           ),
         ),
         if (!kIsWeb)
-          const TabItem(
+          TabItem(
             icon: Icons.add_a_photo_outlined,
             title: remember,
             activeIcon: Icon(
               Icons.add_a_photo,
+              color: colorScheme.surface,
             ),
           ),
         TabItem(

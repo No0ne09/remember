@@ -7,10 +7,10 @@ import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/new_memory.dart';
 import 'package:remember/screens/memories_map.dart';
 import 'package:remember/screens/memories_gallery.dart';
-import 'package:remember/widgets/decoration/background.dart';
+import 'package:remember/widgets/layout/background.dart';
 import 'package:remember/widgets/buttons/animated_toggle_button.dart';
-import 'package:remember/widgets/decoration/custom_app_bar.dart';
-import 'package:remember/widgets/decoration/title_widget.dart';
+import 'package:remember/widgets/layout/custom_app_bar.dart';
+import 'package:remember/widgets/layout/title_widget.dart';
 import 'package:remember/widgets/user_drawer/user_drawer.dart';
 
 class ContentScreen extends ConsumerStatefulWidget {

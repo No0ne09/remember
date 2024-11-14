@@ -11,6 +11,7 @@ void showToast(
   String text,
   BuildContext context,
 ) {
+  final scheme = Theme.of(context).colorScheme;
   final ftoast = FToast().init(context);
   ftoast.showToast(
     toastDuration: const Duration(seconds: 5),
@@ -19,11 +20,14 @@ void showToast(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Theme.of(context).colorScheme.inversePrimary,
+        color: scheme.inverseSurface,
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 20),
+        style: TextStyle(
+          fontSize: 20,
+          color: scheme.onInverseSurface,
+        ),
       ),
     ),
   );
@@ -75,7 +79,8 @@ Future<void> showInfoPopup(BuildContext context, String desc,
 String getStaticMap(GeoPoint location) {
   final lat = location.latitude;
   final lng = location.longitude;
-  return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng=&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$lng&key=$apiKey';
+
+  return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng&zoom=17&size=600x600&maptype=roadmap&markers=color:red%7Clabel:""%7C$lat,$lng&key=$apiKey';
 }
 
 Future<String> getAppVersion() async {

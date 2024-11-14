@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/base_map_screen.dart';
-import 'package:remember/widgets/decoration/infotext.dart';
+import 'package:remember/widgets/layout/infotext.dart';
 
 class MemoriesMap extends StatefulWidget {
   const MemoriesMap({super.key});
@@ -19,28 +20,35 @@ class _MemoriesMapState extends State<MemoriesMap> {
   Future<Set<Marker>> _getMarkers() async {
     final Set<Marker> markers = {};
     final user = FirebaseAuth.instance.currentUser!;
-    final docs = await FirebaseFirestore.instance
-        .collection('memories_by_user')
-        .doc(user.uid)
-        .collection("memories")
-        .orderBy("uploadTimeStamp", descending: true)
-        .get();
-    for (final doc in docs.docs) {
-      final data = doc.data();
-      markers.add(
-        Marker(
-          markerId: MarkerId(doc.id),
-          infoWindow: InfoWindow(
-            title: data["memoryDate"],
-            snippet: data["title"],
+    try {
+      final docs = await FirebaseFirestore.instance
+          .collection('memories_by_user')
+          .doc(user.uid)
+          .collection("memories")
+          .orderBy("uploadTimeStamp", descending: true)
+          .get();
+      for (final doc in docs.docs) {
+        final data = doc.data();
+        markers.add(
+          Marker(
+            markerId: MarkerId(doc.id),
+            infoWindow: InfoWindow(
+              title: data["memoryDate"],
+              snippet: data["title"],
+            ),
+            position: LatLng(
+              data["geopoint"].latitude,
+              data["geopoint"].longitude,
+            ),
           ),
-          position: LatLng(
-            data["geopoint"].latitude,
-            data["geopoint"].longitude,
-          ),
-        ),
-      );
+        );
+      }
+    } on FirebaseException catch (e) {
+      if (!mounted) return {};
+      handleFireBaseError(e.code, context);
+      return {};
     }
+
     return markers;
   }
 

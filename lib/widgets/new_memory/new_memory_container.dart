@@ -18,10 +18,10 @@ class NewMemoryContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
-        clipBehavior: Clip.hardEdge,
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: defaultBorderRadius,

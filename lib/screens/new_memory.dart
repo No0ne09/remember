@@ -112,8 +112,8 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     setState(() {
       _isSubmitting = true;
     });
-    final title = _titleController.text;
-    final desc = _descriptionController.text;
+    final title = _titleController.text.trim();
+    final desc = _descriptionController.text.trim();
     final user = FirebaseAuth.instance.currentUser!;
     final id = uuid.v4();
     final imageUrl = await _uploadImage(user, id);
@@ -150,7 +150,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       });
       return;
     }
-
+    if (!mounted) return;
     setState(() {
       _isSubmitting = false;
     });

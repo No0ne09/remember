@@ -55,6 +55,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
       _isGettingCurrentLocation = true;
     });
     locationData = await location.getLocation();
+    if (!mounted) return;
     setState(() {
       _isGettingCurrentLocation = false;
     });

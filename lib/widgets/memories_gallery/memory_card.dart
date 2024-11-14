@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/screens/memory_details.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 
 class MemoryCard extends StatelessWidget {
-  const MemoryCard({required this.data, super.key});
+  const MemoryCard({required this.data, required this.id, super.key});
   final Map<String, dynamic> data;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Card(
-      clipBehavior: Clip.hardEdge,
+      elevation: 4,
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: defaultBorderRadius,
-        side: const BorderSide(color: Colors.black, width: 2),
       ),
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CustomCachedImage(imageUrl: data['imageUrl']),
+          CustomCachedImage(
+            imageUrl: data['imageUrl'],
+            fit: BoxFit.cover,
+          ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -32,6 +37,19 @@ class MemoryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+            ),
+          ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MemoryDetails(
+                    data: data,
+                    id: id,
+                  ),
+                ));
+              },
             ),
           ),
         ],

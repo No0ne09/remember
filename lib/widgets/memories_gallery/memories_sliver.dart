@@ -17,6 +17,7 @@ class MemoriesSliver extends StatelessWidget {
         childCount: memories.length,
         (context, index) => MemoryCard(
           data: memories[index].data(),
+          id: memories[index].id,
         ),
       ),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

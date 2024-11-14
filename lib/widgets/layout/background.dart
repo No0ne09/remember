@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/theme.dart';
 
@@ -11,7 +12,8 @@ class Background extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      decoration: getBackgroundDecoration(context),
+      decoration:
+          getBackgroundDecoration(context, fit: kIsWeb ? BoxFit.contain : null),
       child: child,
     );
   }
