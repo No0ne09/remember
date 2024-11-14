@@ -56,7 +56,6 @@ class _MultilineTextfieldState extends State<MultilineTextfield> {
             border: getTextFieldBorder(),
           ),
           controller: widget.controller,
-          keyboardType: TextInputType.emailAddress,
           minLines: 5,
           maxLines: 5,
         ),
