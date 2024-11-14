@@ -74,7 +74,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     });
     kIsWeb
         ? await WebImageDownloader.downloadImageFromWeb(widget.data['imageUrl'],
-            imageType: ImageType.jpeg, name: widget.data['title'])
+            imageType: ImageType.jpeg, name: widget.id)
         : await _downloadAndroid();
     setState(() {
       _isDownloading = false;
@@ -83,7 +83,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
 
   Future<void> _downloadAndroid() async {
     final directory = await getDownloadsDirectory();
-    final path = '${directory!.path}/${widget.data["title"]}.jpg';
+    final path = '${directory!.path}/${widget.id}.jpg';
     try {
       await Dio().download(widget.data['imageUrl'], path);
     } on SocketException catch (_) {
