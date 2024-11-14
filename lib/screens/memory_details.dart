@@ -172,7 +172,6 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        automaticallyImplyLeading: !kIsWeb,
         title: const TitleWidget(),
         actions: [
           Tooltip(
