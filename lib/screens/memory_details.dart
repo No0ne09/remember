@@ -76,6 +76,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         ? await WebImageDownloader.downloadImageFromWeb(widget.data['imageUrl'],
             imageType: ImageType.jpeg, name: widget.id)
         : await _downloadAndroid();
+    if (!mounted) return;
     setState(() {
       _isDownloading = false;
     });

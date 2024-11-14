@@ -150,7 +150,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       });
       return;
     }
-
+    if (!mounted) return;
     setState(() {
       _isSubmitting = false;
     });
