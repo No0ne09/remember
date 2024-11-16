@@ -61,7 +61,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       if (!mounted) return null;
       await showInfoPopup(context, noConnection);
       return null;
-    } catch (e) {
+    } catch (_) {
       if (!mounted) return null;
       await showInfoPopup(context, unknownError);
       return null;

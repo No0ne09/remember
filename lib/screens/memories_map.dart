@@ -53,7 +53,11 @@ class _MemoriesMapState extends State<MemoriesMap> {
       }
     } on FirebaseException catch (e) {
       if (!mounted) return {};
-      handleFireBaseError(e.code, context);
+      await handleFireBaseError(e.code, context);
+      return {};
+    } catch (_) {
+      if (!mounted) return {};
+      await showInfoPopup(context, unknownError);
       return {};
     }
 

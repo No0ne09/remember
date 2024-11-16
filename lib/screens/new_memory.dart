@@ -90,7 +90,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       return null;
     } on FirebaseException catch (e) {
       if (!mounted) return null;
-      handleFireBaseError(e.code, context);
+      await handleFireBaseError(e.code, context);
       return null;
     }
   }
@@ -144,7 +144,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       });
     } on FirebaseException catch (e) {
       if (!mounted) return;
-      handleFireBaseError(e.code, context);
+      await handleFireBaseError(e.code, context);
       setState(() {
         _isSubmitting = false;
       });
