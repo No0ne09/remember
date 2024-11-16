@@ -12,7 +12,6 @@ import 'package:remember/helpers/theme.dart';
 
 /*For dev purposes only. If you want to compile app for android this needs to be commented out*/
 //import 'package:remember/helpers/dev_web_api_parsing.dart';
-//import 'package:flutter/foundation.dart';
 
 import 'package:remember/screens/auth_screen.dart';
 import 'package:remember/screens/content_screen.dart';

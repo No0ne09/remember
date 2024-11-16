@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/base_map_screen.dart';
+import 'package:remember/screens/memory_details.dart';
 import 'package:remember/widgets/layout/infotext.dart';
 
 class MemoriesMap extends StatefulWidget {
@@ -33,6 +34,13 @@ class _MemoriesMapState extends State<MemoriesMap> {
           Marker(
             markerId: MarkerId(doc.id),
             infoWindow: InfoWindow(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => MemoryDetails(data: data, id: doc.id),
+                  ),
+                );
+              },
               title: data["memoryDate"],
               snippet: data["title"],
             ),
