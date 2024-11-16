@@ -9,12 +9,9 @@ import 'package:remember/widgets/memories_gallery/memories_sliver_header.dart';
 class MemoriesList extends ConsumerWidget {
   const MemoriesList({required this.memories, super.key});
   final List<QueryDocumentSnapshot<Map<String, dynamic>>> memories;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final overlay = ref.watch(memoryOverlayProvider);
-    final descending = ref.watch(memoryOrderProvider);
-    final sortedMemories = List.from(memories)
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _getSortedMemories(
+      bool descending) {
+    return List.from(memories)
       ..sort((a, b) {
         final memoryDateA = a.data()['memoryDate'] as String;
         final memoryDateB = b.data()['memoryDate'] as String;
@@ -28,13 +25,25 @@ class MemoriesList extends ConsumerWidget {
             ? uploadTimeStampB.compareTo(uploadTimeStampA)
             : uploadTimeStampA.compareTo(uploadTimeStampB);
       });
-    final List<QueryDocumentSnapshot<Map<String, dynamic>>> favouriteMemories =
-        [];
-    final List<QueryDocumentSnapshot<Map<String, dynamic>>> basicMemories = [];
-    for (final memory in sortedMemories) {
-      final isFavourite = memory.data()['isFavourite'] as bool;
-      isFavourite ? favouriteMemories.add(memory) : basicMemories.add(memory);
-    }
+  }
+
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _getGroupedMeals(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> memories,
+      bool isFavourite) {
+    return memories
+        .where(
+          (memory) => memory.data()['isFavourite'] as bool == isFavourite,
+        )
+        .toList();
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final overlay = ref.watch(memoryOverlayProvider);
+    final descending = ref.watch(memoryOrderProvider);
+    final sortedMemories = _getSortedMemories(descending);
+    final favouriteMemories = _getGroupedMeals(sortedMemories, true);
+    final basicMemories = _getGroupedMeals(sortedMemories, false);
 
     return CustomScrollView(
       slivers: [
