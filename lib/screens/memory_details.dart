@@ -48,7 +48,8 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         const SizedBox(
           height: 12,
         ),
-        Text(
+        SelectableText(
+          enableInteractiveSelection: kIsWeb,
           "${widget.data["address"]}\n${widget.data['memoryDate']}",
           textAlign: TextAlign.center,
         ),
