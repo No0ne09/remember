@@ -75,9 +75,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
       height: MediaQuery.of(context).size.height / 4,
       text: noLocationChosen,
       icon: Icons.location_off,
-      onTap: () async {
-        _getLocation();
-      },
+      onTap: _getLocation,
       child: _imageUrl == null
           ? null
           : CustomCachedImage(

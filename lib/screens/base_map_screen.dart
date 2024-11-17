@@ -75,7 +75,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     );
   }
 
-  Future<void> _savePlace() async {
+  void _savePlace() {
     if (_pickedPosition == null) {
       Navigator.pop(context);
       return;
