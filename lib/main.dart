@@ -32,8 +32,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) {
       FlutterError.onError = (details) async {
-        FlutterError.onError =
-            FirebaseCrashlytics.instance.recordFlutterFatalError;
+        await FirebaseCrashlytics.instance.recordFlutterFatalError(details);
         String res = "${details.exception} \n ${details.stack}";
 
         String version = await getAppVersion();
