@@ -68,7 +68,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   Future<String?> _uploadImage(User user, String id) async {
     final storageRef = FirebaseStorage.instance
         .ref()
-        .child('user_memories')
+        .child(firebaseDbKeys['user_memories']!)
         .child(user.uid)
         .child('$id.jpg');
     try {
