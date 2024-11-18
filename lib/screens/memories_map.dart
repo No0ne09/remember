@@ -18,6 +18,29 @@ class MemoriesMap extends StatefulWidget {
 
 class _MemoriesMapState extends State<MemoriesMap> {
   late final Future<Set<Marker>> _markers;
+  Marker _createMarker(
+    String id,
+    Map<String, dynamic> data,
+  ) {
+    return Marker(
+      markerId: MarkerId(id),
+      infoWindow: InfoWindow(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MemoryDetails(data: data, id: id),
+            ),
+          );
+        },
+        title: data[firebaseDataKeys["memoryDate"]!],
+        snippet: data[firebaseDataKeys["title"]!],
+      ),
+      position: LatLng(
+        data[firebaseDataKeys["geopoint"]!].latitude,
+        data[firebaseDataKeys["geopoint"]!].longitude,
+      ),
+    );
+  }
 
   Future<Set<Marker>> _getMarkers() async {
     final Set<Marker> markers = {};
@@ -31,26 +54,11 @@ class _MemoriesMapState extends State<MemoriesMap> {
           .get();
       for (final doc in docs.docs) {
         final data = doc.data();
-        markers.add(
-          Marker(
-            markerId: MarkerId(doc.id),
-            infoWindow: InfoWindow(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => MemoryDetails(data: data, id: doc.id),
-                  ),
-                );
-              },
-              title: data[firebaseDataKeys["memoryDate"]!],
-              snippet: data[firebaseDataKeys["title"]!],
-            ),
-            position: LatLng(
-              data[firebaseDataKeys["geopoint"]!].latitude,
-              data[firebaseDataKeys["geopoint"]!].longitude,
-            ),
-          ),
+        final marker = _createMarker(
+          doc.id,
+          data,
         );
+        markers.add(marker);
       }
     } on FirebaseException catch (e) {
       if (!mounted) return {};
