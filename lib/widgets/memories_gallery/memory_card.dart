@@ -19,7 +19,7 @@ class MemoryCard extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           CustomCachedImage(
-            imageUrl: data['imageUrl'],
+            imageUrl: data[firebaseDataKeys['imageUrl']!],
             fit: BoxFit.cover,
           ),
           Positioned(
@@ -32,7 +32,7 @@ class MemoryCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 child: Text(
-                  data["title"],
+                  data[firebaseDataKeys["title"]!],
                   style: const TextStyle(color: Colors.white),
                   overflow: TextOverflow.ellipsis,
                 ),

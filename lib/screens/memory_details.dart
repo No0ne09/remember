@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
 import 'package:image_downloader_web/image_downloader_web.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
@@ -41,7 +42,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          '${widget.data['description']}',
+          '${widget.data[firebaseDataKeys['description']!]}',
           style: Theme.of(context).textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
@@ -50,7 +51,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
         ),
         SelectableText(
           enableInteractiveSelection: kIsWeb,
-          "${widget.data["address"]}\n${widget.data['memoryDate']}",
+          "${widget.data[firebaseDataKeys["address"]]!}\n${widget.data[firebaseDataKeys['memoryDate']]!}",
           textAlign: TextAlign.center,
         ),
       ],
@@ -74,8 +75,10 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       _isDownloading = true;
     });
     kIsWeb
-        ? await WebImageDownloader.downloadImageFromWeb(widget.data['imageUrl'],
-            imageType: ImageType.jpeg, name: widget.id)
+        ? await WebImageDownloader.downloadImageFromWeb(
+            widget.data[firebaseDataKeys['imageUrl']!],
+            imageType: ImageType.jpeg,
+            name: widget.id)
         : await _downloadAndroid();
     if (!mounted) return;
     setState(() {
@@ -87,7 +90,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     final directory = await getDownloadsDirectory();
     final path = '${directory!.path}/${widget.id}.jpg';
     try {
-      await Dio().download(widget.data['imageUrl'], path);
+      await Dio().download(widget.data[firebaseDataKeys['imageUrl']!], path);
     } on SocketException catch (_) {
       if (!mounted) return;
       await showInfoPopup(context, noConnection);
@@ -122,14 +125,14 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     if (ensure != true) return;
     try {
       _firestore
-          .collection('memories_by_user')
+          .collection(firebaseDbKeys['memories_by_user']!)
           .doc(_user)
-          .collection('memories')
+          .collection(firebaseDbKeys['memories']!)
           .doc(widget.id)
           .delete();
       final image = FirebaseStorage.instance
           .ref()
-          .child('user_memories')
+          .child(firebaseDbKeys['user_memories']!)
           .child(_user)
           .child('${widget.id}.jpg');
       image.delete();
@@ -152,11 +155,11 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     });
     try {
       _firestore
-          .collection('memories_by_user')
+          .collection(firebaseDbKeys['memories_by_user']!)
           .doc(_user)
-          .collection('memories')
+          .collection(firebaseDbKeys['memories']!)
           .doc(widget.id)
-          .update({"isFavourite": _isFavourite});
+          .update({firebaseDataKeys["isFavourite"]!: _isFavourite});
     } on FirebaseException catch (e) {
       if (!mounted) return;
       handleFireBaseError(e.code, context);
@@ -166,7 +169,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
   @override
   void initState() {
     super.initState();
-    _isFavourite = widget.data["isFavourite"];
+    _isFavourite = widget.data[firebaseDataKeys["isFavourite"]!];
   }
 
   @override
@@ -208,7 +211,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                 children: [
                   Text(
                     textAlign: TextAlign.center,
-                    widget.data['title'],
+                    widget.data[firebaseDataKeys['title']!],
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall!
@@ -223,9 +226,11 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                       children: [
                         Expanded(
                           child: MemoryPageview(
-                            imageUrl: widget.data['imageUrl'],
-                            location: widget.data["geopoint"],
-                            title: widget.data['title'],
+                            imageUrl:
+                                widget.data[firebaseDataKeys['imageUrl']!],
+                            location:
+                                widget.data[firebaseDataKeys["geopoint"]!],
+                            title: widget.data[firebaseDataKeys['title']!],
                           ),
                         ),
                         if (landscape)

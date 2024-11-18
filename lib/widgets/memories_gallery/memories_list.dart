@@ -1,26 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/memories_gallery/memories_sliver.dart';
 import 'package:remember/widgets/memories_gallery/memories_sliver_header.dart';
 
 class MemoriesList extends ConsumerWidget {
-  const MemoriesList({required this.memories, super.key});
+  const MemoriesList({
+    required this.memories,
+    super.key,
+  });
   final List<QueryDocumentSnapshot<Map<String, dynamic>>> memories;
+
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _getSortedMemories(
       bool descending) {
     return List.from(memories)
       ..sort((a, b) {
-        final memoryDateA = a.data()['memoryDate'] as String;
-        final memoryDateB = b.data()['memoryDate'] as String;
+        final memoryDateA = a.data()[firebaseDataKeys['memoryDate']]! as String;
+        final memoryDateB = b.data()[firebaseDataKeys['memoryDate']]! as String;
         final comparison = descending
             ? memoryDateB.compareTo(memoryDateA)
             : memoryDateA.compareTo(memoryDateB);
         if (comparison != 0) return comparison;
-        final uploadTimeStampA = a.data()['uploadTimeStamp'] as Timestamp;
-        final uploadTimeStampB = b.data()['uploadTimeStamp'] as Timestamp;
+        final uploadTimeStampA =
+            a.data()[firebaseDataKeys['uploadTimeStamp']]! as Timestamp;
+        final uploadTimeStampB =
+            b.data()[firebaseDataKeys['uploadTimeStamp']]! as Timestamp;
         return descending
             ? uploadTimeStampB.compareTo(uploadTimeStampA)
             : uploadTimeStampA.compareTo(uploadTimeStampB);
@@ -32,7 +39,9 @@ class MemoriesList extends ConsumerWidget {
       bool isFavourite) {
     return memories
         .where(
-          (memory) => memory.data()['isFavourite'] as bool == isFavourite,
+          (memory) =>
+              memory.data()[firebaseDataKeys['isFavourite']]! as bool ==
+              isFavourite,
         )
         .toList();
   }

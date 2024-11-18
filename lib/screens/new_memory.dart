@@ -125,22 +125,22 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     }
     try {
       await FirebaseFirestore.instance
-          .collection('memories_by_user')
+          .collection(firebaseDbKeys['memories_by_user']!)
           .doc(user.uid)
-          .collection("memories")
+          .collection(firebaseDbKeys["memories"]!)
           .doc(id)
           .set({
-        "geopoint": _chosenLocation!.coordinates,
-        "address": _chosenLocation!.address,
-        "title": title,
-        "description": desc,
-        "memoryDate": _chosenDate,
-        "uploadTimeStamp": Timestamp.now(),
-        "username": user.displayName,
-        "email": user.email,
-        "userId": user.uid,
-        "imageUrl": imageUrl,
-        "isFavourite": false,
+        firebaseDataKeys["geopoint"]!: _chosenLocation!.coordinates,
+        firebaseDataKeys["address"]!: _chosenLocation!.address,
+        firebaseDataKeys["title"]!: title,
+        firebaseDataKeys["description"]!: desc,
+        firebaseDataKeys["memoryDate"]!: _chosenDate,
+        firebaseDataKeys["uploadTimeStamp"]!: Timestamp.now(),
+        firebaseDataKeys["username"]!: user.displayName,
+        firebaseDataKeys["email"]!: user.email,
+        firebaseDataKeys["userId"]!: user.uid,
+        firebaseDataKeys["imageUrl"]!: imageUrl,
+        firebaseDataKeys["isFavourite"]!: false,
       });
     } on FirebaseException catch (e) {
       if (!mounted) return;
