@@ -5,7 +5,8 @@ const emailTaken = "Istnieje już konto powiązane z tym adresem email.";
 const invalidEmail = "Upewnij się, podany adres email jest poprawny.";
 const serviceUnavailable =
     "Nasze usługi są chwilowo niedostępne spróbuj ponownie później.";
-const unknownError = "Wystąpił błąd. Spróbuj ponownie później.";
+const unknownError =
+    "Wystąpił błąd. Spróbuj ponownie później. Może być konieczne ponowne zalogowanie się.";
 const error = "Błąd";
 const memoryMap = "Twoja mapa";
 const saveMemory = "Zapisz wspomnienie";
