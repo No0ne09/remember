@@ -80,7 +80,7 @@ class App extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: FirebaseAuth.instance.idTokenChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Scaffold(
