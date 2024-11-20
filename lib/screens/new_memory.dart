@@ -118,6 +118,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     final id = uuid.v4();
     final imageUrl = await _uploadImage(user, id);
     if (imageUrl == null) {
+      if (!mounted) return;
       setState(() {
         _isSubmitting = false;
       });

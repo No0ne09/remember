@@ -58,6 +58,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
       await _authInstance.signInWithEmailAndPassword(
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
       setState(() {
         _isProcessing = false;
       });
@@ -84,6 +85,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
       await userData.user!.updateDisplayName(username);
       await _authInstance.currentUser!.reload();
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
       setState(() {
         _isProcessing = false;
       });

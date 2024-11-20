@@ -31,6 +31,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
     if (coordinates == null) return;
     final address = await _getAddress(coordinates);
     if (address == null) return;
+    if (!mounted) return;
     setState(() {
       _imageUrl = getStaticMap(coordinates);
     });

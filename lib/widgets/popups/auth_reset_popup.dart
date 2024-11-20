@@ -35,10 +35,10 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       } on FirebaseAuthException catch (e) {
+        if (!mounted) return;
         setState(() {
           _isLoading = false;
         });
-        if (!mounted) return;
         await handleFireBaseError(e.code, context);
         return;
       }
