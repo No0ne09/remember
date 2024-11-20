@@ -11,11 +11,13 @@ class MemoryPageview extends StatefulWidget {
     required this.imageUrl,
     required this.location,
     required this.title,
+    required this.size,
     super.key,
   });
   final String imageUrl;
   final GeoPoint location;
   final String title;
+  final Size size;
 
   @override
   State<MemoryPageview> createState() => _MemoryPageviewState();
@@ -92,16 +94,13 @@ class _MemoryPageviewState extends State<MemoryPageview> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
     return Column(
       children: [
         Card(
           clipBehavior: Clip.antiAlias,
           child: SizedBox(
-            width: width,
-            height: height / 1.7,
+            width: widget.size.width,
+            height: widget.size.height / 1.7,
             child: PageView(
               onPageChanged: (value) {
                 setState(() {

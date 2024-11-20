@@ -174,9 +174,6 @@ class _MemoryDetailsState extends State<MemoryDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-    final landscape = width > height;
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -204,64 +201,70 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       ),
       body: Background(
         child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    textAlign: TextAlign.center,
-                    widget.data[firebaseDataKeys['title']!],
-                    style: Theme.of(context)
-                        .textTheme
-                        .displaySmall!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: MemoryPageview(
-                            imageUrl:
-                                widget.data[firebaseDataKeys['imageUrl']!],
-                            location:
-                                widget.data[firebaseDataKeys["geopoint"]!],
-                            title: widget.data[firebaseDataKeys['title']!],
-                          ),
-                        ),
-                        if (landscape)
-                          Expanded(
-                            child: _memoryDetailsColumn,
-                          ),
-                      ],
+          child: LayoutBuilder(builder: (context, constraints) {
+            final width = constraints.maxWidth;
+            final height = constraints.maxHeight;
+            final landscape = width > height;
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      textAlign: TextAlign.center,
+                      widget.data[firebaseDataKeys['title']!],
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  if (!landscape)
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _memoryDetailsColumn,
-                        ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: MemoryPageview(
+                              size: Size(width, height),
+                              imageUrl:
+                                  widget.data[firebaseDataKeys['imageUrl']!],
+                              location:
+                                  widget.data[firebaseDataKeys["geopoint"]!],
+                              title: widget.data[firebaseDataKeys['title']!],
+                            ),
+                          ),
+                          if (landscape)
+                            Expanded(
+                              child: _memoryDetailsColumn,
+                            ),
+                        ],
                       ),
                     ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  MainButton(
-                    color: Colors.red,
-                    text: eraseMemory,
-                    onPressed: _deleteMemory,
-                  ),
-                ],
+                    if (!landscape)
+                      SizedBox(
+                        width: double.infinity,
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: _memoryDetailsColumn,
+                          ),
+                        ),
+                      ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    MainButton(
+                      color: Colors.red,
+                      text: eraseMemory,
+                      onPressed: _deleteMemory,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
       ),
     );
