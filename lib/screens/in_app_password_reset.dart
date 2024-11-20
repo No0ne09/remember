@@ -79,69 +79,67 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
         ),
       ),
       body: Background(
-        child: Center(
-          child: LayoutBuilder(builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final height = constraints.maxHeight;
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: height > width ? width : width / 2,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BaseTextfield(
-                              validator: registerPasswordValidator(
-                                  _oldPasswordController),
-                              hint: currentPassword,
-                              isPassword: true,
-                              controller: _oldPasswordController,
-                            ),
-                            BaseTextfield(
-                              validator: registerPasswordValidator(
-                                  _confirmPasswordController),
-                              hint: newPassword,
-                              isPassword: true,
-                              controller: _newPasswordController,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            BaseTextfield(
-                              isPassword: true,
-                              validator: registerPasswordValidator(
-                                  _newPasswordController),
-                              hint: confirmNewPassword,
-                              controller: _confirmPasswordController,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            _isResetting
-                                ? const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : MainButton(
-                                    text: resetPassword,
-                                    onPressed: _resetPassword,
-                                  )
-                          ],
-                        ),
+        child: LayoutBuilder(builder: (context, constraints) {
+          final width = constraints.maxWidth;
+          final height = constraints.maxHeight;
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: height > width ? width : width / 2,
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BaseTextfield(
+                            validator: registerPasswordValidator(
+                                _oldPasswordController),
+                            hint: currentPassword,
+                            isPassword: true,
+                            controller: _oldPasswordController,
+                          ),
+                          BaseTextfield(
+                            validator: registerPasswordValidator(
+                                _confirmPasswordController),
+                            hint: newPassword,
+                            isPassword: true,
+                            controller: _newPasswordController,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          BaseTextfield(
+                            isPassword: true,
+                            validator: registerPasswordValidator(
+                                _newPasswordController),
+                            hint: confirmNewPassword,
+                            controller: _confirmPasswordController,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          _isResetting
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : MainButton(
+                                  text: resetPassword,
+                                  onPressed: _resetPassword,
+                                )
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

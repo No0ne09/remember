@@ -15,9 +15,7 @@ class AuthScreen extends StatelessWidget {
         title: const TitleWidget(),
       ),
       body: const Background(
-        child: Center(
-          child: AuthForm(),
-        ),
+        child: AuthForm(),
       ),
     );
   }

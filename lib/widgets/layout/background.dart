@@ -14,7 +14,7 @@ class Background extends StatelessWidget {
       height: double.infinity,
       decoration:
           getBackgroundDecoration(context, fit: kIsWeb ? BoxFit.contain : null),
-      child: child,
+      child: Center(child: child),
     );
   }
 }
