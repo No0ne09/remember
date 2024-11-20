@@ -31,11 +31,6 @@ class MemoriesGallery extends StatelessWidget {
             );
           }
           if (snapshot.hasError) {
-            final error = snapshot.error;
-            if (error is FirebaseException &&
-                error.code == "permission-denied") {
-              FirebaseAuth.instance.signOut();
-            }
             return const Infotext(text: unknownError);
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
