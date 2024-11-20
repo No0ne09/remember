@@ -69,6 +69,8 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -79,10 +81,8 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
         ),
       ),
       body: Background(
-        child: LayoutBuilder(builder: (context, constraints) {
-          final width = constraints.maxWidth;
-          final height = constraints.maxHeight;
-          return SingleChildScrollView(
+        child: Center(
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
@@ -138,8 +138,8 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                 ),
               ),
             ),
-          );
-        }),
+          ),
+        ),
       ),
     );
   }
