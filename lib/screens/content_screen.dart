@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,9 +48,20 @@ class _ContentScreenState extends ConsumerState<ContentScreen>
     );
   }
 
+  void _checkIdToken() async {
+    if (await checkConnection()) {
+      await FirebaseAuth.instance.currentUser!
+          .getIdToken(true)
+          .catchError((error) {
+        return null;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _checkIdToken();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
