@@ -51,7 +51,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
       final newPassword = _newPasswordController.text;
       try {
         await _authInstance.currentUser!.updatePassword(newPassword);
-      } on FirebaseException catch (e) {
+      } on FirebaseAuthException catch (e) {
         if (!mounted) return;
         await handleFireBaseError(e.code, context);
         setState(() {
