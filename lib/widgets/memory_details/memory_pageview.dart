@@ -70,24 +70,16 @@ class _MemoryPageviewState extends State<MemoryPageview> {
     final position =
         LatLng(widget.location.latitude, widget.location.longitude);
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          forceMaterialTransparency: true,
-          automaticallyImplyLeading: true,
-        ),
-        body: BaseMapScreen(
-          isSelecting: false,
-          initialPosition: position,
-          markers: {
-            Marker(
-                markerId: MarkerId(widget.title),
-                infoWindow: InfoWindow(
-                  title: widget.title,
-                ),
-                position: position),
-          },
-        ),
+      builder: (context) => BaseMapScreen(
+        initialPosition: position,
+        markers: {
+          Marker(
+              markerId: MarkerId(widget.title),
+              infoWindow: InfoWindow(
+                title: widget.title,
+              ),
+              position: position),
+        },
       ),
     ));
   }

@@ -6,18 +6,21 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/theme.dart';
+import 'package:remember/widgets/layout/background.dart';
 
 class BaseMapScreen extends StatefulWidget {
   const BaseMapScreen({
-    required this.isSelecting,
+    this.isSelecting = false,
     this.initialPosition = const LatLng(51.77689791254236, 19.489274125911784),
     this.markers = const {},
+    this.isMemoriesMap = false,
     super.key,
   });
 
   final bool isSelecting;
   final LatLng initialPosition;
   final Set<Marker> markers;
+  final bool isMemoriesMap;
 
   @override
   State<BaseMapScreen> createState() => _BaseMapScreenState();
@@ -110,30 +113,27 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Widget content = SizedBox.expand(
-      child: GoogleMap(
-        style: Theme.of(context).brightness == Brightness.dark
-            ? darkMapStyle
-            : null,
-        zoomControlsEnabled: false,
-        mapToolbarEnabled: !widget.isSelecting,
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: widget.initialPosition,
-          zoom: zoom,
-        ),
-        markers: _markersList,
-        onTap: widget.isSelecting == false
-            ? null
-            : (markerPosition) {
-                setState(() {
-                  _pickedPosition = markerPosition;
-                });
-              },
+    final Widget content = GoogleMap(
+      style:
+          Theme.of(context).brightness == Brightness.dark ? darkMapStyle : null,
+      zoomControlsEnabled: false,
+      mapToolbarEnabled: !widget.isSelecting,
+      onMapCreated: _onMapCreated,
+      initialCameraPosition: CameraPosition(
+        target: widget.initialPosition,
+        zoom: zoom,
       ),
+      markers: _markersList,
+      onTap: widget.isSelecting == false
+          ? null
+          : (markerPosition) {
+              setState(() {
+                _pickedPosition = markerPosition;
+              });
+            },
     );
 
-    return widget.isSelecting
+    return !widget.isMemoriesMap
         ? Scaffold(
             floatingActionButton: widget.isSelecting
                 ? FloatingActionButton(
@@ -145,11 +145,11 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                   )
                 : null,
             extendBodyBehindAppBar: true,
-            appBar: widget.isSelecting
-                ? AppBar(
-                    forceMaterialTransparency: true,
-                    automaticallyImplyLeading: false,
-                    actions: [
+            appBar: AppBar(
+              forceMaterialTransparency: true,
+              automaticallyImplyLeading: true,
+              actions: widget.isSelecting
+                  ? [
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: FloatingActionButton.large(
@@ -160,10 +160,10 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                           ),
                         ),
                       ),
-                    ],
-                  )
-                : null,
-            body: content,
+                    ]
+                  : [],
+            ),
+            body: Background(child: content),
           )
         : content;
   }

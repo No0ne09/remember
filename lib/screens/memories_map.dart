@@ -97,7 +97,7 @@ class _MemoriesMapState extends State<MemoriesMap> {
         }
 
         return BaseMapScreen(
-          isSelecting: false,
+          isMemoriesMap: true,
           markers: snapshot.data!,
           initialPosition: snapshot.data!.first.position,
         );
