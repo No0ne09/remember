@@ -74,16 +74,27 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     setState(() {
       _isDownloading = true;
     });
-    kIsWeb
-        ? await WebImageDownloader.downloadImageFromWeb(
-            widget.data[firebaseDataKeys['imageUrl']!],
-            imageType: ImageType.jpeg,
-            name: widget.id)
-        : await _downloadAndroid();
+
+    kIsWeb ? await _downloadWeb() : await _downloadAndroid();
+
     if (!mounted) return;
     setState(() {
       _isDownloading = false;
     });
+  }
+
+  Future<void> _downloadWeb() async {
+    try {
+      await WebImageDownloader.downloadImageFromWeb(
+        widget.data[firebaseDataKeys['imageUrl']!],
+        imageType: ImageType.jpeg,
+        name: widget.id,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      showInfoPopup(context, unknownError);
+      return;
+    }
   }
 
   Future<void> _downloadAndroid() async {
@@ -124,7 +135,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     );
     if (ensure != true) return;
     try {
-      _firestore
+      await _firestore
           .collection(firebaseDbKeys['memories_by_user']!)
           .doc(_user)
           .collection(firebaseDbKeys['memories']!)
@@ -135,7 +146,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
           .child(firebaseDbKeys['user_memories']!)
           .child(_user)
           .child('${widget.id}.jpg');
-      image.delete();
+      await image.delete();
     } on FirebaseException catch (e) {
       if (!mounted) return;
       await handleFireBaseError(e.code, context);
@@ -149,25 +160,26 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     Navigator.pop(context);
   }
 
-  void _toggleFavourite() {
-    setState(() {
-      _isFavourite = !_isFavourite;
-    });
+  void _toggleFavourite() async {
     try {
-      _firestore
+      await _firestore
           .collection(firebaseDbKeys['memories_by_user']!)
           .doc(_user)
           .collection(firebaseDbKeys['memories']!)
           .doc(widget.id)
-          .update({firebaseDataKeys["isFavourite"]!: _isFavourite});
+          .update({firebaseDataKeys["isFavourite"]!: !_isFavourite});
     } on FirebaseException catch (e) {
       if (!mounted) return;
       handleFireBaseError(e.code, context);
+      return;
     } catch (_) {
       if (!mounted) return;
       showInfoPopup(context, unknownError);
       return;
     }
+    setState(() {
+      _isFavourite = !_isFavourite;
+    });
   }
 
   @override
