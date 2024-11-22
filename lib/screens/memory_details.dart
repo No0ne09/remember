@@ -163,6 +163,10 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     } on FirebaseException catch (e) {
       if (!mounted) return;
       handleFireBaseError(e.code, context);
+    } catch (_) {
+      if (!mounted) return;
+      showInfoPopup(context, unknownError);
+      return;
     }
   }
 

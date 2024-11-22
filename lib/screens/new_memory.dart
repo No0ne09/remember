@@ -92,6 +92,10 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       if (!mounted) return null;
       await handleFireBaseError(e.code, context);
       return null;
+    } catch (_) {
+      if (!mounted) return null;
+      await showInfoPopup(context, unknownError);
+      return null;
     }
   }
 
@@ -149,6 +153,10 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
       setState(() {
         _isSubmitting = false;
       });
+      return;
+    } catch (_) {
+      if (!mounted) return;
+      await showInfoPopup(context, unknownError);
       return;
     }
     if (!mounted) return;
