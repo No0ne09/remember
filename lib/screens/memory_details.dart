@@ -161,25 +161,31 @@ class _MemoryDetailsState extends State<MemoryDetails> {
   }
 
   void _toggleFavourite() async {
+    setState(() {
+      _isFavourite = !_isFavourite;
+    });
     try {
       await _firestore
           .collection(firebaseDbKeys['memories_by_user']!)
           .doc(_user)
           .collection(firebaseDbKeys['memories']!)
           .doc(widget.id)
-          .update({firebaseDataKeys["isFavourite"]!: !_isFavourite});
+          .update({firebaseDataKeys["isFavourite"]!: _isFavourite});
     } on FirebaseException catch (e) {
       if (!mounted) return;
+      setState(() {
+        _isFavourite = !_isFavourite;
+      });
       handleFireBaseError(e.code, context);
       return;
     } catch (_) {
       if (!mounted) return;
+      setState(() {
+        _isFavourite = !_isFavourite;
+      });
       showInfoPopup(context, unknownError);
       return;
     }
-    setState(() {
-      _isFavourite = !_isFavourite;
-    });
   }
 
   @override
