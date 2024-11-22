@@ -65,14 +65,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     setState(() {
       _pickedPosition = LatLng(lat, lng);
     });
-    _controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: _pickedPosition!,
-          zoom: zoom,
-        ),
-      ),
-    );
+    _moveCamera(_pickedPosition!, zoom);
   }
 
   void _savePlace() {
@@ -102,28 +95,42 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     return {};
   }
 
+  void _moveCamera(LatLng position, double zoom) {
+    _controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: position, zoom: zoom),
+      ),
+    );
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller = controller;
+    _moveCamera(widget.initialPosition, zoom + 1);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Widget content = GoogleMap(
-      style:
-          Theme.of(context).brightness == Brightness.dark ? darkMapStyle : null,
-      zoomControlsEnabled: false,
-      mapToolbarEnabled: !widget.isSelecting,
-      onMapCreated: (controller) {
-        _controller = controller;
-      },
-      initialCameraPosition: CameraPosition(
-        target: widget.initialPosition,
-        zoom: zoom,
+    final Widget content = SizedBox.expand(
+      child: GoogleMap(
+        style: Theme.of(context).brightness == Brightness.dark
+            ? darkMapStyle
+            : null,
+        zoomControlsEnabled: false,
+        mapToolbarEnabled: !widget.isSelecting,
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: widget.initialPosition,
+          zoom: zoom,
+        ),
+        markers: _markersList,
+        onTap: widget.isSelecting == false
+            ? null
+            : (markerPosition) {
+                setState(() {
+                  _pickedPosition = markerPosition;
+                });
+              },
       ),
-      markers: _markersList,
-      onTap: widget.isSelecting == false
-          ? null
-          : (markerPosition) {
-              setState(() {
-                _pickedPosition = markerPosition;
-              });
-            },
     );
 
     return widget.isSelecting
