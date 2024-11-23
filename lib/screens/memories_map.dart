@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remember/helpers/constants.dart';
-import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/screens/base_map_screen.dart';
 import 'package:remember/screens/memory_details.dart';
@@ -45,31 +44,20 @@ class _MemoriesMapState extends State<MemoriesMap> {
   Future<Set<Marker>> _getMarkers() async {
     final Set<Marker> markers = {};
     final user = FirebaseAuth.instance.currentUser!;
-    try {
-      final docs = await FirebaseFirestore.instance
-          .collection(firebaseDbKeys['memories_by_user']!)
-          .doc(user.uid)
-          .collection(firebaseDbKeys["memories"]!)
-          .orderBy(firebaseDataKeys["uploadTimeStamp"]!, descending: true)
-          .get();
-      for (final doc in docs.docs) {
-        final data = doc.data();
-        final marker = _createMarker(
-          doc.id,
-          data,
-        );
-        markers.add(marker);
-      }
-    } on FirebaseException catch (e) {
-      if (!mounted) return {};
-      await handleFireBaseError(e.code, context);
-      return {};
-    } catch (_) {
-      if (!mounted) return {};
-      await showInfoPopup(context, unknownError);
-      return {};
+    final docs = await FirebaseFirestore.instance
+        .collection(firebaseDbKeys['memories_by_user']!)
+        .doc(user.uid)
+        .collection(firebaseDbKeys["memories"]!)
+        .orderBy(firebaseDataKeys["uploadTimeStamp"]!, descending: true)
+        .get();
+    for (final doc in docs.docs) {
+      final data = doc.data();
+      final marker = _createMarker(
+        doc.id,
+        data,
+      );
+      markers.add(marker);
     }
-
     return markers;
   }
 
