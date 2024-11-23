@@ -20,7 +20,6 @@ class MemoryCard extends StatelessWidget {
         children: [
           CustomCachedImage(
             imageUrl: data[firebaseDataKeys['imageUrl']!],
-            fit: BoxFit.cover,
           ),
           Positioned(
             bottom: 0,

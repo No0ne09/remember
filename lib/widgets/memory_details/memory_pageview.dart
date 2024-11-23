@@ -115,7 +115,6 @@ class _MemoryPageviewState extends State<MemoryPageview> {
                   onLongPress: _showMap,
                   child: CustomCachedImage(
                     imageUrl: getStaticMap(widget.location),
-                    fit: BoxFit.cover,
                   ),
                 ),
               ],

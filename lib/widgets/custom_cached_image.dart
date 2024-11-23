@@ -5,7 +5,7 @@ import 'package:remember/helpers/strings.dart';
 class CustomCachedImage extends StatelessWidget {
   const CustomCachedImage({
     required this.imageUrl,
-    required this.fit,
+    this.fit = BoxFit.cover,
     super.key,
   });
 
