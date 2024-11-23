@@ -150,19 +150,19 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     } on FirebaseException catch (e) {
       if (!mounted) return;
       await handleFireBaseError(e.code, context);
-      setState(() {
-        _isSubmitting = false;
-      });
       return;
     } catch (_) {
       if (!mounted) return;
       await showInfoPopup(context, unknownError);
       return;
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
     }
-    if (!mounted) return;
-    setState(() {
-      _isSubmitting = false;
-    });
+
     appBarKey.currentState!.animateTo(0);
     ref.read(indexProvider.notifier).state = 0;
   }
