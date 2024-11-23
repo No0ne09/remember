@@ -44,6 +44,9 @@ class _BaseTextfieldState extends State<BaseTextfield> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        textCapitalization: widget.isPassword
+            ? TextCapitalization.none
+            : TextCapitalization.sentences,
         keyboardType: widget.isEmail ? TextInputType.emailAddress : null,
         controller: widget.controller,
         textInputAction: widget.inputAction,
