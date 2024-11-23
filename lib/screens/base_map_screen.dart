@@ -58,14 +58,12 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
       _isGettingCurrentLocation = true;
     });
     locationData = await location.getLocation();
-    if (!mounted) return;
-    setState(() {
-      _isGettingCurrentLocation = false;
-    });
+
     final lat = locationData.latitude;
     final lng = locationData.longitude;
-    if (lat == null || lng == null) return;
+    if (lat == null || lng == null || !mounted) return;
     setState(() {
+      _isGettingCurrentLocation = false;
       _pickedPosition = LatLng(lat, lng);
     });
     _moveCamera(_pickedPosition!, zoom);
