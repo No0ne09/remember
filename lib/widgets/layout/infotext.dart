@@ -17,7 +17,6 @@ class Infotext extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
-            softWrap: true,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],

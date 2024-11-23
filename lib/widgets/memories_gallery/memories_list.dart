@@ -16,7 +16,7 @@ class MemoriesList extends ConsumerWidget {
 
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _getSortedMemories(
       bool descending) {
-    return List.from(memories)
+    return List.of(memories)
       ..sort((a, b) {
         final memoryDateA = a.data()[firebaseDataKeys['memoryDate']]! as String;
         final memoryDateB = b.data()[firebaseDataKeys['memoryDate']]! as String;
