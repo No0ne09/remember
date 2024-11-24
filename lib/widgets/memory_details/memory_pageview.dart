@@ -99,31 +99,34 @@ class _MemoryPageviewState extends State<MemoryPageview> {
             height: widget.size.height / 1.7,
             child: Hero(
               tag: widget.imageUrl,
-              child: PageView(
-                onPageChanged: (value) {
-                  setState(() {
-                    _currentPage = value;
-                  });
-                },
-                controller: _pageController,
-                children: [
-                  GestureDetector(
-                    onLongPress: _showFullScreenImage,
-                    child: Container(
-                      color: Colors.black,
-                      child: CustomCachedImage(
-                        imageUrl: widget.imageUrl,
-                        fit: BoxFit.contain,
+              child: ClipRRect(
+                borderRadius: defaultBorderRadius,
+                child: PageView(
+                  onPageChanged: (value) {
+                    setState(() {
+                      _currentPage = value;
+                    });
+                  },
+                  controller: _pageController,
+                  children: [
+                    GestureDetector(
+                      onLongPress: _showFullScreenImage,
+                      child: Container(
+                        color: Colors.black,
+                        child: CustomCachedImage(
+                          imageUrl: widget.imageUrl,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onLongPress: _showMap,
-                    child: CustomCachedImage(
-                      imageUrl: getStaticMap(widget.location),
+                    GestureDetector(
+                      onLongPress: _showMap,
+                      child: CustomCachedImage(
+                        imageUrl: getStaticMap(widget.location),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
