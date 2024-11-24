@@ -89,44 +89,38 @@ class _MemoryPageviewState extends State<MemoryPageview> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: defaultBorderRadius,
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: SizedBox(
-            width: widget.size.width,
-            height: widget.size.height / 1.7,
-            child: Hero(
-              tag: widget.imageUrl,
-              child: ClipRRect(
-                borderRadius: defaultBorderRadius,
-                child: PageView(
-                  onPageChanged: (value) {
-                    setState(() {
-                      _currentPage = value;
-                    });
-                  },
-                  controller: _pageController,
-                  children: [
-                    GestureDetector(
-                      onLongPress: _showFullScreenImage,
-                      child: Container(
-                        color: Colors.black,
-                        child: CustomCachedImage(
-                          imageUrl: widget.imageUrl,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onLongPress: _showMap,
+        SizedBox(
+          width: widget.size.width,
+          height: widget.size.height / 1.7,
+          child: Hero(
+            tag: widget.imageUrl,
+            child: ClipRRect(
+              borderRadius: defaultBorderRadius,
+              child: PageView(
+                onPageChanged: (value) {
+                  setState(() {
+                    _currentPage = value;
+                  });
+                },
+                controller: _pageController,
+                children: [
+                  GestureDetector(
+                    onLongPress: _showFullScreenImage,
+                    child: Container(
+                      color: Colors.black,
                       child: CustomCachedImage(
-                        imageUrl: getStaticMap(widget.location),
+                        imageUrl: widget.imageUrl,
+                        fit: BoxFit.contain,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                    onLongPress: _showMap,
+                    child: CustomCachedImage(
+                      imageUrl: getStaticMap(widget.location),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
