@@ -9,6 +9,7 @@ class MemoryCard extends StatelessWidget {
   final String id;
   @override
   Widget build(BuildContext context) {
+    final url = data[firebaseDataKeys['imageUrl']!];
     return Card(
       elevation: 4,
       clipBehavior: Clip.antiAlias,
@@ -18,8 +19,11 @@ class MemoryCard extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          CustomCachedImage(
-            imageUrl: data[firebaseDataKeys['imageUrl']!],
+          Hero(
+            tag: url,
+            child: CustomCachedImage(
+              imageUrl: url,
+            ),
           ),
           Positioned(
             bottom: 0,
