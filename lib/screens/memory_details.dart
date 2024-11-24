@@ -11,6 +11,7 @@ import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
+import 'package:remember/helpers/theme.dart';
 import 'package:remember/widgets/buttons/main_button.dart';
 import 'package:remember/widgets/layout/background.dart';
 import 'package:remember/widgets/layout/title_widget.dart';
@@ -243,6 +244,9 @@ class _MemoryDetailsState extends State<MemoryDetails> {
                     height: 8,
                   ),
                   Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: defaultBorderRadius,
+                    ),
                     clipBehavior: Clip.antiAlias,
                     child: Row(
                       children: [

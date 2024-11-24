@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:uuid/uuid.dart';
 
-final defaultBorderRadius = BorderRadius.circular(25);
 const zoom = 16.0;
 final apiKey = dotenv.env["API_KEY"];
 const uuid = Uuid();

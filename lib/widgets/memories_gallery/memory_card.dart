@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
+import 'package:remember/helpers/theme.dart';
 import 'package:remember/screens/memory_details.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 
@@ -9,53 +10,53 @@ class MemoryCard extends StatelessWidget {
   final String id;
   @override
   Widget build(BuildContext context) {
-    final url = data[firebaseDataKeys['imageUrl']!];
-    return Card(
-      elevation: 4,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: defaultBorderRadius,
-      ),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Hero(
-            tag: url,
-            child: CustomCachedImage(
-              imageUrl: url,
+    final imageUrl = data[firebaseDataKeys['imageUrl']!];
+    return Hero(
+      tag: imageUrl,
+      child: Card(
+        elevation: 4,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: defaultBorderRadius,
+        ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            CustomCachedImage(
+              imageUrl: imageUrl,
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: Text(
-                  data[firebaseDataKeys["title"]!],
-                  style: const TextStyle(color: Colors.white),
-                  overflow: TextOverflow.ellipsis,
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 8.0),
+                  child: Text(
+                    data[firebaseDataKeys["title"]!],
+                    style: const TextStyle(color: Colors.white),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
             ),
-          ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => MemoryDetails(
-                    data: data,
-                    id: id,
-                  ),
-                ));
-              },
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MemoryDetails(
+                      data: data,
+                      id: id,
+                    ),
+                  ));
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

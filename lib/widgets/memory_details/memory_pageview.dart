@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remember/helpers/functions.dart';
+import 'package:remember/helpers/theme.dart';
 import 'package:remember/screens/base_map_screen.dart';
 import 'package:remember/widgets/custom_cached_image.dart';
 import 'package:remember/widgets/memory_details/pageview_button.dart';
@@ -89,6 +90,9 @@ class _MemoryPageviewState extends State<MemoryPageview> {
     return Column(
       children: [
         Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: defaultBorderRadius,
+          ),
           clipBehavior: Clip.antiAlias,
           child: SizedBox(
             width: widget.size.width,

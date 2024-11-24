@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remember/helpers/constants.dart';
+import 'package:remember/helpers/theme.dart';
 
 class NewMemoryContainer extends StatelessWidget {
   const NewMemoryContainer({

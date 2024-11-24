@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:remember/helpers/constants.dart';
+
+final defaultBorderRadius = BorderRadius.circular(20);
 
 OutlineInputBorder getTextFieldBorder({Color color = Colors.transparent}) {
   return OutlineInputBorder(
