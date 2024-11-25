@@ -6,7 +6,6 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/theme.dart';
-import 'package:remember/widgets/layout/background.dart';
 
 class BaseMapScreen extends StatefulWidget {
   const BaseMapScreen({
@@ -161,7 +160,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                     ]
                   : [],
             ),
-            body: Background(child: content),
+            body: content,
           )
         : content;
   }
