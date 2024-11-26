@@ -69,3 +69,5 @@ const yes = "TAK";
 const no = "NIE";
 const download = "Pobierz zdjęcie";
 const toggleFavourite = "Dodaj/usuń z ulubionych";
+const locationError =
+    "Nie udało się uzyskać twojej lokalizacji. Upewnij się, że aplikacja posiada odpowiednie uprawnienia, a lokalizacja w twoim urządzeniu jest włączona.";

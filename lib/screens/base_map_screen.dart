@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as loc;
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
@@ -30,37 +31,48 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
   bool _isGettingCurrentLocation = false;
   LatLng? _pickedPosition;
 
-  Future<void> _getCurrentLocation() async {
-    final location = Location();
+  Future<bool> _checkPermissions() async {
+    final location = loc.Location();
     bool serviceEnabled;
-    PermissionStatus permissionGranted;
-    LocationData locationData;
+    loc.PermissionStatus permissionGranted;
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
-        if (!mounted) return;
+        if (!mounted) return false;
         await showInfoPopup(context, locationTurnedOff);
-        return;
+        return false;
       }
     }
     permissionGranted = await location.hasPermission();
-    if (permissionGranted != PermissionStatus.granted) {
+    if (permissionGranted != loc.PermissionStatus.granted) {
       permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        if (!mounted) return;
+      if (permissionGranted != loc.PermissionStatus.granted) {
+        if (!mounted) return false;
         await showInfoPopup(context, noLocationPermission);
-        return;
+        return false;
       }
     }
+    return true;
+  }
+
+  Future<void> _getCurrentLocation() async {
+    final Position position;
+    final check = await _checkPermissions();
+    if (!check) return;
     setState(() {
       _isGettingCurrentLocation = true;
     });
-    locationData = await location.getLocation();
-
-    final lat = locationData.latitude;
-    final lng = locationData.longitude;
-    if (lat == null || lng == null || !mounted) return;
+    try {
+      position = await Geolocator.getCurrentPosition();
+    } catch (_) {
+      if (!mounted) return;
+      await showInfoPopup(context, locationError);
+      return;
+    }
+    final lat = position.latitude;
+    final lng = position.longitude;
+    if (!mounted) return;
     setState(() {
       _isGettingCurrentLocation = false;
       _pickedPosition = LatLng(lat, lng);
