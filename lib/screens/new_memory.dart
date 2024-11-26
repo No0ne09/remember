@@ -197,9 +197,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
                 children: [
                   NewPhotoWidget(
                     onChooseImage: (image) async {
-                      setState(() {
-                        _chosenImage = image;
-                      });
+                      _chosenImage = image;
                       await _checkDateTime();
                     },
                   ),
@@ -222,9 +220,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
               ),
               NewLocationWidget(
                 onPickedLocation: (locationInfo) {
-                  setState(() {
-                    _chosenLocation = locationInfo;
-                  });
+                  _chosenLocation = locationInfo;
                 },
               ),
               const SizedBox(
