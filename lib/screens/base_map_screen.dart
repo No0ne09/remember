@@ -26,7 +26,7 @@ class BaseMapScreen extends StatefulWidget {
 }
 
 class _BaseMapScreenState extends State<BaseMapScreen> {
-  late final GoogleMapController _controller;
+  late final GoogleMapController? _controller;
   bool _isGettingCurrentLocation = false;
   LatLng? _pickedPosition;
 
@@ -96,6 +96,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
   }
 
   void _moveCamera(LatLng position, double zoom) {
+    if (_controller == null) return;
     _controller.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(target: position, zoom: zoom),
