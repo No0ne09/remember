@@ -67,6 +67,9 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
       position = await Geolocator.getCurrentPosition();
     } catch (_) {
       if (!mounted) return;
+      setState(() {
+        _isGettingCurrentLocation = false;
+      });
       await showInfoPopup(context, locationError);
       return;
     }
