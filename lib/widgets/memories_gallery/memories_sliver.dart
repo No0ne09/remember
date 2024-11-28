@@ -21,7 +21,7 @@ class MemoriesSliver extends StatelessWidget {
         ),
       ),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: overlay ? 500 : 300,
+        maxCrossAxisExtent: overlay ? 550 : 300,
         crossAxisSpacing: 4.0,
         mainAxisSpacing: 4.0,
       ),
