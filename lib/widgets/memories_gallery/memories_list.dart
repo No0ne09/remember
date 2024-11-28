@@ -34,7 +34,7 @@ class MemoriesList extends ConsumerWidget {
       });
   }
 
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> _getGroupedMeals(
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _getGroupedMemories(
       List<QueryDocumentSnapshot<Map<String, dynamic>>> memories,
       bool isFavourite) {
     return memories
@@ -51,8 +51,8 @@ class MemoriesList extends ConsumerWidget {
     final overlay = ref.watch(memoryOverlayProvider);
     final descending = ref.watch(memoryOrderProvider);
     final sortedMemories = _getSortedMemories(descending);
-    final favouriteMemories = _getGroupedMeals(sortedMemories, true);
-    final basicMemories = _getGroupedMeals(sortedMemories, false);
+    final favouriteMemories = _getGroupedMemories(sortedMemories, true);
+    final basicMemories = _getGroupedMemories(sortedMemories, false);
 
     return CustomScrollView(
       slivers: [
