@@ -18,15 +18,8 @@ class UserDrawer extends ConsumerStatefulWidget {
 
 class _UserDrawerState extends ConsumerState<UserDrawer> {
   final _authInstance = FirebaseAuth.instance;
-
   String _appVersion = '';
   String _connection = offline;
-  @override
-  void initState() {
-    super.initState();
-    _getVersion();
-    _getConnection();
-  }
 
   Future<void> _getVersion() async {
     final version = await getAppVersion();
@@ -40,6 +33,13 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
     setState(() {
       _connection = res ? online : offline;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getVersion();
+    _getConnection();
   }
 
   @override

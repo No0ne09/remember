@@ -25,14 +25,6 @@ class _AuthFormState extends ConsumerState<AuthForm> {
   bool _isLogin = true;
   bool _isProcessing = false;
   final _authInstance = FirebaseAuth.instance;
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
 
   Future<void> _validate() async {
     if (_formKey.currentState!.validate()) {
@@ -97,6 +89,15 @@ class _AuthFormState extends ConsumerState<AuthForm> {
       await showInfoPopup(context, unknownError);
       return;
     }
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override

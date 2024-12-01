@@ -25,6 +25,7 @@ class BaseTextfield extends StatefulWidget {
 
 class _BaseTextfieldState extends State<BaseTextfield> {
   late FocusNode _focusNode;
+  bool _hidden = true;
 
   @override
   void initState() {
@@ -38,7 +39,6 @@ class _BaseTextfieldState extends State<BaseTextfield> {
     super.dispose();
   }
 
-  bool _hidden = true;
   @override
   Widget build(BuildContext context) {
     return Padding(

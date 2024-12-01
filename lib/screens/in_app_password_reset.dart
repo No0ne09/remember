@@ -21,13 +21,6 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
   final _formKey = GlobalKey<FormState>();
   final _authInstance = FirebaseAuth.instance;
   bool _isResetting = false;
-  @override
-  void dispose() {
-    _oldPasswordController.dispose();
-    _newPasswordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
 
   void _resetPassword() async {
     if (_formKey.currentState!.validate()) {
@@ -65,6 +58,14 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
       showToast(passwordChanged, context);
       _authInstance.signOut();
     }
+  }
+
+  @override
+  void dispose() {
+    _oldPasswordController.dispose();
+    _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override

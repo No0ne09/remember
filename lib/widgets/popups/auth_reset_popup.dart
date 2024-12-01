@@ -20,12 +20,6 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
   final _emailController = TextEditingController();
   bool _isLoading = false;
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
   Future<void> _resetPassword() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -46,6 +40,12 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
       showToast(checkInbox, context);
       Navigator.pop(context);
     }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
   }
 
   @override

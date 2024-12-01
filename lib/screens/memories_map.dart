@@ -17,6 +17,7 @@ class MemoriesMap extends StatefulWidget {
 
 class _MemoriesMapState extends State<MemoriesMap> {
   late final Future<Set<Marker>> _markers;
+
   Marker _createMarker(
     String id,
     Map<String, dynamic> data,

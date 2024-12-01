@@ -27,17 +27,6 @@ class MemoryPageview extends StatefulWidget {
 class _MemoryPageviewState extends State<MemoryPageview> {
   late final PageController _pageController;
   int _currentPage = 0;
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   void _showFullScreenImage() {
     showDialog(
@@ -83,6 +72,18 @@ class _MemoryPageviewState extends State<MemoryPageview> {
         },
       ),
     ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
