@@ -215,9 +215,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
               const SizedBox(
                 height: 8,
               ),
-              const SizedBox(
-                height: 8,
-              ),
               NewLocationWidget(
                 onPickedLocation: (locationInfo) {
                   _chosenLocation = locationInfo;
