@@ -73,7 +73,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
   @override
   Widget build(BuildContext context) {
     return NewMemoryContainer(
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.sizeOf(context).height / 4,
       text: noLocationChosen,
       icon: Icons.location_off,
       onTap: _getLocation,

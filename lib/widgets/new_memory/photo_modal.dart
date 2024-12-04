@@ -30,7 +30,7 @@ class PhotoModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.sizeOf(context).height / 2,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

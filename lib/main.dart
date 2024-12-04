@@ -32,7 +32,9 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) {
       FlutterError.onError = (details) async {
-        await FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+        if (!kIsWeb) {
+          await FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+        }
         String res = "${details.exception} \n ${details.stack}";
 
         String version = await getAppVersion();
@@ -48,10 +50,12 @@ void main() async {
           );
         } catch (_) {}
       };
-      PlatformDispatcher.instance.onError = (error, stack) {
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-        return true;
-      };
+      if (!kIsWeb) {
+        PlatformDispatcher.instance.onError = (error, stack) {
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+          return true;
+        };
+      }
       runApp(
         const ProviderScope(
           child: App(),

@@ -70,8 +70,9 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    final size = MediaQuery.sizeOf(context);
+    final width = size.width;
+    final height = size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text(

@@ -45,7 +45,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: MediaQuery.of(context).size.width * 0.75,
+      width: MediaQuery.sizeOf(context).width * 0.75,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(

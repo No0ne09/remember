@@ -38,7 +38,7 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
   @override
   Widget build(BuildContext context) {
     return NewMemoryContainer(
-      height: MediaQuery.of(context).size.width,
+      height: MediaQuery.sizeOf(context).width,
       text: noPhotoChosen,
       icon: Icons.camera_alt,
       onTap: () async {
