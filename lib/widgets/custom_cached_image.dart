@@ -18,10 +18,10 @@ class CustomCachedImage extends StatelessWidget {
         child: CircularProgressIndicator(),
       ),
       errorWidget: (context, url, error) {
-        return Container(
-          color: Colors.black,
-          child: const Center(
-            child: Column(
+        return Center(
+          child: Container(
+            color: Colors.black,
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
@@ -30,6 +30,7 @@ class CustomCachedImage extends StatelessWidget {
                   color: Colors.white,
                 ),
                 Text(
+                  textAlign: TextAlign.center,
                   failedDownload,
                   style: TextStyle(
                     color: Colors.white,
