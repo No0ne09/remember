@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
-import 'package:remember/helpers/theme.dart';
 import 'package:remember/widgets/user_drawer/drawer_option.dart';
 import 'package:remember/screens/in_app_password_reset.dart';
+import 'package:remember/widgets/user_drawer/user_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserDrawer extends ConsumerStatefulWidget {
@@ -53,45 +53,10 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DrawerHeader(
-                decoration:
-                    getBackgroundDecoration(context, fit: BoxFit.contain),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${_authInstance.currentUser!.displayName}',
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      _connection,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Opacity(
-                      opacity: 0.4,
-                      child: Text(
-                        '${_authInstance.currentUser!.email}',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              UserHeader(
+                  name: '${_authInstance.currentUser!.displayName}',
+                  email: '${_authInstance.currentUser!.email}',
+                  connection: _connection),
               DrawerOption(
                 onTap: () {
                   Navigator.of(context).push(
