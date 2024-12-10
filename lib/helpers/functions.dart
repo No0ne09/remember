@@ -73,6 +73,7 @@ Future<void> showInfoPopup(BuildContext context, String desc,
   await showDialog(
     context: context,
     builder: (context) => InfoPopup(title: title, desc: desc),
+    barrierDismissible: false,
   );
 }
 

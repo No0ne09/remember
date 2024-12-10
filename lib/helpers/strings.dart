@@ -1,6 +1,6 @@
 const appName = "Re(me)mber";
 const invalidCredentials = "Upewnij się, że wprowadzone dane są poprawne.";
-const noConnection = "Upewnij się, posiadasz połączenie z internetem.";
+const noConnection = "Upewnij się, posiadasz połączenie z Internetem.";
 const emailTaken = "Istnieje już konto powiązane z tym adresem email.";
 const invalidEmail = "Upewnij się, podany adres email jest poprawny.";
 const serviceUnavailable =
@@ -11,7 +11,7 @@ const error = "Błąd";
 const memoryMap = "Twoja mapa";
 const saveMemory = "Zapisz wspomnienie";
 const noConnectionPopUpInfo =
-    "Nie masz połączenia z internetem. Niektóre z funkcji aplikacji mogą nie działać prawidłowo.";
+    "Nie masz połączenia z Internetem. Niektóre z funkcji aplikacji mogą nie działać prawidłowo.";
 const changeSize = "Zmień rozmiar kafelków";
 const sort = "Odwróć sortowanie";
 const currentPassword = "Aktualne hasło";
