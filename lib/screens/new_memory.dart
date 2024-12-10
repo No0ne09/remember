@@ -52,11 +52,12 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   Future<void> _pickDateTime() async {
     final tempDateTime = await showDatePicker(
       locale: const Locale("pl"),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDate: _chosenDate == null
           ? DateTime.now()
           : DateTime.tryParse(_chosenDate!),
       context: context,
-      firstDate: DateTime(DateTime.now().year - 5),
+      firstDate: DateTime(DateTime.now().year - 100),
       lastDate: DateTime.now(),
     );
     if (tempDateTime == null) return;
