@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:uuid/uuid.dart';
 
-const zoom = 16.0;
+const zoom = 15.5;
 final apiKey = dotenv.env["API_KEY"];
 const uuid = Uuid();
 GlobalKey<ConvexAppBarState> appBarKey = GlobalKey<ConvexAppBarState>();
