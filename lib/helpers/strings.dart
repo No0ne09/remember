@@ -71,3 +71,5 @@ const download = "Pobierz zdjęcie";
 const toggleFavourite = "Dodaj/usuń z ulubionych";
 const locationError =
     "Nie udało się uzyskać twojej lokalizacji. Upewnij się, że aplikacja posiada odpowiednie uprawnienia, a lokalizacja w twoim urządzeniu jest włączona.";
+const cameraPermission =
+    "Wystąpił błąd. Upewnij się, że zezwoliłeś aplikacji na dostęp do kamery.";

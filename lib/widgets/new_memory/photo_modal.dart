@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/widgets/buttons/exit_button.dart';
 
@@ -16,8 +17,14 @@ class PhotoModal extends StatelessWidget {
 
   Future<void> _choosePhoto(ImageSource source, BuildContext context) async {
     final ImagePicker picker = ImagePicker();
-
-    final XFile? image = await picker.pickImage(source: source);
+    final XFile? image;
+    try {
+      image = await picker.pickImage(source: source);
+    } catch (e) {
+      if (!context.mounted) return;
+      showInfoPopup(context, cameraPermission);
+      return;
+    }
 
     if (image == null) return;
 
