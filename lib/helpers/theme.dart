@@ -172,6 +172,13 @@ final darkTheme = ThemeData(
 );
 const darkMapStyle = '''[
   {
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
     "elementType": "geometry",
     "stylers": [
       {
@@ -242,7 +249,7 @@ const darkMapStyle = '''[
   },
   {
     "featureType": "poi",
-    "elementType": "all",
+    "elementType": "geometry",
     "stylers": [
       {
         "color": "#283d6a"

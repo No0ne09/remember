@@ -11,7 +11,7 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/helpers/theme.dart';
 
-/*For dev purposes only. If you want to compile app for android this needs to be commented out*/
+/*For web purposes only. If you want to compile app for android this needs to be commented out*/
 //import 'package:remember/helpers/dev_web_api_parsing.dart';
 
 import 'package:remember/screens/auth_screen.dart';
@@ -27,7 +27,7 @@ void main() async {
   );
 
   await dotenv.load(fileName: '.env');
-  /*For dev purposes only. If you want to compile app for android this needs to be commented out*/
+  /*For web purposes only. If you want to compile app for android this needs to be commented out*/
   //if (kIsWeb) addAPIkeyWeb();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) {
