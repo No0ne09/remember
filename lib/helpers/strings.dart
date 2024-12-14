@@ -18,7 +18,7 @@ const currentPassword = "Aktualne hasło";
 const newPassword = "Nowe hasło";
 const confirmNewPassword = "Powtórz nowe hasło";
 const resetPassword = "Zresetuj hasło";
-const yourLocation = "Twoja lokalizacja";
+const yourLocation = "Wybrana lokalizacja";
 const locationTurnedOff =
     "Lokalizacja w twoim telefonie musi pozostać włączona.";
 const noLocationPermission =
