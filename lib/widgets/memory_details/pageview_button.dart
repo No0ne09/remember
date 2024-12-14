@@ -13,11 +13,14 @@ class PageviewButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: onPressed,
-        child: CircleAvatar(
-          child: Icon(icon, size: 30),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          shape: WidgetStateProperty.all(
+            const CircleBorder(),
+          ),
         ),
+        child: Icon(icon, size: 30),
       ),
     );
   }
