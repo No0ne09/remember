@@ -34,16 +34,22 @@ class MemoriesList extends ConsumerWidget {
       });
   }
 
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> _getGroupedMemories(
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> memories,
-      bool isFavourite) {
-    return memories
-        .where(
-          (memory) =>
-              memory.data()[firebaseDataKeys['isFavourite']]! as bool ==
-              isFavourite,
-        )
-        .toList();
+  Map<String, List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      _getGroupedMemories(
+          List<QueryDocumentSnapshot<Map<String, dynamic>>> memories) {
+    final Map<String, List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+        grouped = {
+      'favouriteMemories': [],
+      'basicMemories': [],
+    };
+    for (final memory in memories) {
+      final isFavourite =
+          memory.data()[firebaseDataKeys['isFavourite']]! as bool;
+      isFavourite
+          ? grouped["favouriteMemories"]!.add(memory)
+          : grouped["basicMemories"]!.add(memory);
+    }
+    return grouped;
   }
 
   @override
@@ -51,8 +57,9 @@ class MemoriesList extends ConsumerWidget {
     final overlay = ref.watch(memoryOverlayProvider);
     final descending = ref.watch(memoryOrderProvider);
     final sortedMemories = _getSortedMemories(descending);
-    final favouriteMemories = _getGroupedMemories(sortedMemories, true);
-    final basicMemories = _getGroupedMemories(sortedMemories, false);
+    final groupedMemories = _getGroupedMemories(sortedMemories);
+    final favouriteMemories = groupedMemories['favouriteMemories']!;
+    final basicMemories = groupedMemories['basicMemories']!;
 
     return CustomScrollView(
       slivers: [
