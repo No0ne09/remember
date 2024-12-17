@@ -51,7 +51,7 @@ class _NewLocationWidgetState extends State<NewLocationWidget> {
 
     try {
       final url = Uri.parse(
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey');
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&language=pl&key=$apiKey');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final resData = json.decode(response.body);
