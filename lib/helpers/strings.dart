@@ -73,3 +73,4 @@ const locationError =
     "Nie udało się uzyskać twojej lokalizacji. Upewnij się, że aplikacja posiada odpowiednie uprawnienia, a lokalizacja w twoim urządzeniu jest włączona.";
 const cameraPermission =
     "Wystąpił błąd. Upewnij się, że zezwoliłeś aplikacji na dostęp do kamery.";
+const dioFailed = "Nie udało się pobrać zdjęcia. Spróbuj ponownie później.";

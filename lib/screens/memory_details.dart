@@ -103,9 +103,9 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     final path = '${directory!.path}/${widget.id}.jpg';
     try {
       await Dio().download(widget.data[firebaseDataKeys['imageUrl']!], path);
-    } on SocketException catch (_) {
+    } on DioException catch (_) {
       if (!mounted) return;
-      await showInfoPopup(context, noConnection);
+      await showInfoPopup(context, dioFailed);
       setState(() {
         _isDownloading = false;
       });
