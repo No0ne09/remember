@@ -93,7 +93,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       );
     } catch (e) {
       if (!mounted) return;
-      showInfoPopup(context, unknownError);
+      showInfoPopup(context, photoFailed);
       return;
     }
   }
@@ -105,7 +105,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       await Dio().download(widget.data[firebaseDataKeys['imageUrl']!], path);
     } on DioException catch (_) {
       if (!mounted) return;
-      await showInfoPopup(context, dioFailed);
+      await showInfoPopup(context, photoFailed);
       setState(() {
         _isDownloading = false;
       });
