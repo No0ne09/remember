@@ -48,7 +48,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen>
     );
   }
 
-  void _checkIdToken() async {
+  void _checkIdToken() {
     FirebaseAuth.instance.currentUser!.getIdToken(true).catchError(
       (error) {
         return null;
