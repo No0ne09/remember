@@ -35,7 +35,7 @@ void main() async {
         if (!kIsWeb) {
           await FirebaseCrashlytics.instance.recordFlutterFatalError(details);
         }
-        String res = "${details.exception} \n ${details.stack}";
+        String error = "${details.exception} \n ${details.stack}";
 
         String version = await getAppVersion();
 
@@ -43,7 +43,7 @@ void main() async {
           await http.post(
             Uri.parse(autoReportUrl),
             body: {
-              'entry.1191287436': res,
+              'entry.1191287436': error,
               'entry.1479404169': version,
               'entry.517717971': kIsWeb.toString(),
             },
