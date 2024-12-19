@@ -44,7 +44,7 @@ Future<bool> checkConnection() async {
   return false;
 }
 
-Future<void> handleFireBaseError(String code, BuildContext context) async {
+Future<void> handleFirebaseError(String code, BuildContext context) async {
   String message;
   switch (code) {
     case 'invalid-credential':

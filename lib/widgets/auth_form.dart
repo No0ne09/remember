@@ -55,7 +55,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
         _isProcessing = false;
       });
       if (!mounted) return;
-      await handleFireBaseError(e.code, context);
+      await handleFirebaseError(e.code, context);
       return;
     } catch (_) {
       if (!mounted) return;
@@ -82,7 +82,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
         _isProcessing = false;
       });
       if (!mounted) return;
-      await handleFireBaseError(e.code, context);
+      await handleFirebaseError(e.code, context);
       return;
     } catch (_) {
       if (!mounted) return;

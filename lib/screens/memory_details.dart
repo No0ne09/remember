@@ -150,7 +150,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       await image.delete();
     } on FirebaseException catch (e) {
       if (!mounted) return;
-      await handleFireBaseError(e.code, context);
+      await handleFirebaseError(e.code, context);
       return;
     } catch (_) {
       if (!mounted) return;
@@ -177,7 +177,7 @@ class _MemoryDetailsState extends State<MemoryDetails> {
       setState(() {
         _isFavourite = !_isFavourite;
       });
-      handleFireBaseError(e.code, context);
+      handleFirebaseError(e.code, context);
       return;
     } catch (_) {
       if (!mounted) return;

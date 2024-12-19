@@ -33,7 +33,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
         setState(() {
           _isLoading = false;
         });
-        await handleFireBaseError(e.code, context);
+        await handleFirebaseError(e.code, context);
         return;
       }
       if (!mounted) return;

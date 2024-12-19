@@ -35,7 +35,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                 email: user.email!, password: oldPassword));
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
-        await handleFireBaseError(e.code, context);
+        await handleFirebaseError(e.code, context);
         setState(() {
           _isResetting = false;
         });
@@ -46,7 +46,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
         await _authInstance.currentUser!.updatePassword(newPassword);
       } on FirebaseAuthException catch (e) {
         if (!mounted) return;
-        await handleFireBaseError(e.code, context);
+        await handleFirebaseError(e.code, context);
         setState(() {
           _isResetting = false;
         });
