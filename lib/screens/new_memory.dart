@@ -163,9 +163,10 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
         });
       }
     }
-
-    appBarKey.currentState!.animateTo(0);
-    ref.read(indexProvider.notifier).state = 0;
+    if (mounted) {
+      appBarKey.currentState!.animateTo(0);
+      ref.read(indexProvider.notifier).state = 0;
+    }
   }
 
   @override
