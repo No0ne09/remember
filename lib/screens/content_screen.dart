@@ -93,7 +93,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen>
                 child: CustomAppBar(),
               )
             : null,
-        actions: ref.read(indexProvider) == 0
+        actions: _currentIndex == 0
             ? [
                 Tooltip(
                   message: changeSize,
