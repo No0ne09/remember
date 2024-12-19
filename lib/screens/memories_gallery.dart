@@ -34,9 +34,7 @@ class MemoriesGallery extends StatelessWidget {
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Infotext(text: noMemories);
           }
-
-          final memories = snapshot.data!.docs;
-          return MemoriesList(memories: memories);
+          return MemoriesList(memories: snapshot.data!.docs);
         },
       ),
     );
