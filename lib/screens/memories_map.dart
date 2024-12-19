@@ -42,7 +42,7 @@ class _MemoriesMapState extends State<MemoriesMap> {
     );
   }
 
-  Future<Set<Marker>> _getMarkers() async {
+  Future<Set<Marker>> get _markersList async {
     final Set<Marker> markers = {};
     final user = FirebaseAuth.instance.currentUser!;
     final docs = await FirebaseFirestore.instance
@@ -65,7 +65,7 @@ class _MemoriesMapState extends State<MemoriesMap> {
   @override
   void initState() {
     super.initState();
-    _markers = _getMarkers();
+    _markers = _markersList;
   }
 
   @override
