@@ -35,7 +35,6 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   bool _isSubmitting = false;
 
   Future<void> _checkDateTime() async {
-    if (_chosenImage == null) return;
     final exif = await readExifFromFile(_chosenImage!);
     final exifDateTime = exif["EXIF DateTimeOriginal"]?.toString();
 
