@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/theme.dart';
 import 'package:remember/screens/base_map_screen.dart';
-import 'package:remember/widgets/custom_cached_image.dart';
+import 'package:remember/widgets/layout/custom_cached_image.dart';
 import 'package:remember/widgets/memory_details/pageview_button.dart';
 
 class MemoryPageview extends StatefulWidget {

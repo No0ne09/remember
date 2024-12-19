@@ -8,7 +8,7 @@ import 'package:remember/helpers/functions.dart';
 import 'package:remember/helpers/strings.dart';
 import 'package:remember/models/map_data.dart';
 import 'package:remember/screens/base_map_screen.dart';
-import 'package:remember/widgets/custom_cached_image.dart';
+import 'package:remember/widgets/layout/custom_cached_image.dart';
 import 'package:remember/widgets/new_memory/new_memory_container.dart';
 import 'package:http/http.dart' as http;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/theme.dart';
 import 'package:remember/screens/memory_details.dart';
-import 'package:remember/widgets/custom_cached_image.dart';
+import 'package:remember/widgets/layout/custom_cached_image.dart';
 
 class MemoryCard extends StatelessWidget {
   const MemoryCard({required this.data, required this.id, super.key});
