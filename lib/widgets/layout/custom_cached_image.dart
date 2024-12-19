@@ -20,6 +20,7 @@ class CustomCachedImage extends StatelessWidget {
       errorWidget: (context, url, error) {
         return Center(
           child: Container(
+            width: double.infinity,
             color: Colors.black,
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
