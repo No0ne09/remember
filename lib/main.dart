@@ -37,7 +37,7 @@ void main() async {
         }
         String error = "${details.exception} \n ${details.stack}";
 
-        String version = await getAppVersion();
+        String version = await appVersion;
 
         try {
           await http.post(

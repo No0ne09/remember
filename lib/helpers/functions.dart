@@ -84,7 +84,7 @@ String getStaticMap(GeoPoint location) {
   return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng&zoom=17&size=600x600&maptype=roadmap&markers=color:red%7Clabel:""%7C$lat,$lng&key=$apiKey';
 }
 
-Future<String> getAppVersion() async {
+Future<String> get appVersion async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
 }

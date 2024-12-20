@@ -22,7 +22,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
   String _connection = offline;
 
   Future<void> _getVersion() async {
-    final version = await getAppVersion();
+    final version = await appVersion;
     setState(() {
       _appVersion = version;
     });
