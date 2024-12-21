@@ -84,17 +84,15 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
   }
 
   void _savePlace() {
-    if (_pickedPosition == null) {
-      Navigator.pop(context);
-      return;
-    }
-    Navigator.pop(
-      context,
-      GeoPoint(
-        _pickedPosition!.latitude,
-        _pickedPosition!.longitude,
-      ),
-    );
+    _pickedPosition == null
+        ? Navigator.pop(context)
+        : Navigator.pop(
+            context,
+            GeoPoint(
+              _pickedPosition!.latitude,
+              _pickedPosition!.longitude,
+            ),
+          );
   }
 
   Set<Marker> get _markersList {
