@@ -149,7 +149,8 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
             floatingActionButton: widget.isSelecting
                 ? FloatingActionButton(
                     heroTag: "Locate",
-                    onPressed: _getCurrentLocation,
+                    onPressed:
+                        _isGettingCurrentLocation ? null : _getCurrentLocation,
                     child: _isGettingCurrentLocation
                         ? const CircularProgressIndicator()
                         : const Icon(Icons.my_location_outlined),
