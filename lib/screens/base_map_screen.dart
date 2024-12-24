@@ -128,7 +128,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
       style:
           Theme.of(context).brightness == Brightness.dark ? darkMapStyle : null,
       zoomControlsEnabled: false,
-      mapToolbarEnabled: !widget.isSelecting,
+      mapToolbarEnabled: false,
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: widget.initialPosition,
