@@ -108,11 +108,11 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     return {};
   }
 
-  void _moveCamera(LatLng position, double zoom) {
+  void _moveCamera(LatLng position, double newZoom) {
     if (_controller == null) return;
     _controller.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: position, zoom: zoom),
+        CameraPosition(target: position, zoom: newZoom),
       ),
     );
   }
