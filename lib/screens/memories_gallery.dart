@@ -13,9 +13,9 @@ class MemoriesGallery extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     final stream = FirebaseFirestore.instance
-        .collection(firebaseDbKeys['memories_by_user']!)
+        .collection(firebaseDataKeys['memories_by_user']!)
         .doc(user.uid)
-        .collection(firebaseDbKeys["memories"]!)
+        .collection(firebaseDataKeys["memories"]!)
         .snapshots();
 
     return Padding(

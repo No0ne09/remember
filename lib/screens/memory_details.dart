@@ -137,14 +137,14 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     if (ensure != true) return;
     try {
       await _firestore
-          .collection(firebaseDbKeys['memories_by_user']!)
+          .collection(firebaseDataKeys['memories_by_user']!)
           .doc(_user)
-          .collection(firebaseDbKeys['memories']!)
+          .collection(firebaseDataKeys['memories']!)
           .doc(widget.id)
           .delete();
       final image = FirebaseStorage.instance
           .ref()
-          .child(firebaseDbKeys['user_memories']!)
+          .child(firebaseDataKeys['user_memories']!)
           .child(_user)
           .child('${widget.id}.jpg');
       await image.delete();
@@ -167,9 +167,9 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     });
     try {
       await _firestore
-          .collection(firebaseDbKeys['memories_by_user']!)
+          .collection(firebaseDataKeys['memories_by_user']!)
           .doc(_user)
-          .collection(firebaseDbKeys['memories']!)
+          .collection(firebaseDataKeys['memories']!)
           .doc(widget.id)
           .update({firebaseDataKeys["isFavourite"]!: _isFavourite});
     } on FirebaseException catch (e) {

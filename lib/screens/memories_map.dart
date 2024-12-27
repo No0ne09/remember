@@ -46,9 +46,9 @@ class _MemoriesMapState extends State<MemoriesMap> {
     final Set<Marker> markers = {};
     final user = FirebaseAuth.instance.currentUser!;
     final docs = await FirebaseFirestore.instance
-        .collection(firebaseDbKeys['memories_by_user']!)
+        .collection(firebaseDataKeys['memories_by_user']!)
         .doc(user.uid)
-        .collection(firebaseDbKeys["memories"]!)
+        .collection(firebaseDataKeys["memories"]!)
         .orderBy(firebaseDataKeys["uploadTimeStamp"]!, descending: true)
         .get();
     for (final doc in docs.docs) {

@@ -68,7 +68,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
   Future<String?> _uploadImage(User user, String id) async {
     final storageRef = FirebaseStorage.instance
         .ref()
-        .child(firebaseDbKeys['user_memories']!)
+        .child(firebaseDataKeys['user_memories']!)
         .child(user.uid)
         .child('$id.jpg');
     try {
@@ -130,9 +130,9 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
     }
     try {
       await FirebaseFirestore.instance
-          .collection(firebaseDbKeys['memories_by_user']!)
+          .collection(firebaseDataKeys['memories_by_user']!)
           .doc(user.uid)
-          .collection(firebaseDbKeys["memories"]!)
+          .collection(firebaseDataKeys["memories"]!)
           .doc(id)
           .set({
         firebaseDataKeys["geopoint"]!: _chosenLocation!.coordinates,

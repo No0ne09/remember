@@ -25,9 +25,7 @@ const Map<String, String> firebaseDataKeys = {
   "userId": "userId",
   "imageUrl": "imageUrl",
   "isFavourite": "isFavourite",
-};
-const Map<String, String> firebaseDbKeys = {
-  'memories_by_user': 'memories_by_user',
+  "memories_by_user": "memories_by_user",
   "memories": "memories",
-  'user_memories': 'user_memories',
+  "user_memories": "user_memories",
 };
