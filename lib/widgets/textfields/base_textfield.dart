@@ -70,9 +70,8 @@ class _BaseTextfieldState extends State<BaseTextfield> {
                         _hidden = !_hidden;
                       });
                     },
-                    icon: _hidden
-                        ? const Icon(Icons.visibility_off)
-                        : const Icon(Icons.visibility),
+                    icon:
+                        Icon(_hidden ? Icons.visibility_off : Icons.visibility),
                   ),
                 )
               : null,
