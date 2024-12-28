@@ -5,7 +5,7 @@ final emailValidator = ValidationBuilder(localeName: 'pl').email().build();
 final basicValidator = ValidationBuilder(localeName: 'pl')
     .add(
       (value) => value.toString().trim().isEmpty
-          ? "To pole nie może zawierać samych spacji."
+          ? "To pole nie może zawierać samych spacji"
           : null,
     )
     .build();
@@ -20,7 +20,7 @@ String? Function(String?) createPasswordValidator(
       })
       .add(
         (value) => value.toString().contains((' '))
-            ? "Hasło nie może zawierać spacji."
+            ? "Hasło nie może zawierać spacji"
             : null,
       )
       .build();

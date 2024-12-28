@@ -44,7 +44,7 @@ const takePhoto = "Zrób zdjęcie";
 const logOut = "Wyloguj się";
 const checkInbox = "Sprawdź swoją skrzynkę";
 const passwordResetting = "Resetowanie hasła";
-const emailSend =
+const emailInfo =
     "Na podany adres e-mail otrzymasz wiadomość, która pozwoli Ci na zmianę hasła.";
 const sendMail = "Wyślij wiadomość";
 const noAccount = "Nie masz jeszcze konta?";

@@ -74,7 +74,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
               height: 30,
             ),
             const Text(
-              emailSend,
+              emailInfo,
             ),
             const SizedBox(
               height: 10,
