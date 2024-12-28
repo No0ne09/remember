@@ -4,11 +4,12 @@ import 'package:form_validator/form_validator.dart';
 final emailValidator = ValidationBuilder(localeName: 'pl').email().build();
 final basicValidator = ValidationBuilder(localeName: 'pl')
     .add(
-      (value) =>
-          value.toString().trim().isEmpty ? "To pole jest wymagane." : null,
+      (value) => value.toString().trim().isEmpty
+          ? "To pole nie może zawierać samych spacji."
+          : null,
     )
     .build();
-String? Function(String?) registerPasswordValidator(
+String? Function(String?) createPasswordValidator(
     TextEditingController passwordController) {
   return ValidationBuilder(localeName: 'pl')
       .minLength(8)

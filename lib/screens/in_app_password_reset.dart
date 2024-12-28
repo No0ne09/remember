@@ -99,14 +99,13 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           BaseTextfield(
-                            validator: registerPasswordValidator(
-                                _oldPasswordController),
+                            validator: basicValidator,
                             hint: currentPassword,
                             isPassword: true,
                             controller: _oldPasswordController,
                           ),
                           BaseTextfield(
-                            validator: registerPasswordValidator(
+                            validator: createPasswordValidator(
                                 _confirmPasswordController),
                             hint: newPassword,
                             isPassword: true,
@@ -117,8 +116,8 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                           ),
                           BaseTextfield(
                             isPassword: true,
-                            validator: registerPasswordValidator(
-                                _newPasswordController),
+                            validator:
+                                createPasswordValidator(_newPasswordController),
                             hint: confirmNewPassword,
                             controller: _confirmPasswordController,
                           ),

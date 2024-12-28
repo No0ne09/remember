@@ -160,14 +160,14 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                                 BaseTextfield(
                                   hint: password,
                                   isPassword: true,
-                                  validator: registerPasswordValidator(
+                                  validator: createPasswordValidator(
                                       _confirmPasswordController),
                                   controller: _passwordController,
                                 ),
                                 BaseTextfield(
                                   hint: confirmPassword,
                                   isPassword: true,
-                                  validator: registerPasswordValidator(
+                                  validator: createPasswordValidator(
                                       _passwordController),
                                   controller: _confirmPasswordController,
                                 ),
