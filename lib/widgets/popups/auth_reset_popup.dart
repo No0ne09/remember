@@ -54,52 +54,54 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
       insetPadding: const EdgeInsets.all(10),
       content: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Row(
-              children: [
-                Spacer(),
-                ExitButton(),
-              ],
-            ),
-            Text(
-              passwordResetting,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Row(
+                children: [
+                  Spacer(),
+                  ExitButton(),
+                ],
+              ),
+              Text(
+                passwordResetting,
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                emailInfo,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BaseTextfield(
+                    validator: emailValidator,
+                    hint: "E-mail",
+                    controller: _emailController,
+                    isEmail: true,
                   ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              emailInfo,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                BaseTextfield(
-                  validator: emailValidator,
-                  hint: "E-mail",
-                  controller: _emailController,
-                  isEmail: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                _isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : MainButton(
-                        onPressed: _resetPassword,
-                        text: sendMail,
-                      ),
-              ],
-            ),
-          ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : MainButton(
+                          onPressed: _resetPassword,
+                          text: sendMail,
+                        ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
