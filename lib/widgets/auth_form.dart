@@ -110,29 +110,30 @@ class _AuthFormState extends ConsumerState<AuthForm> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: SizedBox(
           width: height > width ? width : width / 2,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isLogin = !_isLogin;
-                  });
-                },
-                child: Text(
-                  _isLogin ? noAccount : haveAccount,
-                  overflow: TextOverflow.visible,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    _formKey.currentState!.reset();
+                    setState(() {
+                      _isLogin = !_isLogin;
+                    });
+                  },
+                  child: Text(
+                    _isLogin ? noAccount : haveAccount,
+                    overflow: TextOverflow.visible,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Card(
-                  child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
+                const SizedBox(
+                  height: 8,
+                ),
+                Card(
+                    child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -195,23 +196,23 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                         ),
                     ],
                   ),
+                )),
+                const SizedBox(
+                  height: 8,
                 ),
-              )),
-              const SizedBox(
-                height: 8,
-              ),
-              _isProcessing
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : SizedBox(
-                      width: double.infinity,
-                      child: MainButton(
-                        onPressed: _validate,
-                        text: _isLogin ? login : register,
+                _isProcessing
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SizedBox(
+                        width: double.infinity,
+                        child: MainButton(
+                          onPressed: _validate,
+                          text: _isLogin ? login : register,
+                        ),
                       ),
-                    ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
