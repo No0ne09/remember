@@ -64,9 +64,8 @@ class _MemoryDetailsState extends State<MemoryDetails> {
     if (!status) {
       if (!mounted) return false;
       await showInfoPopup(context, noConnection);
-      return false;
     }
-    return true;
+    return status;
   }
 
   Future<void> _downloadImage() async {
