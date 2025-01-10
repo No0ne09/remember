@@ -145,37 +145,41 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     );
 
     return !widget.isMemoriesMap
-        ? Scaffold(
-            floatingActionButton: widget.isSelecting
-                ? FloatingActionButton(
-                    heroTag: "Locate",
-                    onPressed:
-                        _isGettingCurrentLocation ? null : _getCurrentLocation,
-                    child: _isGettingCurrentLocation
-                        ? const CircularProgressIndicator()
-                        : const Icon(Icons.my_location_outlined),
-                  )
-                : null,
-            extendBodyBehindAppBar: true,
-            appBar: AppBar(
-              forceMaterialTransparency: true,
-              automaticallyImplyLeading: true,
-              actions: widget.isSelecting
-                  ? [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: FloatingActionButton.large(
-                          heroTag: "Save",
-                          onPressed: _savePlace,
-                          child: const Icon(
-                            Icons.save_rounded,
+        ? SafeArea(
+            top: false,
+            child: Scaffold(
+              floatingActionButton: widget.isSelecting
+                  ? FloatingActionButton(
+                      heroTag: "Locate",
+                      onPressed: _isGettingCurrentLocation
+                          ? null
+                          : _getCurrentLocation,
+                      child: _isGettingCurrentLocation
+                          ? const CircularProgressIndicator()
+                          : const Icon(Icons.my_location_outlined),
+                    )
+                  : null,
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(
+                forceMaterialTransparency: true,
+                automaticallyImplyLeading: true,
+                actions: widget.isSelecting
+                    ? [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: FloatingActionButton.large(
+                            heroTag: "Save",
+                            onPressed: _savePlace,
+                            child: const Icon(
+                              Icons.save_rounded,
+                            ),
                           ),
                         ),
-                      ),
-                    ]
-                  : [],
+                      ]
+                    : [],
+              ),
+              body: content,
             ),
-            body: content,
           )
         : content;
   }
