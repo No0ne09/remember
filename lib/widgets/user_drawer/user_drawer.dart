@@ -80,7 +80,7 @@ class _UserDrawerState extends ConsumerState<UserDrawer> {
               DrawerOption(
                 onTap: () async {
                   await launchUrl(
-                    Uri.parse("mailto:$contactMail?subject=$subject"),
+                    Uri.parse(sendMailUrl),
                   );
                 },
                 text: support,
