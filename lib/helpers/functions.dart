@@ -57,8 +57,6 @@ Future<void> handleFirebaseError(String code, BuildContext context) async {
       message = invalidEmail;
     case 'unavailable':
       message = serviceUnavailable;
-    case 'canceled':
-      return;
     default:
       message = unknownError;
   }
