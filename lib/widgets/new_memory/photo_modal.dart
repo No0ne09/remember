@@ -53,26 +53,22 @@ class PhotoModal extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: PhotoModalButton(
-                      onTap: () async {
-                        await _choosePhoto(ImageSource.gallery, context);
-                      },
-                      text: pickGallery,
-                      icon: Icons.image_rounded,
-                    ),
+                  PhotoModalButton(
+                    onTap: () async {
+                      await _choosePhoto(ImageSource.gallery, context);
+                    },
+                    text: pickGallery,
+                    icon: Icons.image_rounded,
                   ),
                   const SizedBox(
                     width: 8,
                   ),
-                  Expanded(
-                    child: PhotoModalButton(
-                      onTap: () async {
-                        await _choosePhoto(ImageSource.camera, context);
-                      },
-                      text: takePhoto,
-                      icon: Icons.camera_enhance_rounded,
-                    ),
+                  PhotoModalButton(
+                    onTap: () async {
+                      await _choosePhoto(ImageSource.camera, context);
+                    },
+                    text: takePhoto,
+                    icon: Icons.camera_enhance_rounded,
                   ),
                 ],
               ),

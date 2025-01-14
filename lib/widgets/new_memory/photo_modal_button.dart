@@ -13,18 +13,20 @@ class PhotoModalButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: CircleAvatar(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 35,
-            ),
-            Text(text),
-          ],
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: CircleAvatar(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 35,
+              ),
+              Text(text),
+            ],
+          ),
         ),
       ),
     );
