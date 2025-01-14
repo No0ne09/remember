@@ -83,7 +83,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
     _moveCamera(_pickedPosition!, zoom);
   }
 
-  void _savePlace() {
+  void _savePosition() {
     _pickedPosition == null
         ? Navigator.pop(context)
         : Navigator.pop(
@@ -169,7 +169,7 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
                           padding: const EdgeInsets.all(10.0),
                           child: FloatingActionButton.large(
                             heroTag: "Save",
-                            onPressed: _savePlace,
+                            onPressed: _savePosition,
                             child: const Icon(
                               Icons.save_rounded,
                             ),
