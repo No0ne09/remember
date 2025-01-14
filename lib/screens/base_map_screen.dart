@@ -135,13 +135,13 @@ class _BaseMapScreenState extends State<BaseMapScreen> {
         zoom: zoom,
       ),
       markers: _markersList,
-      onTap: widget.isSelecting == false
-          ? null
-          : (markerPosition) {
+      onTap: widget.isSelecting
+          ? (markerPosition) {
               setState(() {
                 _pickedPosition = markerPosition;
               });
-            },
+            }
+          : null,
     );
 
     return !widget.isMemoriesMap
