@@ -1,10 +1,10 @@
 const appName = "Re(me)mber";
 const invalidCredentials = "Upewnij się, że wprowadzone dane są poprawne.";
-const noConnection = "Upewnij się, posiadasz połączenie z Internetem.";
+const noConnection = "Upewnij się, że posiadasz połączenie z Internetem.";
 const emailTaken = "Istnieje już konto powiązane z tym adresem email.";
-const invalidEmail = "Upewnij się, podany adres email jest poprawny.";
+const invalidEmail = "Upewnij się, że podany adres email jest poprawny.";
 const serviceUnavailable =
-    "Nasze usługi są chwilowo niedostępne spróbuj ponownie później.";
+    "Nasze usługi są chwilowo niedostępne. Spróbuj ponownie później.";
 const unknownError =
     "Wystąpił błąd. Spróbuj ponownie później. Jeżeli zmieniałeś hasło może być konieczne ponowne zalogowanie się.";
 const error = "Błąd";
