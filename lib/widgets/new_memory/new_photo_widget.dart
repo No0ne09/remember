@@ -25,10 +25,10 @@ class _NewPhotoWidgetState extends State<NewPhotoWidget> {
       builder: (context) {
         return PhotoModal(
           onChooseImage: (image) {
-            widget.onChooseImage(image);
             setState(() {
               _chosenPhoto = image;
             });
+            widget.onChooseImage(image);
           },
         );
       },
