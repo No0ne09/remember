@@ -5,6 +5,7 @@ class BaseTextfield extends StatefulWidget {
   const BaseTextfield({
     this.isEmail = false,
     this.isPassword = false,
+    this.isTitle = false,
     required this.validator,
     required this.hint,
     required this.controller,
@@ -14,6 +15,7 @@ class BaseTextfield extends StatefulWidget {
 
   final bool isEmail;
   final bool isPassword;
+  final bool isTitle;
   final String hint;
   final String? Function(String?) validator;
   final TextEditingController controller;
@@ -44,9 +46,9 @@ class _BaseTextfieldState extends State<BaseTextfield> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        textCapitalization: widget.isPassword
-            ? TextCapitalization.none
-            : TextCapitalization.sentences,
+        textCapitalization: widget.isTitle
+            ? TextCapitalization.sentences
+            : TextCapitalization.none,
         keyboardType: widget.isEmail ? TextInputType.emailAddress : null,
         controller: widget.controller,
         textInputAction: widget.inputAction,

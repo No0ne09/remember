@@ -185,6 +185,7 @@ class _NewMemoryState extends ConsumerState<NewMemory> {
           child: Column(
             children: [
               BaseTextfield(
+                isTitle: true,
                 validator: basicValidator,
                 hint: nameMemory,
                 controller: _titleController,
