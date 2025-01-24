@@ -6,8 +6,8 @@ import 'package:remember/helpers/constants.dart';
 import 'package:remember/helpers/providers.dart';
 import 'package:remember/helpers/strings.dart';
 
-class CustomAppBar extends ConsumerWidget {
-  const CustomAppBar({super.key});
+class CustomNavigationBar extends ConsumerWidget {
+  const CustomNavigationBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

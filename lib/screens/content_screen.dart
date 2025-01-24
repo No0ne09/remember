@@ -10,7 +10,7 @@ import 'package:remember/screens/memories_map.dart';
 import 'package:remember/screens/memories_gallery.dart';
 import 'package:remember/widgets/layout/background.dart';
 import 'package:remember/widgets/buttons/animated_toggle_button.dart';
-import 'package:remember/widgets/layout/custom_app_bar.dart';
+import 'package:remember/widgets/layout/custom_navigation_bar.dart';
 import 'package:remember/widgets/layout/title_widget.dart';
 import 'package:remember/widgets/user_drawer/user_drawer.dart';
 
@@ -82,7 +82,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen>
     _animationController.reset();
     _animationController.forward();
     return Scaffold(
-      bottomNavigationBar: kIsWeb ? null : const CustomAppBar(),
+      bottomNavigationBar: kIsWeb ? null : const CustomNavigationBar(),
       drawer: const UserDrawer(),
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -90,7 +90,7 @@ class _ContentScreenState extends ConsumerState<ContentScreen>
         bottom: kIsWeb
             ? const PreferredSize(
                 preferredSize: Size.fromHeight(kToolbarHeight),
-                child: CustomAppBar(),
+                child: CustomNavigationBar(),
               )
             : null,
         actions: _currentIndex == 0
