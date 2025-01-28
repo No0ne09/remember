@@ -111,9 +111,6 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                             isPassword: true,
                             controller: _newPasswordController,
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
                           BaseTextfield(
                             isPassword: true,
                             validator:

@@ -28,6 +28,7 @@ void showToast(
           fontSize: 20,
           color: scheme.onInverseSurface,
         ),
+        textAlign: TextAlign.center,
       ),
     ),
   );
