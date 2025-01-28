@@ -56,12 +56,12 @@ const passwordReset = "Resetowanie hasła";
 const login = "Zaloguj się";
 const register = "Zarejestruj się";
 const passwordChanged =
-    "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować.";
+    "Hasło zostało zmienione. Zaloguj się ponownie, aby kontynuować";
 const reportBug = "Zgłoś błąd";
 const support = "Pomoc techniczna";
 const offline = "Jesteś Offline";
 const online = "Jesteś Online";
-const imageSaved = "Zdjęcie zostało zapisane w galerii.";
+const imageSaved = "Zdjęcie zostało zapisane w galerii";
 const eraseMemory = "Wymaż wspomnienie";
 const ensureErase =
     "Czy na pewno chcesz wymazać to wspomnienie? Tego procesu nie da się odwrócić.";
