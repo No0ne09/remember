@@ -53,7 +53,6 @@ class _BaseTextfieldState extends State<BaseTextfield> {
         controller: widget.controller,
         textInputAction: widget.inputAction,
         obscureText: widget.isPassword ? _hidden : false,
-        obscuringCharacter: "●",
         focusNode: _focusNode,
         validator: widget.validator,
         onTapOutside: (event) {
