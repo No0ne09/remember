@@ -107,7 +107,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
     final height = size.height;
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.all(8.0),
         child: SizedBox(
           width: height > width ? width : width / 2,
           child: Form(
