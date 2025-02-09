@@ -88,6 +88,7 @@ class _AuthResetPopupState extends State<AuthResetPopup> {
                     hint: "E-mail",
                     controller: _emailController,
                     isEmail: true,
+                    inputAction: TextInputAction.done,
                   ),
                   const SizedBox(
                     height: 10,
