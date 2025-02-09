@@ -117,6 +117,7 @@ class _InAppPasswordResetState extends State<InAppPasswordReset> {
                                 createPasswordValidator(_newPasswordController),
                             hint: confirmNewPassword,
                             controller: _confirmPasswordController,
+                            inputAction: TextInputAction.done,
                           ),
                           const SizedBox(
                             height: 8,

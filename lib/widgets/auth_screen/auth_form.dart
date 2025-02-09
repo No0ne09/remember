@@ -155,6 +155,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                               isPassword: true,
                               validator: basicValidator,
                               controller: _passwordController,
+                              inputAction: TextInputAction.done,
                             )
                           : Column(
                               children: [
@@ -171,6 +172,7 @@ class _AuthFormState extends ConsumerState<AuthForm> {
                                   validator: createPasswordValidator(
                                       _passwordController),
                                   controller: _confirmPasswordController,
+                                  inputAction: TextInputAction.done,
                                 ),
                               ],
                             ),
