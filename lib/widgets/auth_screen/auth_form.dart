@@ -18,10 +18,10 @@ class AuthForm extends ConsumerStatefulWidget {
 
 class _AuthFormState extends ConsumerState<AuthForm> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController(text: "");
+  final _emailController = TextEditingController(text: "");
+  final _passwordController = TextEditingController(text: "");
+  final _confirmPasswordController = TextEditingController(text: "");
   bool _isLogin = true;
   bool _isProcessing = false;
   final _authInstance = FirebaseAuth.instance;
